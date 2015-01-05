@@ -1,7 +1,7 @@
-ezi_issue:
-    resource: "@EziIssueBundle/Controller/"
-    type:     annotation
-    prefix:   /
+# ezi_issue:
+#     resource: "@EziIssueBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
 
 #
 # 3rd party routes
