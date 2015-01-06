@@ -22,6 +22,42 @@ class EziIssue implements Migration
     const TABLE_NAME = 'ezi_issue';
 
     /**
+     * Column array that provides in schema builder
+     *
+     * @var array
+     */
+    protected $issueTableFields = [
+        ['id',                'integer',  ['autoincrement' => true]             ],
+        ['summary',           'string',   ['notnull' => false, 'length' => 255] ],
+        ['code',              'string',   ['notnull' => true,  'length' => 32]  ],
+        ['description',       'string',   ['notnull' => false, 'length' => 255] ],
+        ['type',              'string',   ['notnull' => true,  'length' => 32]  ],
+        ['priority',          'string',   ['notnull' => true,  'length' => 32]  ],
+        ['resolution',        'string',   ['notnull' => true,  'length' => 32]  ],
+        ['status',            'string',   ['notnull' => true,  'length' => 32]  ],
+        ['tags',              'string',   ['notnull' => true,  'length' => 32]  ],
+        ['reporter_id',       'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['assignee_id',       'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['related',           'string',   ['notnull' => true,  'length' => 32]  ],
+        ['collaborators',     'string',   ['notnull' => true,  'length' => 32]  ],
+        ['issue_parent_id',   'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['issue_children_id', 'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['workflow_item_id',  'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['workflow_step_id',  'integer',  ['notnull' => true,  'length' => 32]  ],
+        ['notes',             'string',   ['notnull' => true,  'length' => 32]  ],
+        ['created_at',        'datetime'                                        ],
+        ['updated_at',        'datetime', ['notnull' => true]                   ],
+    ];
+
+    protected $issueTableIndexes = [
+
+    ];
+
+    protected $issueForeignKeys = [
+
+    ];
+
+    /**
      * Modifies the given schema to apply necessary changes of a database
      * The given query bag can be used to apply additional SQL queries before and after schema changes
      *
@@ -40,7 +76,7 @@ class EziIssue implements Migration
             $schema->dropTable(self::TABLE_NAME);
         }
 
-        $table = $this->addIssueColumns(
+        $table = $this->createTableStructure(
             $schema->createTable(self::TABLE_NAME)
         );
 
@@ -55,26 +91,13 @@ class EziIssue implements Migration
         (new EziIssueResolution())->up($schema, $queries);
     }
 
-    protected function addIssueColumns(Table $table)
+    protected function createTableStructure(Table $table)
     {
-        $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('summary', 'string', ['notnull' => false, 'length' => 255]);
-        $table->addColumn('code', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('description', 'string', ['notnull' => false, 'length' => 255]);
-        $table->addColumn('type', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('priority', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('resolution', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('status', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('tags', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('reporter_id', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('assignee_id', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('related', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('collaborators', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('issue_parent_id', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('issue_children_id', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('notes', 'string', ['notnull' => true, 'length' => 32]);
-        $table->addColumn('created_at', 'datetime');
-        $table->addColumn('updated_at', 'datetime', ['notnull' => true]);
+        $method = new \ReflectionMethod($table, 'addColumn');
+
+        foreach($this->issueTableFields as $args) {
+            $method->invokeArgs($table, $args);
+        }
 
         return $table;
     }

@@ -16,7 +16,7 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 class EziIssueResolution implements Migration
 {
 
-    CONST TABLE_NAME = 'ezi_issue_resolution';
+    const TABLE_NAME = 'ezi_issue_resolution';
 
     /**
      * Modifies the given schema to apply necessary changes of a database

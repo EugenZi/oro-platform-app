@@ -53,6 +53,6 @@ class EziIssueBundleInstaller implements Installation, ActivityExtensionAwareInt
      */
     public function up(Schema $schema, QueryBag $queries)
     {
-        // TODO: Implement up() method.
+
     }
 }

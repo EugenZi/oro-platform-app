@@ -15,7 +15,7 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 class EziIssuePriority implements Migration
 {
-    CONST TABLE_NAME = 'ezi_issue_priority';
+    const TABLE_NAME = 'ezi_issue_priority';
 
     /**
      * Modifies the given schema to apply necessary changes of a database
