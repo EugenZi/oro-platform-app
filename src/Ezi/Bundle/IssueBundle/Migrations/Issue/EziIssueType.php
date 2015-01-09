@@ -38,7 +38,5 @@ class EziIssueType implements Migration
 
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['type'], 'ISSUE_TYPE_UNIQ_IDX');
-
-        $this->createRelations($schema);
     }
 }
