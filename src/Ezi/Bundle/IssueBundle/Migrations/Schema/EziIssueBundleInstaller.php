@@ -14,6 +14,8 @@ use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterfac
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
+use Ezi\Bundle\IssueBundle\Migrations\Schema\v1_0\EziIssueBundle as EziIssueBundleMigration;
+
 class EziIssueBundleInstaller implements Installation, ActivityExtensionAwareInterface
 {
     const ISSUE_MIGRATION_VERSION = 'v0_0';
@@ -53,6 +55,8 @@ class EziIssueBundleInstaller implements Installation, ActivityExtensionAwareInt
      */
     public function up(Schema $schema, QueryBag $queries)
     {
+        $migration = new EziIssueBundleMigration();
 
+        $migration->up($schema, $queries);
     }
 }
