@@ -10,7 +10,6 @@
 namespace Bap\Bundle\IssueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Bap\Bundle\IssueBundle\Entity\BaseIssueCollaborator;
 
 /**
  * Bap\Bundle\IssueBundle\Entity\BapIssueCollaborator
@@ -19,4 +18,89 @@ use Bap\Bundle\IssueBundle\Entity\BaseIssueCollaborator;
  */
 class IssueCollaborator extends BaseIssueCollaborator
 {
+    const TABLE_NAME = 'bap_issue_collaborator';
+
+    /**
+     * Get the value of id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of issue_id.
+     *
+     * @param integer $issue_id
+     * @return \Bap\Bundle\IssueBundle\Entity\IssueCollaborator
+     */
+    public function setIssueId($issue_id)
+    {
+        $this->issue_id = $issue_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of issue_id.
+     *
+     * @return integer
+     */
+    public function getIssueId()
+    {
+        return $this->issue_id;
+    }
+
+    /**
+     * Set the value of user_id.
+     *
+     * @param integer $user_id
+     * @return \Bap\Bundle\IssueBundle\Entity\IssueCollaborator
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user_id.
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set Issue entity (many to one).
+     *
+     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
+     * @return \Bap\Bundle\IssueBundle\Entity\IssueCollaborator
+     */
+    public function setIssue(Issue $issue = null)
+    {
+        $this->issue = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Get Issue entity (many to one).
+     *
+     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
+    }
+
+    public function __sleep()
+    {
+        return array('id', 'issue_id', 'user_id');
+    }
 }
