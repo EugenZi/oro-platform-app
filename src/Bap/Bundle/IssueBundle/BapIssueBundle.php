@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezi\Bundle\IssueBundle;
+namespace Bap\Bundle\IssueBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

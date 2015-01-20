@@ -1,5 +1,5 @@
 # ezi_issue:
-#     resource: "@EziIssueBundle/Controller/"
+#     resource: "@BapIssueBundle/Controller/"
 #     type:     annotation
 #     prefix:   /
 
