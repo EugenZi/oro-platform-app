@@ -3,7 +3,7 @@
  * User: ezi
  */
 
-namespace Ezi\Bundle\IssueBundle\Migrations\Schema\v1_0;
+namespace Bap\Bundle\IssueBundle\Migrations\Schema\v1_0;
 
 use Doctrine\DBAL\Schema\Schema;
 
@@ -12,7 +12,7 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Ezi\Bundle\IssueBundle\Migrations\Schema\v1_0\EziIssue;
 
-class EziIssueBundle implements Migration
+class BapIssueBundle implements Migration
 {
 
     /**

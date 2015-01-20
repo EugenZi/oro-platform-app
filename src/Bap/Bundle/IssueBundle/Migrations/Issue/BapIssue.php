@@ -13,13 +13,13 @@ use Doctrine\DBAL\Schema\Table;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Ezi\Bundle\IssueBundle\Migrations\Issue\EziIssueType;
-use Ezi\Bundle\IssueBundle\Migrations\Issue\EziIssuePriority;
-use Ezi\Bundle\IssueBundle\Migrations\Issue\EziIssueResolution;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueType;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssuePriority;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueResolution;
 
-class EziIssue implements Migration
+class BapIssue implements Migration
 {
-    const TABLE_NAME  = 'ezi_issue';
+    const TABLE_NAME  = 'bap_issue';
     const PRIMARY_KEY = 'id';
 
     /**
@@ -77,19 +77,19 @@ class EziIssue implements Migration
 
     private $issueForeignKeys = [
         [
-            EziIssueType::TABLE_NAME,
+            BapIssueType::TABLE_NAME,
             ['type_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
         ],
         [
-            EziIssuePriority::TABLE_NAME,
+            BapIssuePriority::TABLE_NAME,
             ['priority_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
         ],
         [
-            EziIssueResolution::TABLE_NAME,
+            BapIssueResolution::TABLE_NAME,
             ['resolution_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
@@ -172,9 +172,9 @@ class EziIssue implements Migration
 
     private function createDictionaryTables()
     {
-        (new EziIssueType())->up($this->schema, $this->queries);
-        (new EziIssuePriority())->up($this->schema, $this->queries);
-        (new EziIssueResolution())->up($this->schema, $this->queries);
+        (new BapIssueType())->up($this->schema, $this->queries);
+        (new BapIssuePriority())->up($this->schema, $this->queries);
+        (new BapIssueResolution())->up($this->schema, $this->queries);
     }
 
     private function addTableStructure(Table $table)

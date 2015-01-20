@@ -5,7 +5,7 @@
  * Time: 2:21 PM
  */
 
-namespace Ezi\Bundle\IssueBundle\Migrations\Schema;
+namespace Bap\Bundle\IssueBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
 
@@ -14,9 +14,9 @@ use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterfac
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Ezi\Bundle\IssueBundle\Migrations\Schema\v1_0\EziIssueBundle as EziIssueBundleMigration;
+use Bap\Bundle\IssueBundle\Migrations\Schema\v1_0\BapIssueBundle as BapIssueBundleMigration;
 
-class EziIssueBundleInstaller implements Installation, ActivityExtensionAwareInterface
+class BapIssueBundleInstaller implements Installation, ActivityExtensionAwareInterface
 {
     const ISSUE_MIGRATION_VERSION = 'v0_0';
 
@@ -55,7 +55,7 @@ class EziIssueBundleInstaller implements Installation, ActivityExtensionAwareInt
      */
     public function up(Schema $schema, QueryBag $queries)
     {
-        $migration = new EziIssueBundleMigration();
+        $migration = new BapIssueBundleMigration();
 
         $migration->up($schema, $queries);
     }

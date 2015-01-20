@@ -3,20 +3,19 @@
  * Created by PhpStorm.
  * User: ezi
  * Date: 1/5/15
- * Time: 5:03 PM
+ * Time: 5:01 PM
  */
 
-namespace Ezi\Bundle\IssueBundle\Migrations\Issue;
+namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
 use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-class EziIssueResolution implements Migration
+class BapIssueType implements Migration
 {
-
-    const TABLE_NAME = 'ezi_issue_resolution';
+    const TABLE_NAME = 'bap_issue_type';
 
     /**
      * Modifies the given schema to apply necessary changes of a database
@@ -35,16 +34,9 @@ class EziIssueResolution implements Migration
         $table = $schema->createTable(self::TABLE_NAME);
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('resolution', 'string', ['notnull' => true, 'length' => 32]);
+        $table->addColumn('type', 'string', ['notnull' => true, 'length' => 32]);
 
         $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['resolution'], 'ISSUE_RESOLUTION_UNIQ_IDX');
-
-        $this->createRelations($schema);
-    }
-
-    protected function createRelations(Schema $schema)
-    {
-
+        $table->addUniqueIndex(['type'], 'ISSUE_TYPE_UNIQ_IDX');
     }
 }
