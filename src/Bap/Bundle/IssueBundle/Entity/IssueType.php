@@ -3,6 +3,7 @@
 namespace Bap\Bundle\IssueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Bap\Bundle\IssueBundle\Entity\IssueType
@@ -12,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class IssueType extends BaseIssueType
 {
     const TABLE_NAME = 'bap_issue_type';
+
+    const TASK_TYPE     = 'task';
+    const STORY_TYPE    = 'story';
+    const SUB_TASK_TYPE = 'sub_task';
+    const BUG_TYPE      = 'bug';
 
     public function __construct()
     {

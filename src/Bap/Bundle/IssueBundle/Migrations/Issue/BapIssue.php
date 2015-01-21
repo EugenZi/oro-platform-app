@@ -13,15 +13,13 @@ use Doctrine\DBAL\Schema\Table;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueType;
-use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssuePriority;
-use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueResolution;
+use Bap\Bundle\IssueBundle\Migrations\Issue\Issue;
+use Bap\Bundle\IssueBundle\Migrations\Issue\IssueType;
+use Bap\Bundle\IssueBundle\Migrations\Issue\IssuePriority;
+use Bap\Bundle\IssueBundle\Migrations\Issue\IssueResolution;
 
 class BapIssue implements Migration
 {
-    const TABLE_NAME  = 'bap_issue';
-    const PRIMARY_KEY = 'id';
-
     /**
      * @var Schema
      */
@@ -39,31 +37,31 @@ class BapIssue implements Migration
      */
     private $issueTableColumns = [
         ['id',                'integer',  ['autoincrement' => true]             ],
+        ['type_id',           'integer',  ],
+        ['owner_id',          'integer',  ['notnull' => false]],
+        ['priority_id',       'integer',  ],
+        ['resolution_id',     'integer',  ],
+        ['reporter_id',       'integer',  ],
+        ['assignee_id',       'integer',  ],
+        ['issue_parent_id',   'integer',  ],
+        ['workflow_item_id',  'integer',  ],
+        ['workflow_step_id',  'integer',  ],
         ['summary',           'string',   ['notnull' => false, 'length' => 255] ],
-        ['code',              'string',   ['notnull' => true,  'length' => 32]  ],
+        ['code',              'string',   ['length' => 32]],
         ['description',       'string',   ['notnull' => false, 'length' => 255] ],
-        ['type_id',           'string',   ['notnull' => true,  'length' => 32]  ],
-        ['priority_id',       'string',   ['notnull' => true,  'length' => 32]  ],
-        ['resolution_id',     'string',   ['notnull' => true,  'length' => 32]  ],
-        ['status',            'string',   ['notnull' => true,  'length' => 32]  ],
-        ['tags',              'string',   ['notnull' => true,  'length' => 32]  ],
-        ['reporter_id',       'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['assignee_id',       'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['related',           'string',   ['notnull' => true,  'length' => 32]  ],
-        ['collaborators',     'string',   ['notnull' => true,  'length' => 32]  ],
-        ['issue_parent_id',   'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['issue_children_id', 'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['workflow_item_id',  'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['workflow_step_id',  'integer',  ['notnull' => true,  'length' => 32]  ],
-        ['notes',             'string',   ['notnull' => true,  'length' => 32]  ],
+        ['status',            'string',   ['length' => 32]],
+        ['tags',              'string',   ['length' => 32]],
+        ['related',           'string',   ['length' => 32]],
+        ['collaborators',     'string',   ['length' => 32]],
+        ['notes',             'string',   ['length' => 32]],
         ['created_at',        'datetime'                                        ],
-        ['updated_at',        'datetime', ['notnull' => true]                   ],
+        ['updated_at',        'datetime'  ],
     ];
 
     private $issueTableIndexes = [
         [['summary'],           "EZI_ISSUE_SUMMARY_IDX",           []],
         [['code'],              "EZI_ISSUE_CODE_IDX",              []],
-        [['descripton'],        "EZI_ISSUE_DESCRIPTION_IDX",       []],
+        [['description'],       "EZI_ISSUE_DESCRIPTION_IDX",       []],
         [['reporter_id'],       "EZI_ISSUE_STATUS_IDX",            []],
         [['assignee_id'],       "EZI_ISSUE_ASSIGNEE_ID_IDX",       []],
         [['assignee_id'],       "EZI_ISSUE_RELATED_ISSUES_ID_IDX", []],
@@ -77,19 +75,19 @@ class BapIssue implements Migration
 
     private $issueForeignKeys = [
         [
-            BapIssueType::TABLE_NAME,
+            IssueType::TABLE_NAME,
             ['type_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
         ],
         [
-            BapIssuePriority::TABLE_NAME,
+            IssuePriority::TABLE_NAME,
             ['priority_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
         ],
         [
-            BapIssueResolution::TABLE_NAME,
+            IssueResolution::TABLE_NAME,
             ['resolution_id'],
             ['id'],
             ['onDelete' => 'SET NULL']
@@ -156,7 +154,7 @@ class BapIssue implements Migration
         $this->addIssueForeignKeys(
             $this->addIssueIndexes(
                 $this->addTableStructure(
-                    $this->schema->createTable(self::TABLE_NAME)
+                    $this->schema->createTable(Issue::TABLE_NAME)
                 )
             )
         );
@@ -172,9 +170,9 @@ class BapIssue implements Migration
 
     private function createDictionaryTables()
     {
-        (new BapIssueType())->up($this->schema, $this->queries);
-        (new BapIssuePriority())->up($this->schema, $this->queries);
-        (new BapIssueResolution())->up($this->schema, $this->queries);
+        (new IssueType())->up($this->schema, $this->queries);
+        (new IssuePriority())->up($this->schema, $this->queries);
+        (new IssueResolution())->up($this->schema, $this->queries);
     }
 
     private function addTableStructure(Table $table)

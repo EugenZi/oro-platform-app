@@ -13,11 +13,10 @@ use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
+
 class BapIssueResolution implements Migration
 {
-
-    const TABLE_NAME = 'bap_issue_resolution';
-
     /**
      * Modifies the given schema to apply necessary changes of a database
      * The given query bag can be used to apply additional SQL queries before and after schema changes
@@ -28,23 +27,16 @@ class BapIssueResolution implements Migration
      */
     public function up(Schema $schema, QueryBag $queries)
     {
-        if ($schema->hasTable(self::TABLE_NAME)) {
-            $schema->dropTable(self::TABLE_NAME);
+        if ($schema->hasTable(IssueResolution::TABLE_NAME)) {
+            $schema->dropTable(IssueResolution::TABLE_NAME);
         }
 
-        $table = $schema->createTable(self::TABLE_NAME);
+        $table = $schema->createTable(IssueResolution::TABLE_NAME);
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('resolution', 'string', ['notnull' => true, 'length' => 32]);
+        $table->addColumn('name', 'string', ['length' => 32]);
 
         $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['resolution'], 'ISSUE_RESOLUTION_UNIQ_IDX');
-
-        $this->createRelations($schema);
-    }
-
-    protected function createRelations(Schema $schema)
-    {
-
+        $table->addUniqueIndex(['name'], 'BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX');
     }
 }
