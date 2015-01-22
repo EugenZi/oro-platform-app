@@ -15,31 +15,17 @@ use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
+use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
-class BapIssuePriority implements Migration
+class BapIssuePriority extends AbstractMigration
 {
-    /**
-     * Modifies the given schema to apply necessary changes of a database
-     * The given query bag can be used to apply additional SQL queries before and after schema changes
-     *
-     * @param Schema $schema
-     * @param QueryBag $queries
-     * @return void
-     */
-    public function up(Schema $schema, QueryBag $queries)
-    {
-        if ($schema->hasTable(IssuePriority::TABLE_NAME)) {
-            $schema->dropTable(IssuePriority::TABLE_NAME);
-        }
 
-        $this->createIndexes(
-            $this->createColumns(
-                $schema->createTable(IssuePriority::TABLE_NAME)
-            )
-        );
+    protected function getTableName()
+    {
+        return IssuePriority::TABLE_NAME;
     }
 
-    private function createColumns(Table $table)
+    protected function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
@@ -48,7 +34,7 @@ class BapIssuePriority implements Migration
         return $table;
     }
 
-    private function createIndexes(Table $table)
+    protected function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['priority'], 'BAP_ISSUE_PRIORITY_FIELD_UNIQUE_IDX');

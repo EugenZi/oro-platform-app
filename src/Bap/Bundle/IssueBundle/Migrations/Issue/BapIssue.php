@@ -5,7 +5,7 @@
  * Time: 5:04 PM
  */
 
-namespace Ezi\Bundle\IssueBundle\Migrations\Schema\v1_0;
+namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
@@ -13,12 +13,13 @@ use Doctrine\DBAL\Schema\Table;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Bap\Bundle\IssueBundle\Migrations\Issue\Issue;
-use Bap\Bundle\IssueBundle\Migrations\Issue\IssueType;
-use Bap\Bundle\IssueBundle\Migrations\Issue\IssuePriority;
-use Bap\Bundle\IssueBundle\Migrations\Issue\IssueResolution;
+use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
+use Bap\Bundle\IssueBundle\Entity\Issue;
+use Bap\Bundle\IssueBundle\Entity\IssueType;
+use Bap\Bundle\IssueBundle\Entity\IssuePriority;
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
-class BapIssue implements Migration
+class BapIssue extends AbstractMigration
 {
     /**
      * @var Schema
@@ -146,46 +147,33 @@ class BapIssue implements Migration
         $this->setup($schema, $queries);
     }
 
-    protected function setup()
+    protected function getTableName()
     {
-        $this->dropTableIfExists($this->schema);
-        $this->createDictionaryTables($this->schema, $this->queries);
-
-        $this->addIssueForeignKeys(
-            $this->addIssueIndexes(
-                $this->addTableStructure(
-                    $this->schema->createTable(Issue::TABLE_NAME)
-                )
-            )
-        );
-
+        return Issue::TABLE_NAME;
     }
 
-    private function dropTableIfExists(Schema $schema)
+    protected function createRelationTables()
     {
-        if ($schema->hasTable(self::TABLE_NAME)) {
-            $schema->dropTable(self::TABLE_NAME);
-        }
+        $issueType       = new IssueType();
+        $issuePriority   = new IssuePriority();
+        $issueResolution = new IssueResolution();
+
+        $issueType->setup();
+        $issuePriority->setup();
+        $issueResolution->setup();
     }
 
-    private function createDictionaryTables()
-    {
-        (new IssueType())->up($this->schema, $this->queries);
-        (new IssuePriority())->up($this->schema, $this->queries);
-        (new IssueResolution())->up($this->schema, $this->queries);
-    }
-
-    private function addTableStructure(Table $table)
+    protected function addColumns(Table $table)
     {
         return $this->invokeTableMethod($table, 'addColumn', $this->issueTableColumns);
     }
 
-    private function addIssueIndexes(Table $table)
+    protected function addIndexKeys(Table $table)
     {
         return $this->invokeTableMethod($table, 'addIndex', $this->issueTableIndexes);
     }
 
-    private function addIssueForeignKeys(Table $table)
+    protected function addForeignKeys(Table $table)
     {
         $schema   = $this->schema;
         $callback = function(array $args) use ($schema) {

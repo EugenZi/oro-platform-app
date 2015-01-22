@@ -11,32 +11,17 @@ namespace Ezi\Bundle\IssueBundle\Migrations\Issue;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-
+use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 use Bap\Bundle\IssueBundle\Entity\IssueCollaborator;
 
-class BapIssueCollaborator implements Migration
+class BapIssueCollaborator extends AbstractMigration
 {
-    const TABLE_NAME = 'bap_issues_collaborator';
-
-    public function up(Schema $schema, QueryBag $queryBag)
+    protected function getTableName()
     {
-        if ($schema->hasTable(IssueCollaborator::TABLE_NAME)) {
-            $schema->dropTable(IssueCollaborator::TABLE_NAME);
-        }
-
-        $this->createForeighnKeys(
-            $schema,
-            $this->createIndexes(
-                $this->createColumns(
-                    $schema->createTable(IssueCollaborator::TABLE_NAME)
-                )
-            )
-        );
+        return IssueCollaborator::TABLE_NAME;
     }
 
-    private function createIndexes(Table $table)
+    protected function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addIndex(['issue_id'], 'BAP_ISSUE_COLLABORATOR_ISSUE_ID_INDEX');
@@ -45,7 +30,7 @@ class BapIssueCollaborator implements Migration
         return $table;
     }
 
-    private function createColumns(Table $table)
+    protected function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('issue_id', 'integer');
@@ -54,7 +39,7 @@ class BapIssueCollaborator implements Migration
         return $table;
     }
 
-    private function createForeighnKeys(Schema $schema, Table $table)
+    protected function addForeignKeys(Schema $schema, Table $table)
     {
         $table->addForeignKeyConstraint(
             $schema->getTable('bts_issue'),

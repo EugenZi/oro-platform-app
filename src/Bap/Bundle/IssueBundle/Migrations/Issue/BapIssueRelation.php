@@ -15,28 +15,11 @@ use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Entity\IssueRelation;
+use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
-class BapIssueRelation implements Migration
+class BapIssueRelation extends AbstractMigration
 {
-    const TABLE_NAME = 'bap_issue_relation';
-
-    public function up(Schema $schema, QueryBag $queryBag)
-    {
-        if ($schema->hasTable(IssueRelation::TABLE_NAME)) {
-            $schema->dropTable(IssueRelation::TABLE_NAME);
-        }
-
-        $this->createForeignKeys(
-            $schema,
-            $this->createIndexes(
-                $this->createColumns(
-                    $schema->createTable(IssueRelation::TABLE_NAME)
-                )
-            )
-        );
-    }
-
-    private function createColumns(Table $table)
+    protected function addColumns(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addIndex(['issue_id'], 'BAP_ISSUE_RELATION_ISSUE_ID_INDEX');
@@ -45,7 +28,7 @@ class BapIssueRelation implements Migration
         return $table;
     }
 
-    private function createIndexes(Table $table)
+    protected function addIndexKeys(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('issue_id', 'integer');
@@ -54,7 +37,7 @@ class BapIssueRelation implements Migration
         return $table;
     }
 
-    private function createForeignKeys(Schema $schema, Table $table)
+    protected function addForeignKeys(Schema $schema, Table $table)
     {
         $table->addForeignKeyConstraint(
             $schema->getTable('bts_issue'),

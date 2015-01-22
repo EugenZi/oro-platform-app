@@ -11,14 +11,21 @@ use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
+use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Migrations\Schema\v1_0\BapIssueBundle as BapIssueBundleMigration;
 
-class BapIssueBundleInstaller implements Installation, ActivityExtensionAwareInterface
+class BapIssueBundleInstaller implements Installation, NoteExtensionAwareInterface, ActivityExtensionAwareInterface
 {
     const ISSUE_MIGRATION_VERSION = 'v0_0';
+
+    /**
+     * @var NoteExtension
+     */
+    protected $noteExtension;
 
     /**
      * @var ActivityExtension
@@ -33,6 +40,16 @@ class BapIssueBundleInstaller implements Installation, ActivityExtensionAwareInt
     public function setActivityExtension(ActivityExtension $activityExtension)
     {
         $this->activityExtension = $activityExtension;
+    }
+
+    /**
+     * Sets the NoteExtension
+     *
+     * @param NoteExtension $noteExtension
+     */
+    public function setNoteExtension(NoteExtension $noteExtension)
+    {
+        $this->noteExtension = $noteExtension;
     }
 
     /**

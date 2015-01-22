@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Ezi\Bundle\IssueBundle\Migrations\Issue;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssue;
 
 class BapIssueBundle implements Migration
 {
@@ -25,8 +25,8 @@ class BapIssueBundle implements Migration
      */
     public function up(Schema $schema, QueryBag $queries)
     {
-        $issue = new Issue();
+        $issue = new BapIssue($schema);
 
-        $issue->up($schema, $queries);
+        $issue->setup();
     }
 }
