@@ -12,12 +12,42 @@ namespace Bap\Bundle\IssueBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Bap\Bundle\IssueBundle\Entity\BapIssueCollaborator
+ * Bap\Bundle\IssueBundle\Entity\IssueCollaborator
  *
+ * @ORM\Entity(repositoryClass="Entity\Repository\IssueCollaboratorRepository")
+ * @ORM\Table(
+ *      name="bap_issue_collaborators",
+ *      indexes={
+ *          @ORM\Index(name="index2", columns={"issue_id"}),
+ *          @ORM\Index(name="index3", columns={"user_id"})
+ *      }
+ * )
  * @ORM\Entity(repositoryClass="Entity\Repository\BapIssueCollaboratorRepository")
  */
-class IssueCollaborator extends BaseIssueCollaborator
+class IssueCollaborator
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $issue_id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $user_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Issue", inversedBy="issueCollaborators")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
+     */
+    protected $issue;
+
     /**
      * Issue table real name
      */

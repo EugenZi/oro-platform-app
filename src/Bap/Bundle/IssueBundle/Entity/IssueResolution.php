@@ -6,16 +6,37 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Bap\Bundle\IssueBundle\Entity\IssueResolution
+ * Bap\Bundle\IssueBundle\Entity\BapIssueResolution
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueResolutionRepository")
+ * @ORM\Table(
+ *      name="bap_issue_resolution",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="value_UNIQUE",
+ *              columns={"`value`"}
+ *          )
+ *      }
+ * )
  */
-class IssueResolution extends BaseIssueResolution
+class IssueResolution
 {
     /**
      * Issue resolution real name in database
      */
     const TABLE_NAME = 'bap_issue_resolution';
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(name="`value`", type="string", length=45)
+     */
+    protected $name;
 
     /**
      * Issue resolution entity constructor
@@ -38,12 +59,12 @@ class IssueResolution extends BaseIssueResolution
     /**
      * Set the value of value.
      *
-     * @param string $value
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
+     * @param string $name
+     * @return IssueResolution
      */
-    public function setValue($value)
+    public function setName($name)
     {
-        $this->value = $value;
+        $this->name = $name;
 
         return $this;
     }
@@ -53,9 +74,17 @@ class IssueResolution extends BaseIssueResolution
      *
      * @return string
      */
-    public function getValue()
+    public function getName()
     {
-        return $this->value;
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

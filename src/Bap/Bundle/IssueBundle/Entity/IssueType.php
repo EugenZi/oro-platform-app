@@ -9,23 +9,32 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Bap\Bundle\IssueBundle\Entity\IssueType
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueTypeRepository")
+ * @ORM\Table(
+ *      name="bap_issue_type",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="value_UNIQUE",
+ *              columns={"`value`"}
+ *          )
+ *      }
+ * )
  */
-class IssueType extends BaseIssueType
+class IssueType
 {
     /**
      * Issue type table real name
      */
-    const TABLE_NAME    = 'bap_issue_type';
+    const TABLE_NAME = 'bap_issue_type';
 
     /**
      * Issue type task
      */
-    const TASK_TYPE     = 'task';
+    const TASK_TYPE = 'task';
 
     /**
      * Issue type story
      */
-    const STORY_TYPE    = 'story';
+    const STORY_TYPE = 'story';
 
     /**
      * Issue type sub-task
@@ -35,10 +44,22 @@ class IssueType extends BaseIssueType
     /**
      * Issue type bug
      */
-    const BUG_TYPE      = 'bug';
+    const BUG_TYPE = 'bug';
 
     /**
-     * Base issue type constructor
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(name="`value`", type="string", length=45)
+     */
+    protected $name;
+
+    /**
+     * Issue type constructor
      */
     public function __construct()
     {
@@ -61,7 +82,7 @@ class IssueType extends BaseIssueType
      * @param string $name
      * @return \Bap\Bundle\IssueBundle\Entity\IssueType
      */
-    public function setValue($name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -79,39 +100,11 @@ class IssueType extends BaseIssueType
     }
 
     /**
-     * Add Issue entity to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueType
+     * @return string
      */
-    public function addIssue(Issue $issue)
+    public function __toString()
     {
-        $this->issues[] = $issue;
-
-        return $this;
-    }
-
-    /**
-     * Remove Issue entity from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueType
-     */
-    public function removeIssue(Issue $issue)
-    {
-        $this->issues->removeElement($issue);
-
-        return $this;
-    }
-
-    /**
-     * Get Issue entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssues()
-    {
-        return $this->issues;
+        return $this->name;
     }
 
     /**

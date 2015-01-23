@@ -11,6 +11,8 @@ namespace Bap\Bundle\IssueBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 
 /**
  * Bap\Bundle\IssueBundle\Entity\Issue
@@ -19,22 +21,20 @@ use Oro\Bundle\UserBundle\Entity\User;
  * @ORM\Table(
  *      name="bap_issue",
  *      indexes={
- *          @ORM\Index(name="index2", columns={"summary"}),
- *          @ORM\Index(name="index3", columns={"code"}),
- *          @ORM\Index(name="index4", columns={"description"}),
- *          @ORM\Index(name="index5", columns={"`type`"}),
- *          @ORM\Index(name="index6", columns={"priority"}),
- *          @ORM\Index(name="index7", columns={"`status`"}),
- *          @ORM\Index(name="index8", columns={"tags_id"}),
- *          @ORM\Index(name="index9", columns={"reporter_id"}),
- *          @ORM\Index(name="index10", columns={"parent_id"}),
- *          @ORM\Index(name="index12", columns={"resolution"}),
- *          @ORM\Index(name="index13", columns={"assignee_id"})
+ *          @ORM\Index(name="BAP_ISSUE_SUMMARY_IDX", columns={"summary"}),
+ *          @ORM\Index(name="BAP_ISSUE_CODE_IDX", columns={"code"}),
+ *          @ORM\Index(name="BAP_ISSUE_DESCRIPTION_IDX", columns={"description"}),
+ *          @ORM\Index(name="BAP_ISSUE_STATUS_IDX", columns={"`type`"}),
+ *          @ORM\Index(name="BAP_ISSUE_ASSIGNEE_ID_IDX", columns={"priority"}),
+ *          @ORM\Index(name="BAP_ISSUE_RELATED_ISSUES_ID_IDX", columns={"`status`"}),
+ *          @ORM\Index(name="BAP_ISSUE_RELATED_ISSUES_ID_IDX", columns={"tags_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_COLLABORATORS_ID_IDX", columns={"reporter_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_ISSUE_PARENT_ID_IDX", columns={"parent_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_CHILDREN_ID_IDX", columns={"resolution_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_IDX", columns={"assignee_id"})
+ *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_IDX", columns={"notes"})
  *      }
  * )
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"base"="BaseIssue", "extended"="Issue"})
  * @ORM\HasLifecycleCallbacks()
  * @Config(
  *      routeName="bts_issue_index",
@@ -64,6 +64,9 @@ use Oro\Bundle\UserBundle\Entity\User;
  * )
  *
  * @package Bap\IssueBundle\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"base"="BaseIssue", "extended"="Issue"})
  */
 abstract class BaseIssue
 {
@@ -165,7 +168,7 @@ abstract class BaseIssue
 
     /**
      * @var IssuePriority
-     * @ORM\ManyToOne(targetEntity="Priority")
+     * @ORM\ManyToOne(targetEntity="IssuePriority")
      * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=false)
      * @ConfigField(
      *      defaultValues={
@@ -182,7 +185,7 @@ abstract class BaseIssue
 
     /**
      * @var IssueResolution
-     * @ORM\ManyToOne(targetEntity="Resolution")
+     * @ORM\ManyToOne(targetEntity="IssueResolution")
      * @ORM\JoinColumn(name="resolution_id", referencedColumnName="id")
      * @ConfigField(
      *      defaultValues={
@@ -221,13 +224,13 @@ abstract class BaseIssue
 
     /**
      * @ORM\ManyToOne(targetEntity="IssuePriority", inversedBy="issues")
-     * @ORM\JoinColumn(name="priority", referencedColumnName="`value`")
+     * @ORM\JoinColumn(name="priority_id", referencedColumnName="`id`")
      */
     protected $issuePriority;
 
     /**
      * @ORM\ManyToOne(targetEntity="IssueResolution", inversedBy="issues")
-     * @ORM\JoinColumn(name="resolution", referencedColumnName="`value`")
+     * @ORM\JoinColumn(name="issue_resolution_id", referencedColumnName="`id`")
      */
     protected $issueResolution;
 }

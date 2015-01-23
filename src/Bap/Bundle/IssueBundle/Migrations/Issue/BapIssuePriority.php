@@ -20,12 +20,12 @@ use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 class BapIssuePriority extends AbstractMigration
 {
 
-    protected function getTableName()
+    public function getTableName()
     {
         return IssuePriority::TABLE_NAME;
     }
 
-    protected function addColumns(Table $table)
+    public function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
@@ -34,7 +34,7 @@ class BapIssuePriority extends AbstractMigration
         return $table;
     }
 
-    protected function addIndexKeys(Table $table)
+    public function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['priority'], 'BAP_ISSUE_PRIORITY_FIELD_UNIQUE_IDX');

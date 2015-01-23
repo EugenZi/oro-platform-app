@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueTypeRepository")
  */
-class IssueStatus extends BaseIssueType
+class IssueStatus
 {
     /**
      * Issue table real name
@@ -41,6 +41,18 @@ class IssueStatus extends BaseIssueType
      * Issue status when developer not done the issue
      */
     const REOPENED = 'reopened';
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(name="`value`", type="string", length=32)
+     */
+    protected $name;
 
     /**
      * Base issue type constructor
@@ -78,6 +90,14 @@ class IssueStatus extends BaseIssueType
      * @return string
      */
     public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->name;
     }

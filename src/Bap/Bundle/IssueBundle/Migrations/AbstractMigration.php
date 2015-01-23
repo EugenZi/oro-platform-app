@@ -8,11 +8,10 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations;
 
-
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
-abstract class AbstractMigration
+abstract class AbstractMigration implements MigrationInterface
 {
     /**
      * @var Schema
@@ -39,24 +38,7 @@ abstract class AbstractMigration
      * @param Table $table
      * @return Table
      */
-    abstract protected function addColumns(Table $table);
-
-    /**
-     * @param Table $table
-     * @return Table
-     */
-    abstract protected function addIndexKeys(Table $table);
-
-    /**
-     * @return string
-     */
-    abstract protected function getTableName();
-
-    /**
-     * @param Table $table
-     * @return Table
-     */
-    protected function addForeignKeys(Table $table)
+    public function addForeignKeys(Table $table)
     {
         return $table;
     }
@@ -64,11 +46,14 @@ abstract class AbstractMigration
     /**
      * @return null
      */
-    protected  function createRelationTables()
+    public function createRelationTables()
     {
         return null;
     }
 
+    /**
+     * @return Table
+     */
     public final function setup()
     {
         if ($this->schema->hasTable($this->getTableName())) {
@@ -82,5 +67,43 @@ abstract class AbstractMigration
                 $this->addColumns($this->table)
             )
         );
+    }
+
+    /**
+     * @param Schema $schema
+     * @return AbstractMigration
+     */
+    public function setSchema(Schema $schema)
+    {
+        $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * @return Schema
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    /**
+     * @return Table
+     */
+    public function getTargetTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * @param Table $table
+     * @return AbstractMigration
+     */
+    public function setTargetTable(Table $table)
+    {
+        $this->table = $table;
+
+        return $this;
     }
 }

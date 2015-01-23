@@ -8,11 +8,7 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
-
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
@@ -24,12 +20,19 @@ use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 class BapIssueStatus extends AbstractMigration
 {
 
-    protected function getTableName()
+    /**
+     * @return string
+     */
+    public function getTableName()
     {
         return IssuePriority::TABLE_NAME;
     }
 
-    protected function addColumns(Table $table)
+    /**
+     * @param Table $table
+     * @return Table
+     */
+    public function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
@@ -37,7 +40,11 @@ class BapIssueStatus extends AbstractMigration
         return $table;
     }
 
-    protected function addIndexKeys(Table $table)
+    /**
+     * @param Table $table
+     * @return Table
+     */
+    public function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_STATUS_NAME_FIELD_IDX');

@@ -164,7 +164,7 @@ class BapIssue extends AbstractMigration
     /**
      * @return string
      */
-    protected function getTableName()
+    public function getTableName()
     {
         return Issue::TABLE_NAME;
     }
@@ -172,7 +172,7 @@ class BapIssue extends AbstractMigration
     /**
      * Method that create tables related to issue
      */
-    protected function createRelationTables()
+    public function createRelationTables()
     {
         $issueType       = new IssueType();
         $issuePriority   = new IssuePriority();
@@ -187,7 +187,7 @@ class BapIssue extends AbstractMigration
      * @param Table $table
      * @return Table
      */
-    protected function addColumns(Table $table)
+    public function addColumns(Table $table)
     {
         return $this->invokeTableMethod($table, 'addColumn', $this->issueTableColumns);
     }
@@ -196,7 +196,7 @@ class BapIssue extends AbstractMigration
      * @param Table $table
      * @return Table
      */
-    protected function addIndexKeys(Table $table)
+    public function addIndexKeys(Table $table)
     {
         return $this->invokeTableMethod($table, 'addIndex', $this->issueTableIndexes);
     }
@@ -205,7 +205,7 @@ class BapIssue extends AbstractMigration
      * @param Table $table
      * @return Table
      */
-    protected function addForeignKeys(Table $table)
+    public function addForeignKeys(Table $table)
     {
         $schema   = $this->schema;
 

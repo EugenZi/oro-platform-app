@@ -3,14 +3,22 @@
 namespace Bap\Bundle\IssueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Bap\Bundle\IssueBundle\Entity\IssuePriority
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssuePriorityRepository")
+ * @ORM\Table(
+ *      name="bap_issue_priority",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="value_UNIQUE",
+ *              columns={"`value`"}
+ *          )
+ *      }
+ * )
  */
-class IssuePriority extends BaseIssuePriority
+class IssuePriority
 {
     /**
      * Issue table real name
@@ -18,10 +26,20 @@ class IssuePriority extends BaseIssuePriority
     const TABLE_NAME = 'bap_issue_priority';
 
     /**
-    public function __construct()
-    {
-        $this->issues = new ArrayCollection();
-    }
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $value;
 
     /**
      * Get the value of id.
@@ -34,10 +52,26 @@ class IssuePriority extends BaseIssuePriority
     }
 
     /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Set the value of value.
      *
      * @param string $value
-     * @return \Bap\Bundle\IssueBundle\Entity\IssuePriority
+     * @return IssuePriority
      */
     public function setValue($value)
     {
@@ -54,6 +88,14 @@ class IssuePriority extends BaseIssuePriority
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

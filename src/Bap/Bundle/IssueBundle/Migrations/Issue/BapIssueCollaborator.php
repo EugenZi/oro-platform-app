@@ -16,12 +16,12 @@ use Bap\Bundle\IssueBundle\Entity\IssueCollaborator;
 
 class BapIssueCollaborator extends AbstractMigration
 {
-    protected function getTableName()
+    public function getTableName()
     {
         return IssueCollaborator::TABLE_NAME;
     }
 
-    protected function addIndexKeys(Table $table)
+    public function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addIndex(['issue_id'], 'BAP_ISSUE_COLLABORATOR_ISSUE_ID_INDEX');
@@ -30,7 +30,7 @@ class BapIssueCollaborator extends AbstractMigration
         return $table;
     }
 
-    protected function addColumns(Table $table)
+    public function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('issue_id', 'integer');
@@ -39,17 +39,17 @@ class BapIssueCollaborator extends AbstractMigration
         return $table;
     }
 
-    protected function addForeignKeys(Schema $schema, Table $table)
+    public function addForeignKeys(Table $table)
     {
         $table->addForeignKeyConstraint(
-            $schema->getTable('bts_issue'),
+            $this->getSchema()->getTable('bts_issue'),
             ['issue_id'],
             ['id'],
             ['onDelete' => 'CASCADE']
         );
 
         $table->addForeignKeyConstraint(
-            $schema->getTable('oro_user'),
+            $this->getSchema()->getTable('oro_user'),
             ['user_id'],
             ['id'],
             ['onDelete' => 'CASCADE']
