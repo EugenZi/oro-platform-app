@@ -18,6 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class IssueCollaborator extends BaseIssueCollaborator
 {
+    /**
+     * Issue table real name
+     */
     const TABLE_NAME = 'bap_issue_collaborator';
 
     /**

@@ -15,7 +15,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Bap\Bundle\IssueBundle\Entity\IssueCollaborator
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueCollaboratorRepository")
- * @ORM\Table(name="bap_issue_collaborators", indexes={@ORM\Index(name="index2", columns={"issue_id"}), @ORM\Index(name="index3", columns={"user_id"})})
+ * @ORM\Table(
+ *      name="bap_issue_collaborators",
+ *      indexes={
+ *          @ORM\Index(name="index2", columns={"issue_id"}),
+ *          @ORM\Index(name="index3", columns={"user_id"})
+ *      }
+ * )
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"base"="BaseIssueCollaborator", "extended"="IssueCollaborator"})

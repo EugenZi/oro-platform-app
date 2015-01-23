@@ -12,13 +12,34 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class IssueType extends BaseIssueType
 {
-    const TABLE_NAME = 'bap_issue_type';
+    /**
+     * Issue type table real name
+     */
+    const TABLE_NAME    = 'bap_issue_type';
 
+    /**
+     * Issue type task
+     */
     const TASK_TYPE     = 'task';
+
+    /**
+     * Issue type story
+     */
     const STORY_TYPE    = 'story';
+
+    /**
+     * Issue type sub-task
+     */
     const SUB_TASK_TYPE = 'sub_task';
+
+    /**
+     * Issue type bug
+     */
     const BUG_TYPE      = 'bug';
 
+    /**
+     * Base issue type constructor
+     */
     public function __construct()
     {
         $this->issues = new ArrayCollection();
@@ -37,12 +58,12 @@ class IssueType extends BaseIssueType
     /**
      * Set the value of value.
      *
-     * @param string $value
+     * @param string $name
      * @return \Bap\Bundle\IssueBundle\Entity\IssueType
      */
-    public function setValue($value)
+    public function setValue($name)
     {
-        $this->value = $value;
+        $this->name = $name;
 
         return $this;
     }
@@ -52,9 +73,9 @@ class IssueType extends BaseIssueType
      *
      * @return string
      */
-    public function getValue()
+    public function getName()
     {
-        return $this->value;
+        return $this->name;
     }
 
     /**
@@ -93,8 +114,13 @@ class IssueType extends BaseIssueType
         return $this->issues;
     }
 
+    /**
+     * Return fields used to serialization
+     *
+     * @return array
+     */
     public function __sleep()
     {
-        return array('id', 'value');
+        return ['id', 'value'];
     }
 }

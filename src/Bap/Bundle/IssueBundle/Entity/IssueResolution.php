@@ -12,8 +12,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class IssueResolution extends BaseIssueResolution
 {
+    /**
+     * Issue resolution real name in database
+     */
     const TABLE_NAME = 'bap_issue_resolution';
 
+    /**
+     * Issue resolution entity constructor
+     */
     public function __construct()
     {
         $this->bapIssues = new ArrayCollection();
@@ -53,43 +59,10 @@ class IssueResolution extends BaseIssueResolution
     }
 
     /**
-     * Add BapIssue entity to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
+     * @return array
      */
-    public function addBapIssue(Issue $issue)
-    {
-        $this->issues[] = $issue;
-
-        return $this;
-    }
-
-    /**
-     * Remove Issue entity from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
-     */
-    public function removeIssue(Issue $issue)
-    {
-        $this->issues->removeElement($issue);
-
-        return $this;
-    }
-
-    /**
-     * Get BapIssue entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBapIssues()
-    {
-        return $this->issues;
-    }
-
     public function __sleep()
     {
-        return array('id', 'value');
+        return ['id', 'value'];
     }
 }

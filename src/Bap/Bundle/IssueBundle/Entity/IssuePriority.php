@@ -12,8 +12,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class IssuePriority extends BaseIssuePriority
 {
+    /**
+     * Issue table real name
+     */
     const TABLE_NAME = 'bap_issue_priority';
 
+    /**
     public function __construct()
     {
         $this->issues = new ArrayCollection();
@@ -53,43 +57,12 @@ class IssuePriority extends BaseIssuePriority
     }
 
     /**
-     * Add Issue entity to collection (one to many).
+     * Get the value of value.
      *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssuePriority
+     * @return string
      */
-    public function addIssue(Issue $issue)
-    {
-        $this->issues[] = $issue;
-
-        return $this;
-    }
-
-    /**
-     * Remove Issue entity from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssuePriority
-     */
-    public function removeIssue(Issue $issue)
-    {
-        $this->issues->removeElement($issue);
-
-        return $this;
-    }
-
-    /**
-     * Get Issue entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssues()
-    {
-        return $this->issues;
-    }
-
     public function __sleep()
     {
-        return array('id', 'value');
+        return ['id', 'value'];
     }
 }

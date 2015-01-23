@@ -18,6 +18,9 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 {
     use ExtendActivity;
 
+    /**
+     * Issue table real name
+     */
     const TABLE_NAME = 'bap_issue';
 
     public function __construct()

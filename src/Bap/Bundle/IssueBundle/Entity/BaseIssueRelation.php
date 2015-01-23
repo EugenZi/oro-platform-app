@@ -8,7 +8,19 @@ use Doctrine\ORM\Mapping as ORM;
  * Bap\Bundle\IssueBundle\Entity\IssueRelation
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueRelationRepository")
- * @ORM\Table(name="bap_issue_relations", indexes={@ORM\Index(name="index2", columns={"issue_id"}), @ORM\Index(name="index3", columns={"related_issue_id"})})
+ * @ORM\Table(
+ *      name="bap_issue_relations",
+ *      indexes={
+ *          @ORM\Index(
+ *              name="index2",
+ *              columns={"issue_id"}
+ *          ),
+ *          @ORM\Index(
+ *              name="index3",
+ *              columns={"related_issue_id"}
+ *          )
+ *      }
+ * )
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"base"="BaseIssueRelation", "extended"="IssueRelation"})

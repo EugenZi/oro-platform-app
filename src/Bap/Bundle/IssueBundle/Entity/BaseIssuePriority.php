@@ -8,13 +8,23 @@ use Doctrine\ORM\Mapping as ORM;
  * Bap\Bundle\IssueBundle\Entity\IssuePriority
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssuePriorityRepository")
- * @ORM\Table(name="bap_issue_priority", uniqueConstraints={@ORM\UniqueConstraint(name="value_UNIQUE", columns={"`value`"})})
+ * @ORM\Table(
+ *      name="bap_issue_priority",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="value_UNIQUE",
+ *              columns={"`value`"}
+ *          )
+ *      }
+ * )
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"base"="BaseIssuePriority", "extended"="IssuePriority"})
  */
+
 abstract class BaseIssuePriority
 {
+    cocnst
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

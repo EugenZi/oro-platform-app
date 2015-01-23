@@ -19,6 +19,10 @@ use Bap\Bundle\IssueBundle\Entity\IssueType;
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
+/**
+ * Class BapIssue
+ * @package Bap\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssue extends AbstractMigration
 {
     /**
@@ -59,21 +63,31 @@ class BapIssue extends AbstractMigration
         ['updated_at',        'datetime'  ],
     ];
 
+    /**
+     * Array of indexes that adding to table fields
+     *
+     * @var array
+     */
     private $issueTableIndexes = [
-        [['summary'],           "EZI_ISSUE_SUMMARY_IDX",           []],
-        [['code'],              "EZI_ISSUE_CODE_IDX",              []],
-        [['description'],       "EZI_ISSUE_DESCRIPTION_IDX",       []],
-        [['reporter_id'],       "EZI_ISSUE_STATUS_IDX",            []],
-        [['assignee_id'],       "EZI_ISSUE_ASSIGNEE_ID_IDX",       []],
-        [['assignee_id'],       "EZI_ISSUE_RELATED_ISSUES_ID_IDX", []],
-        [['related_issues_id'], "EZI_ISSUE_RELATED_ISSUES_ID_IDX", []],
-        [['collaborators'],     "EZI_ISSUE_COLLABORATORS_ID_IDX",  []],
-        [['parent_id'],         "EZI_ISSUE_ISSUE_PARENT_ID_IDX",   []],
-        [['child_id'],          "EZI_ISSUE_CHILDREN_ID_IDX",       []],
-        [['workflow_step_id'],  "EZI_ISSUE_WORKFLOW_STEP_ID_IDX",  []],
-        [['notes'],             "EZI_ISSUE_NOTES_IDX",             []]
+        [['summary'],           "BAP_ISSUE_SUMMARY_IDX",           []],
+        [['code'],              "BAP_ISSUE_CODE_IDX",              []],
+        [['description'],       "BAP_ISSUE_DESCRIPTION_IDX",       []],
+        [['reporter_id'],       "BAP_ISSUE_STATUS_IDX",            []],
+        [['assignee_id'],       "BAP_ISSUE_ASSIGNEE_ID_IDX",       []],
+        [['assignee_id'],       "BAP_ISSUE_RELATED_ISSUES_ID_IDX", []],
+        [['related_issues_id'], "BAP_ISSUE_RELATED_ISSUES_ID_IDX", []],
+        [['collaborators'],     "BAP_ISSUE_COLLABORATORS_ID_IDX",  []],
+        [['parent_id'],         "BAP_ISSUE_ISSUE_PARENT_ID_IDX",   []],
+        [['child_id'],          "BAP_ISSUE_CHILDREN_ID_IDX",       []],
+        [['workflow_step_id'],  "BAP_ISSUE_WORKFLOW_STEP_ID_IDX",  []],
+        [['notes'],             "BAP_ISSUE_NOTES_IDX",             []]
     ];
 
+    /**
+     * Array of issue table foreign keys
+     *
+     * @var array
+     */
     private $issueForeignKeys = [
         [
             IssueType::TABLE_NAME,
@@ -147,11 +161,17 @@ class BapIssue extends AbstractMigration
         $this->setup($schema, $queries);
     }
 
+    /**
+     * @return string
+     */
     protected function getTableName()
     {
         return Issue::TABLE_NAME;
     }
 
+    /**
+     * Method that create tables related to issue
+     */
     protected function createRelationTables()
     {
         $issueType       = new IssueType();
@@ -163,20 +183,34 @@ class BapIssue extends AbstractMigration
         $issueResolution->setup();
     }
 
+    /**
+     * @param Table $table
+     * @return Table
+     */
     protected function addColumns(Table $table)
     {
         return $this->invokeTableMethod($table, 'addColumn', $this->issueTableColumns);
     }
 
+    /**
+     * @param Table $table
+     * @return Table
+     */
     protected function addIndexKeys(Table $table)
     {
         return $this->invokeTableMethod($table, 'addIndex', $this->issueTableIndexes);
     }
 
+    /**
+     * @param Table $table
+     * @return Table
+     */
     protected function addForeignKeys(Table $table)
     {
         $schema   = $this->schema;
-        $callback = function(array $args) use ($schema) {
+
+        $callback = function (array $args) use ($schema) {
+
             $args[0] = $schema->getTable($args[0]);
 
             return $args;
@@ -185,11 +219,18 @@ class BapIssue extends AbstractMigration
         return $this->invokeTableMethod($table, 'addForeignKeyConstraint', $this->issueForeignKeys, $callback);
     }
 
+    /**
+     * @param Table $table
+     * @param $method
+     * @param array $argsArray
+     * @param callable $redefineArgs
+     * @return Table
+     */
     private function invokeTableMethod(Table $table, $method, array $argsArray, \Closure $redefineArgs = null)
     {
         $method = new \ReflectionMethod($table, $method);
 
-        foreach($argsArray as $args) {
+        foreach ($argsArray as $args) {
 
             if (!is_null($redefineArgs)) {
                 $args = $redefineArgs($args);

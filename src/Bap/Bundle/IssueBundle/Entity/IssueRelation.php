@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class IssueRelation extends BaseIssueRelation
 {
+    /**
+     * Issue relations table real name
+     */
     const TABLE_NAME = 'bap_issue_relation';
 
     /**
@@ -117,6 +120,6 @@ class IssueRelation extends BaseIssueRelation
 
     public function __sleep()
     {
-        return array('id', 'issue_id', 'related_issue_id');
+        return ['id', 'issue_id', 'related_issue_id'];
     }
 }
