@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezi\Bundle\IssueBundle\Tests\Controller;
+namespace Bap\Bundle\IssueBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

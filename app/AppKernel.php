@@ -9,7 +9,7 @@ class AppKernel extends OroKernel
     public function registerBundles()
     {
         $bundles = array(
-            // new Ezi\Bundle\IssueBundle\EziIssueBundle(),
+            // new Bap\Bundle\IssueBundle\BapIssueBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev'))) {

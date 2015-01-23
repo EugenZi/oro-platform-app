@@ -1,6 +1,6 @@
 <?php
 
-namespace Ezi\Bundle\IssueBundle\Controller;
+namespace Bap\Bundle\IssueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
