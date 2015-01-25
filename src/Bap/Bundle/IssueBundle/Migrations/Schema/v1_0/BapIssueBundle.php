@@ -12,6 +12,11 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssue;
 
+/**
+ * Class BapIssueBundle
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations\Schema\v1_0
+ */
 class BapIssueBundle implements Migration
 {
 

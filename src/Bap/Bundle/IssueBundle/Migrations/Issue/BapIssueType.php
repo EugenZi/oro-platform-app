@@ -19,6 +19,9 @@ use Bap\Bundle\IssueBundle\Entity\IssueType;
  */
 class BapIssueType extends AbstractMigration
 {
+    /**
+     * @return string
+     */
     public function getTableName()
     {
         return IssueType::TABLE_NAME;
@@ -28,7 +31,7 @@ class BapIssueType extends AbstractMigration
      * @param Table $table
      * @return Table
      */
-    function addColumns(Table $table)
+    public function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
@@ -40,7 +43,7 @@ class BapIssueType extends AbstractMigration
      * @param Table $table
      * @return Table
      */
-    function addIndexKeys(Table $table)
+    public function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_TYPE_NAME_UNIQUE_INDEX');

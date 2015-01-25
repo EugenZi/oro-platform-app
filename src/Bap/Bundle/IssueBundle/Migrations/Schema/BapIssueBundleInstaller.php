@@ -18,8 +18,16 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Migrations\Schema\v1_0\BapIssueBundle as BapIssueBundleMigration;
 
+/**
+ * Class BapIssueBundleInstaller
+ * 
+ * @package Bap\Bundle\IssueBundle\Migrations\Schema
+ */
 class BapIssueBundleInstaller implements Installation, NoteExtensionAwareInterface, ActivityExtensionAwareInterface
 {
+    /**
+     * Previous migrations version
+     */
     const ISSUE_MIGRATION_VERSION = 'v0_0';
 
     /**

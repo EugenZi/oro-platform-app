@@ -14,6 +14,11 @@ use Doctrine\DBAL\Schema\Table;
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
+/**
+ * Class BapIssueResolution
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssueResolution extends AbstractMigration
 {
     /**

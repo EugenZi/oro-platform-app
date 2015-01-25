@@ -11,6 +11,11 @@ namespace Bap\Bundle\IssueBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
+/**
+ * Class AbstractMigration
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations
+ */
 abstract class AbstractMigration implements MigrationInterface
 {
     /**
@@ -54,7 +59,7 @@ abstract class AbstractMigration implements MigrationInterface
     /**
      * @return Table
      */
-    public final function setup()
+    final public function setup()
     {
         if ($this->schema->hasTable($this->getTableName())) {
             $this->schema->dropTable($this->getTableName());

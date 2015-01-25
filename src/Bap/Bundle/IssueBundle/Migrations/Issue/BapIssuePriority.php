@@ -11,20 +11,29 @@ namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
+/**
+ * Class BapIssuePriority
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssuePriority extends AbstractMigration
 {
 
+    /**
+     * @return string
+     */
     public function getTableName()
     {
         return IssuePriority::TABLE_NAME;
     }
 
+    /**
+     * @param Table $table
+     * @return Table
+     */
     public function addColumns(Table $table)
     {
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
@@ -34,6 +43,10 @@ class BapIssuePriority extends AbstractMigration
         return $table;
     }
 
+    /**
+     * @param Table $table
+     * @return Table
+     */
     public function addIndexKeys(Table $table)
     {
         $table->setPrimaryKey(['id']);

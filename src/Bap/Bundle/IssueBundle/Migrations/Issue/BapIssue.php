@@ -7,17 +7,16 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
+use Bts\Bundle\IssueBundle\Migrations\Issue\BapIssueRelation;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
-
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 use Bap\Bundle\IssueBundle\Entity\Issue;
 use Bap\Bundle\IssueBundle\Entity\IssueType;
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
+use Ezi\Bundle\IssueBundle\Migrations\Issue\BapIssueCollaborator;
 
 /**
  * Class BapIssue
@@ -25,16 +24,6 @@ use Bap\Bundle\IssueBundle\Entity\IssueResolution;
  */
 class BapIssue extends AbstractMigration
 {
-    /**
-     * @var Schema
-     */
-    private $schema;
-
-    /**
-     * @var QueryBag
-     */
-    private $queries;
-
     /**
      * Column array that provides in schema builder
      *
@@ -59,7 +48,7 @@ class BapIssue extends AbstractMigration
         ['related',           'string',   ['length' => 32]],
         ['collaborators',     'string',   ['length' => 32]],
         ['notes',             'string',   ['length' => 32]],
-        ['created_at',        'datetime'                                        ],
+        ['created_at',        'datetime'  ],
         ['updated_at',        'datetime'  ],
     ];
 
@@ -146,22 +135,6 @@ class BapIssue extends AbstractMigration
     ];
 
     /**
-     * Modifies the given schema to apply necessary changes of a database
-     * The given query bag can be used to apply additional SQL queries before and after schema changes
-     *
-     * @param Schema $schema
-     * @param QueryBag $queries
-     * @return void
-     */
-    public function up(Schema $schema, QueryBag $queries)
-    {
-        $this->schema  = $schema;
-        $this->queries = $queries;
-
-        $this->setup($schema, $queries);
-    }
-
-    /**
      * @return string
      */
     public function getTableName()
@@ -174,10 +147,18 @@ class BapIssue extends AbstractMigration
      */
     public function createRelationTables()
     {
-        $issueType       = new IssueType();
-        $issuePriority   = new IssuePriority();
-        $issueResolution = new IssueResolution();
+        $schema          = $this->getSchema();
 
+        $issueCollaborator = new BapIssueCollaborator($schema);
+        $issueRelation     = new BapIssueRelation($schema);
+        $issueType         = new BapIssueType($schema);
+        $issueStatus       = new BapIssueStatus($schema);
+        $issuePriority     = new BapIssuePriority($schema);
+        $issueResolution   = new BapIssueResolution($schema);
+
+        $issueCollaborator->setup();
+        $issueRelation->setup();
+        $issueStatus->setup();
         $issueType->setup();
         $issuePriority->setup();
         $issueResolution->setup();
@@ -189,7 +170,11 @@ class BapIssue extends AbstractMigration
      */
     public function addColumns(Table $table)
     {
-        return $this->invokeTableMethod($table, 'addColumn', $this->issueTableColumns);
+        return $this->invokeTableMethod(
+            $table,
+            'addColumn',
+            $this->issueTableColumns
+        );
     }
 
     /**
@@ -198,7 +183,11 @@ class BapIssue extends AbstractMigration
      */
     public function addIndexKeys(Table $table)
     {
-        return $this->invokeTableMethod($table, 'addIndex', $this->issueTableIndexes);
+        return $this->invokeTableMethod(
+            $table,
+            'addIndex',
+            $this->issueTableIndexes
+        );
     }
 
     /**
@@ -216,7 +205,12 @@ class BapIssue extends AbstractMigration
             return $args;
         };
 
-        return $this->invokeTableMethod($table, 'addForeignKeyConstraint', $this->issueForeignKeys, $callback);
+        return $this->invokeTableMethod(
+            $table,
+            'addForeignKeyConstraint',
+            $this->issueForeignKeys,
+            $callback
+        );
     }
 
     /**

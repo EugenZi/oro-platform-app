@@ -19,7 +19,7 @@ class BapIssueRelation extends AbstractMigration
     /**
      * @return string
      */
-    function getTableName()
+    public function getTableName()
     {
         return IssueRelation::TABLE_NAME;
     }

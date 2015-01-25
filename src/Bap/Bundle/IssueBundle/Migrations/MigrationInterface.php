@@ -10,60 +10,65 @@ namespace Bap\Bundle\IssueBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
+/**
+ * Interface MigrationInterface
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations
+ */
 interface MigrationInterface
 {
     /**
      * @return Schema
      */
-    function getSchema();
+    public function getSchema();
 
     /**
      * @param Schema $schema
      * @return MigrationInterface
      */
-    function setSchema(Schema $schema);
+    public function setSchema(Schema $schema);
 
     /**
      * @return Table
      */
-    function getTargetTable();
+    public function getTargetTable();
 
     /**
      * @param Table $table
      * @return MigrationInterface
      */
-    function setTargetTable(Table $table);
+    public function setTargetTable(Table $table);
 
     /**
      * @return string
      */
-    function getTableName();
+    public function getTableName();
 
     /**
      * @param Table $table
      * @return Table
      */
-    function addColumns(Table $table);
+    public function addColumns(Table $table);
 
     /**
      * @return null
      */
-    function createRelationTables();
+    public function createRelationTables();
 
     /**
      * @param Table $table
      * @return Table
      */
-    function addIndexKeys(Table $table);
+    public function addIndexKeys(Table $table);
 
     /**
      * @param Table $table
      * @return Table
      */
-    function addForeignKeys(Table $table);
+    public function addForeignKeys(Table $table);
 
     /**
      * @return mixed
      */
-    function setup();
+    public function setup();
 }

@@ -8,12 +8,16 @@
 
 namespace Ezi\Bundle\IssueBundle\Migrations\Issue;
 
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
 use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 use Bap\Bundle\IssueBundle\Entity\IssueCollaborator;
 
+/**
+ * Class BapIssueCollaborator
+ *
+ * @package Ezi\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssueCollaborator extends AbstractMigration
 {
     public function getTableName()

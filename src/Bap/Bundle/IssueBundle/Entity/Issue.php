@@ -23,6 +23,9 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      */
     const TABLE_NAME = 'bap_issue';
 
+    /**
+     * Issue constructor
+     */
     public function __construct()
     {
         $this->issueCollaborators = new ArrayCollection();
