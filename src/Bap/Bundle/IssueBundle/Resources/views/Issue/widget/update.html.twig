@@ -19,7 +19,6 @@
                         id="{{ form.vars.name }}"
                         method="post" {{ form_enctype(form) }}
                         action="{{ path('bts_issue_create_widget', {'id': entity.assignee.id}) }}">
-                    {#{% include 'AcademicBtsBundle:Issue:form.html.twig' with {form: form} %}#}
 
                     <fieldset class="form form-horizontal">
                         <div class="span6">

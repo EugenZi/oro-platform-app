@@ -1,6 +1,6 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
-{% import 'AcademicBtsBundle::macros.html.twig' as bts %}
+{% import 'BapIssueBundle::macros.html.twig' as bts %}
 
 {% set title = bts.format_issue_title(entity)|default('N/A') %}
 {% oro_title_set({params : {"%entity.title%": title} }) %}
@@ -9,20 +9,20 @@
     {{ parent() }}
     {% if resource_granted('EDIT', entity) %}
         {{ UI.editButton({
-            'path' : path('bts_issue_update', { id: entity.id }),
+            'path' : path('bap_update_issue', { id: entity.id }),
             'entity_label': 'academic.bts.issue.entity_label'|trans
         }) }}
         {% if entity.type == constant('TYPE_STORY', entity) %}
             {{ UI.button({
-                'path' : path('bts_issue_add_subtask', {id: entity.id}),
+                'path' : path('bts_add_subtask', {id: entity.id}),
                 'label' : 'academic.bts.controller.issue.add_sub_task'|trans
             }) }}
         {% endif %}
     {% endif %}
     {% if resource_granted('DELETE', entity) %}
         {{ UI.deleteButton({
-            'dataUrl': path('bts_api_delete_issue', {'id': entity.id}),
-            'dataRedirect': path('bts_issue_index'),
+            'dataUrl': path('bap_delete_issue', {'id': entity.id}),
+            'dataRedirect': path('bap_issues'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-issue',
             'dataId': entity.id,
@@ -34,7 +34,7 @@
 {% block pageHeader %}
     {% set breadcrumbs = {
         'entity':      entity,
-        'indexPath':   path('bts_issue_index'),
+        'indexPath':   path('bap_issues'),
         'indexLabel':  'academic.bts.issue.entity_plural_label'|trans,
         'entityTitle': entity.summary
     } %}
@@ -50,7 +50,7 @@
     {% set issueInformationWidget %}
         {{ oro_widget_render({
             'widgetType': 'block',
-            'url': path('bts_issue_info', {id: entity.id})
+            'url': path('bap_issue_info', {id: entity.id})
         }) }}
     {% endset %}
     {% set dataBlocks = [
@@ -65,10 +65,10 @@
 
     {% if (entity.type == constant('TYPE_STORY', entity)) %}
         {% set issueSubtasksBlock %}
-            {% include 'AcademicBtsBundle:Issue:subtasks.html.twig' with {'entity': entity} %}
+            {% include 'BapIssueBundle:Issue:subtasks.html.twig' with {'entity': entity} %}
         {% endset %}
         {% set dataBlocks = dataBlocks|merge([{
-            'title': 'academic.bts.controller.issue.subtasks'|trans,
+            'title': 'bap.controller.issue.subtasks'|trans,
             'class': 'active',
             'subblocks': [
                 {'data' : [issueSubtasksBlock]}
@@ -80,11 +80,11 @@
         {{ oro_widget_render({
             'widgetType': 'block',
             'wid': 'collaborators',
-            'url': path('bts_issue_collaborators', {id: entity.id})
+            'url': path('bap_issue_collaborators', {id: entity.id})
         }) }}
     {% endset %}
     {% set dataBlocks = dataBlocks|merge([        {
-        'title': 'academic.bts.issue.collaborators.label'|trans,
+        'title': 'bap.issue.collaborators.label'|trans,
         'class': 'active',
         'subblocks': [
             {'data' : [issueCollaboratorsWidget]}

@@ -6,7 +6,7 @@
 {% block navButtons %}
     {% if resource_granted('bts_resolution_create') %}
         {{ UI.addButton({
-            'path': path('bts_resolution_create'),
+            'path': path('bap_issue_resolution_create'),
             'entity_label': 'academic.bts.resolution.entity_label'|trans
         }) }}
     {% endif %}

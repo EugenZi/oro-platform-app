@@ -20,7 +20,7 @@ Bap\Bundle\IssueBundle\Entity\Issue:
         updatedAt:
             - DateTime:      ~
 
-Bap\Bundle\IssueBundle\Entity\Priority:
+Bap\Bundle\IssueBundle\Entity\IssuePriority:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: weight
@@ -34,7 +34,7 @@ Bap\Bundle\IssueBundle\Entity\Priority:
             - Type:
                 type: integer
 
-Bap\Bundle\IssueBundle\Entity\Resolution:
+Bap\Bundle\IssueBundle\Entity\IssueResolution:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
     properties:

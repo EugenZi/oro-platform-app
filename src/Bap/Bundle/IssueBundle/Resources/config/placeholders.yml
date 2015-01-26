@@ -8,8 +8,8 @@ placeholders:
 
 items:
     createIssueButton:
-        template: AcademicBtsBundle:Issue:createIssueButton.html.twig
+        template: BapIssueBundle:Issue:createIssueButton.html.twig
         applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)
     userIssues:
-        template: AcademicBtsBundle:Issue:userIssues.html.twig
+        template: BapIssueBundle:Issue:userIssues.html.twig
         applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)

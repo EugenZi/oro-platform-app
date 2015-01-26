@@ -16,15 +16,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DashboardController extends Controller
 {
     /**
-     * @param string $widget
-     *
      * @Route(
      *      "/issue_chart/{widget}",
-     *      name="bts_dashboard_issue_chart",
+     *      name="main_issue_chart",
      *      requirements={"widget"="[\w-]+"}
      * )
-     * @Template("AcademicBtsBundle:Dashboard:issueChart.html.twig")
      *
+     * @Template("BapIssueBundle:Dashboard:issueChart.html.twig")
+     *
+     * @param string $widget
      * @return array
      */
     public function issueChartAction($widget)
@@ -60,15 +60,14 @@ class DashboardController extends Controller
     }
 
     /**
-     * @param string $widget
-     *
      * @Route(
-     *      "/my_issues/{widget}",
-     *      name="bts_dashboard_my_issues",
+     *      "/_issues/{widget}",
+     *      name="user_issues_board",
      *      requirements={"widget"="[\w-]+"}
      * )
-     * @Template("AcademicBtsBundle:Dashboard:myIssues.html.twig")
+     * @Template("BapIssueBundle:Dashboard:issueChart.html.twig")
      *
+     * @param string $widget
      * @return array
      */
     public function myIssuesAction($widget)

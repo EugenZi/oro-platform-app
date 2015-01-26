@@ -1,11 +1,11 @@
 bts_issue_api:
-    resource:     "@AcademicBtsBundle/Controller/Api/Rest/IssueController.php"
+    resource:     "@BapIssueBundle/Controller/Api/Rest/IssueController.php"
     type:         rest
 
 bts_priority_api:
-    resource:     "@AcademicBtsBundle/Controller/Api/Rest/PriorityController.php"
+    resource:     "@BapIssueBundle/Controller/Api/Rest/PriorityController.php"
     type:         rest
 
 bts_resolution_api:
-    resource:     "@AcademicBtsBundle/Controller/Api/Rest/ResolutionController.php"
+    resource:     "@BapIssueBundle/Controller/Api/Rest/ResolutionController.php"
     type:         rest

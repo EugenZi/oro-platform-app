@@ -1,5 +1,5 @@
 {% import 'OroUIBundle::macros.html.twig' as ui %}
-{% import 'AcademicBtsBundle::macros.html.twig' as bts %}
+{% import 'BapIssueBundle::macros.html.twig' as bap %}
 
 <div class="widget-content">
     <div class="row-fluid form-horizontal">
@@ -8,7 +8,7 @@
                 <ul class="list-group">
                     {% for collaborator in entity.collaborators %}
                         <li class="list-group-item">
-                            {{ bts.renderUserLink(collaborator) }}
+                            {{ bap.renderUserLink(collaborator) }}
                         </li>
                     {% endfor %}
                 </ul>
@@ -21,7 +21,7 @@
     <script type="text/javascript">
         require(['oroui/js/mediator', 'oroui/js/widget-manager'], function(mediator, widgetManager) {
             mediator.subscribe('widget_success:note-dialog', function() {
-                var collaboratorsWidget = widgetManager.getWidgetInstance('collaborators', function(widget) {
+                widgetManager.getWidgetInstance('collaborators', function(widget) {
                     widget.loadContent();
                 });
             });

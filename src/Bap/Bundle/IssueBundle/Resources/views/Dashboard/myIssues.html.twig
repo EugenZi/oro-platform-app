@@ -1,5 +1,5 @@
 {% extends 'OroDashboardBundle:Dashboard:widget.html.twig' %}
-{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% import 'BapIssueBundle::macros.html.twig' as dataGrid %}
 
 {% block content %}
     {{ dataGrid.renderGrid('dashboard-issue-grid', {'userId': user.id}) }}
@@ -9,8 +9,8 @@
     {% set actions = [
         {
             'type': 'link',
-            'label': 'academic.bts.dashboard.widget.view_issues_page'|trans,
-            'url': path('bts_issue_index', {
+            'label': 'bap.widgets.issues_page.view'|trans,
+            'url': path('bap_issues', {
                 'grid[issue-grid]': {
                     'f[collaborators][value]': app.user.id,
                     'f[collaborators][type]': 1

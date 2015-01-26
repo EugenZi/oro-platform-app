@@ -38,14 +38,14 @@ class ResolutionController extends Controller
     }
 
     /**
-     * @Route("/resolution/create", name="bts_resolution_create")
+     * @Route("/resolution/create", name="bap_create_resolution")
      * @Acl(
-     *      id="bts_resolution_create",
+     *      id="bap_create_resolution",
      *      type="entity",
-     *      class="AcademicBtsBundle:Resolution",
+     *      class="BapIssueBundle:Resolution",
      *      permission="CREATE"
      * )
-     * @Template("AcademicBtsBundle:Resolution:update.html.twig")
+     * @Template("BapIssueBundle:Resolution:update.html.twig")
      *
      * @return array
      */

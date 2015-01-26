@@ -54,7 +54,7 @@ class IssueController extends Controller
 
     /**
      * @Route("/issue/create", name="bts_issue_create")
-     * @Template("AcademicBtsBundle:Issue:update.html.twig")
+     * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
      *      id="bts_issue_create",
      *      type="entity",
@@ -75,7 +75,7 @@ class IssueController extends Controller
      * @param User $user
      *
      * @Route("/issue/create_from_widget/{id}", name="bts_issue_create_widget", requirements={"id"="\d+"})
-     * @Template("AcademicBtsBundle:Issue:update.html.twig")
+     * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
      *      id="bts_issue_create_widget",
      *      type="entity",
@@ -124,14 +124,15 @@ class IssueController extends Controller
     /**
      * @param Issue $issue
      *
-     * @Route("/widget/info/{id}", name="bts_issue_info", requirements={"id"="\d+"})
-     * @Template()
+     * @Route("/widget/info/{id}", name="bap_issue_page", requirements={"id"="\d+"})
      * @Acl(
-     *      id="bts_issue_view",
+     *      id="bap_issue_view",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="VIEW"
      * )
+     *
+     * @Template()
      *
      * @return array
      */

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
-use Bap\Bundle\IssueBundle\Entity\Priority;
+use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 
 /**
  * Class PriorityController
@@ -23,7 +23,7 @@ class PriorityController extends Controller
      * @Acl(
      *      id="bts_priority_view",
      *      type="entity",
-     *      class="AcademicBtsBundle:Priority",
+     *      class="AcademicBtsBundle:IssuePriority",
      *      permission="VIEW"
      * )
      * @Template()
@@ -38,24 +38,24 @@ class PriorityController extends Controller
     }
 
     /**
-     * @Route("/priority/create", name="bts_priority_create")
+     * @Route("/priority/create", name="bap_create_priority")
      * @Acl(
      *      id="bts_priority_create",
      *      type="entity",
-     *      class="AcademicBtsBundle:Priority",
+     *      class="BapIssueBundle:IssuePriority",
      *      permission="CREATE"
      * )
-     * @Template("AcademicBtsBundle:Priority:update.html.twig")
+     * @Template("BapIssueBundle:Priority:update.html.twig")
      *
      * @return array
      */
     public function createAction()
     {
-        return $this->update(new Priority());
+        return $this->update(new IssuePriority());
     }
 
     /**
-     * @param Priority $priority
+     * @param IssuePriority $priority
      * @Route("/priority/update/{id}", name="bts_priority_update", requirements={"id"="\d+"})
      * @Acl(
      *      id="bts_priority_update",
@@ -67,21 +67,21 @@ class PriorityController extends Controller
      *
      * @return array
      */
-    public function updateAction(Priority $priority)
+    public function updateAction(IssuePriority $priority)
     {
         return $this->update($priority);
     }
 
     /**
-     * @param Priority $entity
+     * @param IssuePriority $entity
      * @return array|RedirectResponse
      */
-    protected function update(Priority $entity)
+    protected function update(IssuePriority $entity)
     {
         return $this->get('oro_form.model.update_handler')->handleUpdate(
             $entity,
             $this->get('academic_bts.form.priority'),
-            function (Priority $entity) {
+            function (IssuePriority $entity) {
                 return [
                     'route' => 'bts_priority_update',
                     'parameters' => array('id' => $entity->getId()),

@@ -1,11 +1,11 @@
 Bap\Bundle\IssueBundle\Entity\Issue:
-    alias:                          academic_bts_issue
+    alias:                          academic_bap_issue
     title_fields:                   [code]
     route:
-        name:                       bts_issue_view
+        name:                       bap_issue_view
         parameters:
             id:                     id
-    search_template:                AcademicBtsBundle:Issue:searchResult.html.twig
+    search_template:                BapIssueBundle:Issue:searchResult.html.twig
     fields:
         -
             name:                   code

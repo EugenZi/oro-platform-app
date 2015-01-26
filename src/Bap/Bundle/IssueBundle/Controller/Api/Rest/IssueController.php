@@ -57,8 +57,8 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function cgetAction()
     {
-        $page = (int) $this->getRequest()->get('page', 1);
-        $limit = (int) $this->getRequest()->get('limit', self::ITEMS_PER_PAGE);
+        $page = intval($this->get('request')->get('page', 1));
+        $limit = intval($this->get('request')->get('limit', self::ITEMS_PER_PAGE));
 
         return $this->handleGetListRequest($page, $limit);
     }
@@ -91,7 +91,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      description="Create new issue",
      *      resource=true
      * )
-     * @AclAncestor("bts_issue_create")
+     * @AclAncestor("bap_create_issue")
      */
     public function postAction()
     {
@@ -111,7 +111,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="id", "dataType"="integer"},
      *      }
      * )
-     * @AclAncestor("bts_issue_update")
+     * @AclAncestor("bap_update_issue")
      */
     public function putAction($id)
     {
@@ -155,7 +155,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getManager()
     {
-        return $this->get('academic_bts.issue.manager.api');
+        return $this->get('bap.issue.manager.api');
     }
 
     /**
@@ -163,7 +163,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getForm()
     {
-        return $this->get('academic_bts.form.issue.api');
+        return $this->get('bap.form.issue.api');
     }
 
     /**
@@ -171,6 +171,6 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getFormHandler()
     {
-        return $this->get('academic_bts.form.handler.issue.api');
+        return $this->get('bap.form.handler.issue.api');
     }
 }

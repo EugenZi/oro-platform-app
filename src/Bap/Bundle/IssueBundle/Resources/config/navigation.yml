@@ -7,22 +7,22 @@ oro_menu_config:
                 position: 10
         issues_tab_link:
             label: academic.bts.issue.entity_plural_label
-            route: bts_issue_index
+            route: bap_issue
             extras:
-                routes: ['bts_issue_index', 'bts_issue_create', 'bts_issue_update', 'bts_issue_add_subtask', 'bts_issue_view']
+                routes: ['bap_issue_index', 'bap_issue_create', 'bap_issue_update', 'bap_issue_add_subtask', 'bap_issue_view']
                 description: academic.bts_issue.entity_plural_label
         priorities_tab_link:
             label: academic.bts.priority.entity_plural_label
-            route: bts_priority_index
+            route: bap_priority
             extras:
-                routes: ['bts_priority_index', 'bts_priority_create', 'bts_priority_update']
-                description: academic.bts.priority.entity_plural_label
+                routes: ['bap_priority_index', 'bap_priority_create', 'bap_priority_update']
+                description: bap_issue.priority.entity_plural_label
         resolutions_tab_link:
-            label: academic.bts.resolution.entity_plural_label
-            route: bts_resolution_index
+            label: bap_issue.resolution.entity_plural_label
+            route: bap_resolution
             extras:
-                routes: ['bts_resolution_index', 'bts_resolution_create', 'bts_resolution_update']
-                description: academic.bts.resolution.entity_plural_label
+                routes: ['bap_resolution', 'bap_resolution_create', 'bap_resolution_update']
+                description: bap_issue.resolution.entity_plural_label
     tree:
         application_menu:
             children:
@@ -33,16 +33,16 @@ oro_menu_config:
                         resolutions_tab_link: ~
 
 oro_titles:
-    bts_issue_index:        academic.bts.issue.entity_plural_label
-    bts_issue_create:       academic.bts.controller.issue.create.label
+    bts_issue_index:        bap_issue.issue.entity_plural_label
+    bts_issue_create:       bap_issue.controller.issue.create.label
     bts_issue_view:         '%%entity.title%%'
     bts_issue_update:       '%%entity.title%% - Edit'
     bts_issue_add_subtask:  '%%entity.title%% - Add Subtask'
 
-    bts_priority_index:     academic.bts.priority.entity_plural_label
-    bts_priority_create:    academic.bts.controller.priority.create.label
+    bts_priority_index:     bap_issue.priority.entity_plural_label
+    bts_priority_create:    bap_issue.controller.priority.create.label
     bts_priority_update:    '%%entity.title%% - Edit'
 
-    bts_resolution_index:   academic.bts.resolution.entity_plural_label
-    bts_resolution_create:  academic.bts.controller.resolution.create.label
+    bts_resolution_index:   bap_issue.resolution.entity_plural_label
+    bts_resolution_create:  bap_issue.controller.resolution.create.label
     bts_resolution_update:  '%%entity.title%% - Edit'

@@ -1,11 +1,11 @@
 datagrid:
     issue-grid:
-        extended_entity_name: %academic_bts.issue.entity.class%
+        extended_entity_name: %bap_issue.issue.entity.class%
         options:
             entityHint: issue
             entity_pagination: true
         source:
-            acl_resource: bts_issue_view
+            acl_resource: bap_view_issue
             type: orm
             query:
                 select:

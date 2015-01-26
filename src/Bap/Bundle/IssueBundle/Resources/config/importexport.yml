@@ -4,53 +4,53 @@ parameters:
     academic_bts.importexport.template_fixture.priority.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\PriorityFixture
 
 services:
-    academic_bts.issue.importexport.data_converter:
+    bap_issue.issue.importexport.data_converter:
         parent: oro_importexport.data_converter.configurable
 
-    academic_bts.issue.importexport.template_fixture.data_converter.issue:
+    bap_issue.issue.importexport.template_fixture.data_converter.issue:
         parent: oro_importexport.data_converter.template_fixture.configurable
 
     # Strategy
-    academic_bts.issue.importexport.strategy.issue.add_or_replace:
+    bap_issue.issue.importexport.strategy.issue.add_or_replace:
         parent: oro_importexport.strategy.configurable_add_or_replace
 
     # Import processor
-    academic_bts.issue.importexport.processor.import:
+    bap_issue.issue.importexport.processor.import:
         parent: oro_importexport.processor.import_abstract
         calls:
-             - [setDataConverter, [@academic_bts.issue.importexport.data_converter]]
-             - [setStrategy, [@academic_bts.issue.importexport.strategy.issue.add_or_replace]]
+             - [setDataConverter, [@bap_issue.issue.importexport.data_converter]]
+             - [setStrategy, [@bap_issue.issue.importexport.strategy.issue.add_or_replace]]
         tags:
-            - { name: oro_importexport.processor, type: import, entity: %academic_bts.issue.entity.class%, alias: academic_bts.issue.add_or_replace }
-            - { name: oro_importexport.processor, type: import_validation, entity: %academic_bts.issue.entity.class%, alias: academic_bts.issue.add_or_replace }
+            - { name: oro_importexport.processor, type: import, entity: %bap_issue.issue.entity.class%, alias: bap_issue.issue.add_or_replace }
+            - { name: oro_importexport.processor, type: import_validation, entity: %bap_issue.issue.entity.class%, alias: bap_issue.issue.add_or_replace }
 
     # Export processor
-    academic_bts.issue.importexport.processor.export:
+    bap_issue.issue.importexport.processor.export:
         parent: oro_importexport.processor.export_abstract
         calls:
-            - [setDataConverter, [@academic_bts.issue.importexport.data_converter]]
+            - [setDataConverter, [@bap_issue.issue.importexport.data_converter]]
         tags:
-            - { name: oro_importexport.processor, type: export, entity: %academic_bts.issue.entity.class%, alias: academic_bts_issue }
+            - { name: oro_importexport.processor, type: export, entity: %bap_issue.issue.entity.class%, alias: bap_issue }
 
-    academic_bts.issue.importexport.processor.export_template:
+    bap_issue.issue.importexport.processor.export_template:
         parent: oro_importexport.processor.export_abstract
         calls:
-            - [setDataConverter, [@academic_bts.issue.importexport.template_fixture.data_converter.issue]]
+            - [setDataConverter, [@bap_issue.issue.importexport.template_fixture.data_converter.issue]]
         tags:
-            - { name: oro_importexport.processor, type: export_template, entity: %academic_bts.issue.entity.class%, alias: academic_bts_issue }
+            - { name: oro_importexport.processor, type: export_template, entity: %bap_issue.issue.entity.class%, alias: bap_issue }
 
     # Template fixtures
-    academic_bts.importexport.template_fixture.issue:
-        class: %academic_bts.importexport.template_fixture.issue.class%
+    bap_issue.importexport.template_fixture.issue:
+        class: %bap_issue.importexport.template_fixture.issue.class%
         tags:
             - { name: oro_importexport.template_fixture }
 
-    academic_bts.importexport.template_fixture.priority:
-        class: %academic_bts.importexport.template_fixture.priority.class%
+    bap_issue.importexport.template_fixture.priority:
+        class: %bap_issue.importexport.template_fixture.priority.class%
         tags:
             - { name: oro_importexport.template_fixture }
 
-    academic_bts.importexport.template_fixture.resolution:
-        class: %academic_bts.importexport.template_fixture.resolution.class%
+    bap_issue.importexport.template_fixture.resolution:
+        class: %bap_issue.importexport.template_fixture.resolution.class%
         tags:
             - { name: oro_importexport.template_fixture }

@@ -19,7 +19,7 @@ use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 
-use Bap\Bundle\IssueBundle\Entity\Priority;
+use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 
 /**
  * @RouteResource("priority")
@@ -33,14 +33,14 @@ class PriorityController extends RestController implements ClassResourceInterfac
      * @param int $id
      *
      * @ApiDoc(
-     *      description="Delete Priority",
+     *      description="Delete IssuePriority",
      *      resource=true
      * )
      * @Acl(
-     *      id="bts_priority_delete",
+     *      id="bap_delete_issue_priority",
      *      type="entity",
      *      permission="DELETE",
-     *      class="AcademicBtsBundle:Priority"
+     *      class="AcademicBtsBundle:IssuePriority"
      * )
      * @return Response
      */
@@ -64,7 +64,7 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getManager()
     {
-        return $this->get('academic_bts.priority.manager.api');
+        return $this->get('bap.priority.manager.api');
     }
 
     /**
@@ -72,7 +72,7 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getForm()
     {
-        return $this->get('academic_bts.form.priority.api');
+        return $this->get('bap.form.priority.api');
     }
 
     /**
@@ -80,6 +80,6 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getFormHandler()
     {
-        return $this->get('academic_bts.form.handler.priority.api');
+        return $this->get('bap.form.handler.priority.api');
     }
 }
