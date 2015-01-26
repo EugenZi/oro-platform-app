@@ -21,7 +21,7 @@ datagrid:
                     - i.updatedAt
                     - workflowStep.label as workflowStepLabel
                 from:
-                    - { table: %academic_bts.issue.entity.class%, alias: i }
+                    - { table: %bap_issue.issue.entity.class%, alias: i }
                 join:
                     left:
                         - { join: i.priority, alias: p }

@@ -1,0 +1,22 @@
+parameters:
+    bap.issue.entity.class: Bap\Bundle\IssueBundle\Entity\Issue
+    bap.issue.priority.entity.class: Bap\Bundle\IssueBundle\Entity\IssuePriority
+    bap.issue.resolution.entity.class: Bap\Bundle\IssueBundle\Entity\IssueResolution
+
+    bap.issue.form.resolution.class: Bap\Bundle\IssueBundle\Form\Type\ResolutionType
+    bap.issue.form.type.class: Bap\Bundle\IssueBundle\Form\Type\IssueType
+    bap.issue.form.api.class: Bap\Bundle\IssueBundle\Form\Type\IssueApiType
+    bap.issue.form.priority.class: Bap\Bundle\IssueBundle\Form\Type\PriorityType
+
+    bap.issue.form.handler.class: Bap\Bundle\IssueBundle\Form\Handler\IssueHandler
+    bap.issue.form.resolution.handler.class: Bap\Bundle\IssueBundle\Form\Handler\ResolutionHandler
+    bap.issue.form.priority.handler.class: Bap\Bundle\IssueBundle\Form\Handler\PriorityHandler
+
+    bap.issue.soap.api.manager.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    bap.issue.soap.api.resolution.manager.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    bap.issue.soap.api.priority.manager.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+
+    bap.issue.helper.class: Bap\Bundle\IssueBundle\Helper\IssueHelper
+    bap.issue.grid.type.formatter.class: Bap\Bundle\IssueBundle\Grid\Formatter\IssueTypeProperty
+
+    bap.issue.twig.extension.class: Bap\Bundle\IssueBundle\Twig\IssueExtension
