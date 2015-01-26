@@ -36,7 +36,7 @@ class BapIssueResolution extends AbstractMigration
         $table = $this->getTable();
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('name', 'string', ['length' => 32]);
+        $table->addColumn('value', 'string', ['length' => 32]);
 
         $table->setPrimaryKey(['id']);
 
@@ -48,9 +48,9 @@ class BapIssueResolution extends AbstractMigration
      */
     public function addIndexes()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
-        $table->addUniqueIndex(['name'], 'BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX');
+        $table->addUniqueIndex(['value'], 'BAP_ISSUE_RESOLUTION_VALUE_UNIQUE_INDEX');
 
         return $table;
     }

@@ -89,14 +89,14 @@ class BapIssue extends AbstractMigration
      */
     public function addForeignKeys()
     {
-        $table  = $this->getTargetTable();
+        $table  = $this->getTable();
         $schema = $this->getSchema();
 
         $table->addForeignKeyConstraint(
             $schema->getTable(Issue::TABLE_NAME),
             ['parent_id'],
             ['id'],
-            ['onDelete' => 'CASCADE']
+            ['onDelete' => 'SET NULL']
         );
 
         $table->addForeignKeyConstraint(

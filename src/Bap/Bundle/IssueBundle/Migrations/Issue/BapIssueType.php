@@ -46,7 +46,7 @@ class BapIssueType extends AbstractMigration
      */
     public function addIndexes()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_TYPE_NAME_UNIQUE_INDEX');
 
