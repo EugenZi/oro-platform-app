@@ -11,33 +11,49 @@ namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
+/**
+ * Class BapIssuePriority
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssuePriority extends AbstractMigration
 {
 
-    protected function getTableName()
+    /**
+     * @return string
+     */
+    public function getTableName()
     {
         return IssuePriority::TABLE_NAME;
     }
 
-    protected function addColumns(Table $table)
+    /**
+     * @return Table
+     */
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
         $table->addColumn('priority', 'integer', ['length' => 3]);
 
+        $table->setPrimaryKey(['id']);
+
         return $table;
     }
 
-    protected function addIndexKeys(Table $table)
+    /**
+     * @return Table
+     */
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['priority'], 'BAP_ISSUE_PRIORITY_FIELD_UNIQUE_IDX');
+        $table = $this->getTargetTable();
+
+        $table->addUniqueIndex(['name'], 'BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_IDX');
+        $table->addIndex(['priority'], 'BAP_ISSUE_PRIORITY_PRIORITY_FIELD_IDX');
 
         return $table;
     }

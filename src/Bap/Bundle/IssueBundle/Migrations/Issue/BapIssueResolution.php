@@ -9,45 +9,49 @@
 namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
 use Doctrine\DBAL\Schema\Schema;
-
 use Doctrine\DBAL\Schema\Table;
-use Oro\Bundle\MigrationBundle\Migration\Migration;
-use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
+/**
+ * Class BapIssueResolution
+ *
+ * @package Bap\Bundle\IssueBundle\Migrations\Issue
+ */
 class BapIssueResolution extends AbstractMigration
 {
     /**
-     * @param Table $table
+     * @return string
+     */
+    public function getTableName()
+    {
+        return IssueResolution::TABLE_NAME;
+    }
+
+    /**
      * @return Table
      */
-    protected function addColumns(Table $table)
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
 
-        return $this;
+        $table->setPrimaryKey(['id']);
+
+        return $table;
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    protected function addIndexKeys(Table $table)
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
+        $table = $this->getTargetTable();
+
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX');
 
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTableName()
-    {
-        return IssueResolution::TABLE_NAME;
+        return $table;
     }
 }

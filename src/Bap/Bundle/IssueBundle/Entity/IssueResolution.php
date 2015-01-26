@@ -6,14 +6,38 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Bap\Bundle\IssueBundle\Entity\IssueResolution
+ * Bap\Bundle\IssueBundle\Entity\BapIssueResolution
  *
  * @ORM\Entity(repositoryClass="Entity\Repository\IssueResolutionRepository")
+ * @ORM\Table(
+ *      name="bap_issue_resolution",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX", columns={"value"})
+ *      }
+ * )
  */
-class IssueResolution extends BaseIssueResolution
+class IssueResolution
 {
+    /**
+     * Issue resolution real name in database
+     */
     const TABLE_NAME = 'bap_issue_resolution';
 
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(name="`value`", type="string", length=45)
+     */
+    protected $name;
+
+    /**
+     * Issue resolution entity constructor
+     */
     public function __construct()
     {
         $this->bapIssues = new ArrayCollection();
@@ -32,12 +56,12 @@ class IssueResolution extends BaseIssueResolution
     /**
      * Set the value of value.
      *
-     * @param string $value
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
+     * @param string $name
+     * @return IssueResolution
      */
-    public function setValue($value)
+    public function setName($name)
     {
-        $this->value = $value;
+        $this->name = $name;
 
         return $this;
     }
@@ -47,49 +71,24 @@ class IssueResolution extends BaseIssueResolution
      *
      * @return string
      */
-    public function getValue()
+    public function getName()
     {
-        return $this->value;
+        return $this->name;
     }
 
     /**
-     * Add BapIssue entity to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
+     * @return string
      */
-    public function addBapIssue(Issue $issue)
+    public function __toString()
     {
-        $this->issues[] = $issue;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Remove Issue entity from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\Issue $issue
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
+     * @return array
      */
-    public function removeIssue(Issue $issue)
-    {
-        $this->issues->removeElement($issue);
-
-        return $this;
-    }
-
-    /**
-     * Get BapIssue entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBapIssues()
-    {
-        return $this->issues;
-    }
-
     public function __sleep()
     {
-        return array('id', 'value');
+        return ['id', 'value'];
     }
 }

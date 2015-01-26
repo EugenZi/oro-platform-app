@@ -1,2 +1,2 @@
 bundles:
-  - Bap\Bundle\IssueBundle\BapIssueBundle
+  - { name: Bap\Bundle\IssueBundle\BapIssueBundle, priority: 50 }
