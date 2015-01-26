@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":315:{a:2:{i:0;C:53:"Oro\Bundle\EntityConfigBundle\Config\Id\FieldConfigId":112:{a:4:{i:0;s:41:"Oro\Bundle\ReminderBundle\Entity\Reminder";i:1;s:6:"extend";i:2;s:6:"sentAt";i:3;s:8:"datetime";}}i:1;a:5:{s:5:"owner";s:6:"System";s:5:"state";s:6:"Active";s:9:"is_extend";b:0;s:10:"is_deleted";b:0;s:6:"origin";s:4:"Code";}}}

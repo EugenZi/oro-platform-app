@@ -13,8 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      name="bap_issue_type",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(
- *              name="value_UNIQUE",
- *              columns={"`value`"}
+ *              name="BAP_ISSUE_TYPE_NAME_UNIQUE_INDEX",
+ *              columns={"value"}
  *          )
  *      }
  * )
@@ -57,14 +57,6 @@ class IssueType
      * @ORM\Column(name="`value`", type="string", length=45)
      */
     protected $name;
-
-    /**
-     * Issue type constructor
-     */
-    public function __construct()
-    {
-        $this->issues = new ArrayCollection();
-    }
 
     /**
      * Get the value of id.

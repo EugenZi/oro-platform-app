@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":343:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":70:{a:2:{i:0;s:35:"Bap\Bundle\IssueBundle\Entity\Issue";i:1;s:6:"entity";}}i:1;a:4:{s:4:"icon";s:13:"icon-envelope";s:5:"label";s:22:"bap.issue.entity_label";s:12:"plural_label";s:29:"bap.issue.entity_plural_label";s:11:"description";s:28:"bap.issue.entity_description";}}}

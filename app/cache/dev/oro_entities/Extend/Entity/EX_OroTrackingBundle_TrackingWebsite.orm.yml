@@ -1,0 +1,3 @@
+Extend\Entity\EX_OroTrackingBundle_TrackingWebsite:
+    type: mappedSuperclass
+    fields: {  }

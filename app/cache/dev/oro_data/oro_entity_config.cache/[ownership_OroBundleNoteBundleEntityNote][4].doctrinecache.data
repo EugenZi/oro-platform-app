@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":375:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":71:{a:2:{i:0;s:33:"Oro\Bundle\NoteBundle\Entity\Note";i:1;s:9:"ownership";}}i:1;a:5:{s:10:"owner_type";s:4:"USER";s:16:"owner_field_name";s:5:"owner";s:17:"owner_column_name";s:13:"user_owner_id";s:23:"organization_field_name";s:12:"organization";s:24:"organization_column_name";s:15:"organization_id";}}}

@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":344:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":72:{a:2:{i:0;s:35:"Oro\Bundle\EmailBundle\Entity\Email";i:1;s:8:"activity";}}i:1;a:4:{s:5:"route";s:23:"oro_email_activity_view";s:3:"acl";s:14:"oro_email_view";s:20:"action_button_widget";s:21:"oro_send_email_button";s:18:"action_link_widget";s:19:"oro_send_email_link";}}}

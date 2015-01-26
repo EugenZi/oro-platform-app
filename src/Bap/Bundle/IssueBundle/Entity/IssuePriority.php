@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Entity\Repository\IssuePriorityRepository")
  * @ORM\Table(
  *      name="bap_issue_priority",
+ *      indexes={
+ *          @ORM\Index(name="BAP_ISSUE_PRIORITY_PRIORITY_FIELD_IDX", columns={"priority"})
+ *      },
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(
- *              name="value_UNIQUE",
- *              columns={"`value`"}
- *          )
+ *          @ORM\UniqueConstraint(name="BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_IDX", columns={"value"})
  *      }
  * )
  */
@@ -61,16 +61,25 @@ class IssuePriority
 
     /**
      * @param mixed $name
+     * @return IssuePriority
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
-     * Set the value of value.
-     *
-     * @param string $value
+     * @return int
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param int $value
      * @return IssuePriority
      */
     public function setValue($value)
@@ -78,16 +87,6 @@ class IssuePriority
         $this->value = $value;
 
         return $this;
-    }
-
-    /**
-     * Get the value of value.
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 
     /**
@@ -105,6 +104,6 @@ class IssuePriority
      */
     public function __sleep()
     {
-        return ['id', 'value'];
+        return ['id', 'name', 'value'];
     }
 }

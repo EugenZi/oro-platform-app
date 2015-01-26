@@ -9,10 +9,16 @@ use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 use Oro\Bundle\TagBundle\Entity\Taggable;
 
+use Oro\Bundle\OrganizationBundle\Entity\Organization;
+use Oro\Bundle\UserBundle\Entity\User;
+
+use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
+use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
+
 /**
- * Bap\Bundle\IssueBundle\Entity\Issue
- *
  * @ORM\Entity(repositoryClass="Bap\Bundle\IssueBundle\Entity\Repository\IssueRepository")
+ *
+ * @package Bap\IssueBundle\Entity
  */
 class Issue extends BaseIssue implements ActivityInterface, Taggable
 {
@@ -21,23 +27,25 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     /**
      * Issue table real name
      */
-    const TABLE_NAME = 'bap_issue';
+    const TABLE_NAME              = 'bap_issue';
+
+    /**
+     * Issues to users intermediate table name
+     */
+    const COLLABORATOR_TABLE_NAME = 'bap_issue_collaborator';
+
 
     /**
      * Issue constructor
      */
     public function __construct()
     {
-        $this->issueCollaborators = new ArrayCollection();
-        $this->issueCollabortators = new ArrayCollection();
-        $this->issueRelationRelatedByIssueIds = new ArrayCollection();
-        $this->issueRelationRelatedByRelatedIssueIds = new ArrayCollection();
+        $this->tags          = new ArrayCollection();
+        $this->collaborators = new ArrayCollection();
     }
 
     /**
-     * Get the value of id.
-     *
-     * @return integer
+     * @return mixed
      */
     public function getId()
     {
@@ -45,21 +53,118 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of code.
-     *
-     * @param string $code
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @return User
      */
-    public function setCode($code)
+    public function getOwner()
     {
-        $this->code = $code;
-
-        return $this;
+        return $this->owner;
     }
 
     /**
-     * Get the value of code.
-     *
+     * @param User $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    /**
+     * @param Organization $organization
+     */
+    public function setOrganization(Organization $organization)
+    {
+        $this->organization = $organization;
+    }
+
+    /**
+     * @return User
+     */
+    public function getReporter()
+    {
+        return $this->reporter;
+    }
+
+    /**
+     * @param User $reporter
+     */
+    public function setReporter(User $reporter)
+    {
+        $this->reporter = $reporter;
+    }
+
+    /**
+     * @return User
+     */
+    public function getAssignee()
+    {
+        return $this->assignee;
+    }
+
+    /**
+     * @param User $assignee
+     */
+    public function setAssignee(User $assignee)
+    {
+        $this->assignee = $assignee;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCollaborators()
+    {
+        return $this->collaborators;
+    }
+
+    /**
+     * @param ArrayCollection $collaborators
+     */
+    public function setCollaborators($collaborators)
+    {
+        $this->collaborators = $collaborators;
+    }
+
+    /**
+     * @return Issue
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Issue $parent
+     */
+    public function setParent(Issue $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param ArrayCollection $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
      * @return string
      */
     public function getCode()
@@ -68,45 +173,15 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of status.
-     *
-     * @param string $status
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param string $code
      */
-    public function setStatus($status)
+    public function setCode($code)
     {
-        $this->status = $status;
-
-        return $this;
+        $this->code = $code;
     }
 
     /**
-     * Get the value of status.
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set the value of type.
-     *
-     * @param string $type
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of type.
-     *
-     * @return string
+     * @return IssueType
      */
     public function getType()
     {
@@ -114,21 +189,14 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of summary.
-     *
-     * @param string $summary
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param mixed $type
      */
-    public function setSummary($summary)
+    public function setType(IssueType $type)
     {
-        $this->summary = $summary;
-
-        return $this;
+        $this->type = $type;
     }
 
     /**
-     * Get the value of summary.
-     *
      * @return string
      */
     public function getSummary()
@@ -137,21 +205,14 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of description.
-     *
-     * @param string $description
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param string $summary
      */
-    public function setDescription($description)
+    public function setSummary($summary)
     {
-        $this->description = $description;
-
-        return $this;
+        $this->summary = $summary;
     }
 
     /**
-     * Get the value of description.
-     *
      * @return string
      */
     public function getDescription()
@@ -160,22 +221,15 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of priority.
-     *
-     * @param string $priority
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param string $description
      */
-    public function setPriority($priority)
+    public function setDescription($description)
     {
-        $this->priority = $priority;
-
-        return $this;
+        $this->description = $description;
     }
 
     /**
-     * Get the value of priority.
-     *
-     * @return string
+     * @return IssuePriority
      */
     public function getPriority()
     {
@@ -183,22 +237,15 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of resolution.
-     *
-     * @param string $resolution
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param IssuePriority $priority
      */
-    public function setResolution($resolution)
+    public function setPriority(IssuePriority $priority)
     {
-        $this->resolution = $resolution;
-
-        return $this;
+        $this->priority = $priority;
     }
 
     /**
-     * Get the value of resolution.
-     *
-     * @return string
+     * @return IssueResolution
      */
     public function getResolution()
     {
@@ -206,269 +253,85 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * Set the value of created_at.
-     *
-     * @param datetime $created_at
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param IssueResolution $resolution
      */
-    public function setCreatedAt($created_at)
+    public function setResolution(IssueResolution $resolution)
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->resolution = $resolution;
     }
 
     /**
-     * Get the value of created_at.
-     *
-     * @return datetime
+     * @return WorkflowItem
      */
-    public function getCreatedAt()
+    public function getWorkflowItem()
     {
-        return $this->created_at;
+        return $this->workflowItem;
     }
 
     /**
-     * Set the value of updated_at.
-     *
-     * @param datetime $updated_at
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param WorkflowItem $workflowItem
      */
-    public function setUpdatedAt($updated_at)
+    public function setWorkflowItem(WorkflowItem $workflowItem)
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
+        $this->workflowItem = $workflowItem;
     }
 
     /**
-     * Get the value of updated_at.
-     *
-     * @return datetime
+     * @return WorkflowStep
      */
-    public function getUpdatedAt()
+    public function getWorkflowStep()
     {
-        return $this->updated_at;
+        return $this->workflowStep;
     }
 
     /**
-     * Add IssueCollaborator entity to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueCollaborator $issueCollaborator
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
+     * @param WorkflowStep $workflowStep
      */
-    public function addIssueCollaborator(IssueCollaborator $issueCollaborator)
+    public function setWorkflowStep(WorkflowStep $workflowStep)
     {
-        $this->issueCollaborators[] = $issueCollaborator;
-
-        return $this;
+        $this->workflowStep = $workflowStep;
     }
 
     /**
-     * Remove IssueCollaborator entity from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueCollaborator $issueCollaborator
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function removeIssueCollaborator(IssueCollaborator $issueCollaborator)
-    {
-        $this->issueCollaborators->removeElement($issueCollaborator);
-
-        return $this;
-    }
-
-    /**
-     * Get IssueCollaborator entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssueCollaborators()
-    {
-        return $this->issueCollaborators;
-    }
-
-    /**
-     * Get IssueCollabortator entity collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssueCollabortators()
-    {
-        return $this->issueCollabortators;
-    }
-
-    /**
-     * Add IssueRelation entity related by `issue_id` to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueRelation $issueRelation
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function addIssueRelationRelatedByIssueId(IssueRelation $issueRelation)
-    {
-        $this->issueRelationRelatedByIssueIds[] = $issueRelation;
-
-        return $this;
-    }
-
-    /**
-     * Remove IssueRelation entity related by `issue_id` from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueRelation $issueRelation
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function removeIssueRelationRelatedByIssueId(IssueRelation $issueRelation)
-    {
-        $this->issueRelationRelatedByIssueIds->removeElement($issueRelation);
-
-        return $this;
-    }
-
-    /**
-     * Get IssueRelation entity related by `issue_id` collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssueRelationRelatedByIssueIds()
-    {
-        return $this->issueRelationRelatedByIssueIds;
-    }
-
-    /**
-     * Add IssueRelation entity related by `related_issue_id` to collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueRelation $issueRelation
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function addIssueRelationRelatedByRelatedIssueId(IssueRelation $issueRelation)
-    {
-        $this->issueRelationRelatedByRelatedIssueIds[] = $issueRelation;
-
-        return $this;
-    }
-
-    /**
-     * Remove IssueRelation entity related by `related_issue_id` from collection (one to many).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueRelation $issueRelation
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function removeIssueRelationRelatedByRelatedIssueId(IssueRelation $issueRelation)
-    {
-        $this->issueRelationRelatedByRelatedIssueIds->removeElement($issueRelation);
-
-        return $this;
-    }
-
-    /**
-     * Get IssueRelation entity related by `related_issue_id` collection (one to many).
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIssueRelationRelatedByRelatedIssueIds()
-    {
-        return $this->issueRelationRelatedByRelatedIssueIds;
-    }
-
-    /**
-     * Set IssueType entity (many to one).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueType $issueType
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function setIssueType(IssueType $issueType = null)
-    {
-        $this->issueType = $issueType;
-
-        return $this;
-    }
-
-    /**
-     * Get IssueType entity (many to one).
-     *
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueType
-     */
-    public function getIssueType()
-    {
-        return $this->issueType;
-    }
-
-    /**
-     * Set IssuePriority entity (many to one).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssuePriority $issuePriority
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function setIssuePriority(IssuePriority $issuePriority = null)
-    {
-        $this->issuePriority = $issuePriority;
-
-        return $this;
-    }
-
-    /**
-     * Get IssuePriority entity (many to one).
-     *
-     * @return \Bap\Bundle\IssueBundle\Entity\IssuePriority
-     */
-    public function getIssuePriority()
-    {
-        return $this->issuePriority;
-    }
-
-    /**
-     * Set IssueResolution entity (many to one).
-     *
-     * @param \Bap\Bundle\IssueBundle\Entity\IssueResolution $issueResolution
-     * @return \Bap\Bundle\IssueBundle\Entity\Issue
-     */
-    public function setIssueRelsolution(IssueResolution $issueResolution = null)
-    {
-        $this->issueResolution = $issueResolution;
-
-        return $this;
-    }
-
-    /**
-     * Get IssueResolution entity (many to one).
-     *
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
-     */
-    public function getIssueRelsolution()
-    {
-        return $this->issueResolution;
-    }
-
-    /**
-     * Returns the unique taggable resource identifier
-     *
-     * @return string
-     */
-    public function getTaggableId()
-    {
-        // TODO: Implement getTaggableId() method.
-    }
-
-    /**
-     * Returns the collection of tags for this Taggable entity
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return ArrayCollection
      */
     public function getTags()
     {
-        // TODO: Implement getTags() method.
+        return $this->tags;
     }
 
     /**
-     * Set tag collection
-     *
-     * @param $tags
-     * @return $this
+     * @param ArrayCollection $tags
+     * @return Issue
      */
     public function setTags($tags)
     {
-        // TODO: Implement setTags() method.
+        $this->tags = $tags;
+
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Fields that was contain in serialized object
+     *
+     * @return array
+     */
     public function __sleep()
     {
         return [
@@ -487,5 +350,75 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
             'created_at',
             'updated_at'
         ];
+    }
+
+    /**
+     * Checks if an entity of the given type can be associated with this activity entity
+     *
+     * @param string $targetClass The class name of the target entity
+     *
+     * @return bool
+     */
+    public function supportActivityTarget($targetClass)
+    {
+        // TODO: Implement supportActivityTarget() method.
+    }
+
+    /**
+     * Gets entities of the given type associated with this activity entity
+     *
+     * @param string $targetClass The class name of the target entity
+     *
+     * @return object[]
+     */
+    public function getActivityTargets($targetClass)
+    {
+        // TODO: Implement getActivityTargets() method.
+    }
+
+    /**
+     * Checks is the given entity is associated with this activity entity
+     *
+     * @param object $target Any configurable entity that can be associated with this activity
+     *
+     * @return bool
+     */
+    public function hasActivityTarget($target)
+    {
+        // TODO: Implement hasActivityTarget() method.
+    }
+
+    /**
+     * Associates the given entity with this activity entity
+     *
+     * @param object $target Any configurable entity that can be associated with this activity
+     *
+     * @return self This object
+     */
+    public function addActivityTarget($target)
+    {
+        // TODO: Implement addActivityTarget() method.
+    }
+
+    /**
+     * Removes the association of the given entity with this activity entity
+     *
+     * @param object $target Any configurable entity that can be associated with this activity
+     *
+     * @return self This object
+     */
+    public function removeActivityTarget($target)
+    {
+        // TODO: Implement removeActivityTarget() method.
+    }
+
+    /**
+     * Returns the unique taggable resource identifier
+     *
+     * @return string
+     */
+    public function getTaggableId()
+    {
+        // TODO: Implement getTaggableId() method.
     }
 }

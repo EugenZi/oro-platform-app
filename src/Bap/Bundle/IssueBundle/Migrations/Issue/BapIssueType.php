@@ -8,7 +8,6 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Table;
 
 use Bap\Bundle\IssueBundle\Entity\IssueType;
@@ -28,24 +27,27 @@ class BapIssueType extends AbstractMigration
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addColumns(Table $table)
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
+
+        $table->setPrimaryKey(['id']);
 
         return $table;
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addIndexKeys(Table $table)
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
+        $table = $this->getTargetTable();
+
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_TYPE_NAME_UNIQUE_INDEX');
 
         return $table;

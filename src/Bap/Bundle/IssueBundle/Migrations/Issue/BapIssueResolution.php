@@ -12,7 +12,6 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
 /**
  * Class BapIssueResolution
@@ -30,26 +29,29 @@ class BapIssueResolution extends AbstractMigration
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addColumns(Table $table)
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
 
-        return $this;
+        $table->setPrimaryKey(['id']);
+
+        return $table;
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addIndexKeys(Table $table)
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
+        $table = $this->getTargetTable();
+
         $table->addUniqueIndex(['name'], 'BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX');
 
-        return $this;
+        return $table;
     }
 }

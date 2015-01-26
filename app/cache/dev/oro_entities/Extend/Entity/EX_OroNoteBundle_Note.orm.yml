@@ -1,0 +1,3 @@
+Extend\Entity\EX_OroNoteBundle_Note:
+    type: mappedSuperclass
+    fields: {  }

@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":198:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":75:{a:2:{i:0;s:35:"Oro\Bundle\EmailBundle\Entity\Email";i:1;s:10:"attachment";}}i:1;a:2:{s:7:"enabled";b:0;s:7:"maxsize";i:1;}}}

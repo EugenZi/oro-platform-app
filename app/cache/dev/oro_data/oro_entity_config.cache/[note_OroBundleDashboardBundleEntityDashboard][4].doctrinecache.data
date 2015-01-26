@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":201:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":76:{a:2:{i:0;s:43:"Oro\Bundle\DashboardBundle\Entity\Dashboard";i:1;s:4:"note";}}i:1;a:2:{s:7:"enabled";b:0;s:9:"immutable";b:1;}}}

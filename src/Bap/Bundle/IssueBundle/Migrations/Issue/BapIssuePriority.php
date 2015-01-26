@@ -12,7 +12,6 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
 
 /**
  * Class BapIssuePriority
@@ -31,26 +30,30 @@ class BapIssuePriority extends AbstractMigration
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addColumns(Table $table)
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
         $table->addColumn('priority', 'integer', ['length' => 3]);
+
+        $table->setPrimaryKey(['id']);
 
         return $table;
     }
 
     /**
-     * @param Table $table
      * @return Table
      */
-    public function addIndexKeys(Table $table)
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['priority'], 'BAP_ISSUE_PRIORITY_FIELD_UNIQUE_IDX');
+        $table = $this->getTargetTable();
+
+        $table->addUniqueIndex(['name'], 'BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_IDX');
+        $table->addIndex(['priority'], 'BAP_ISSUE_PRIORITY_PRIORITY_FIELD_IDX');
 
         return $table;
     }

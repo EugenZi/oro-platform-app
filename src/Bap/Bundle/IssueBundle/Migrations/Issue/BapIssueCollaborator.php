@@ -6,12 +6,11 @@
  * Time: 7:48 PM
  */
 
-namespace Ezi\Bundle\IssueBundle\Migrations\Issue;
+namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
 use Doctrine\DBAL\Schema\Table;
 
-use Bap\Bundle\IssueBundle\Migrations\AbstractMigration;
-use Bap\Bundle\IssueBundle\Entity\IssueCollaborator;
+use Bap\Bundle\IssueBundle\Entity\Issue;
 
 /**
  * Class BapIssueCollaborator
@@ -20,33 +19,53 @@ use Bap\Bundle\IssueBundle\Entity\IssueCollaborator;
  */
 class BapIssueCollaborator extends AbstractMigration
 {
+    /**
+     * @return mixed
+     */
     public function getTableName()
     {
-        return IssueCollaborator::TABLE_NAME;
+        return Issue::COLLABORATOR_TABLE_NAME;
     }
 
-    public function addIndexKeys(Table $table)
+    /**
+     * @return Table
+     */
+    public function addIndexKeys()
     {
-        $table->setPrimaryKey(['id']);
+        $table = $this->getTargetTable();
+
         $table->addIndex(['issue_id'], 'BAP_ISSUE_COLLABORATOR_ISSUE_ID_INDEX');
         $table->addIndex(['user_id'], 'BAP_ISSUE_COLLABORATOR_USER_ID_INDEX');
 
         return $table;
     }
 
-    public function addColumns(Table $table)
+    /**
+     * @return Table
+     */
+    public function addColumns()
     {
+        $table = $this->getTargetTable();
+
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('issue_id', 'integer');
         $table->addColumn('user_id', 'integer');
 
+        $table->setPrimaryKey(['id']);
+
         return $table;
     }
 
-    public function addForeignKeys(Table $table)
+    /**
+     * @return Table
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addForeignKeys()
     {
+        $table = $this->getTargetTable();
+
         $table->addForeignKeyConstraint(
-            $this->getSchema()->getTable('bts_issue'),
+            $this->getSchema()->getTable('bap_issue'),
             ['issue_id'],
             ['id'],
             ['onDelete' => 'CASCADE']

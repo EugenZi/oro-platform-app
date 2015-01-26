@@ -1,0 +1,2 @@
+0
+C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":176:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":71:{a:2:{i:0;s:38:"Oro\Bundle\AddressBundle\Entity\Region";i:1;s:4:"note";}}i:1;a:1:{s:7:"enabled";b:0;}}}

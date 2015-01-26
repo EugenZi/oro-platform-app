@@ -7,6 +7,7 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations\Schema;
 
+use Bap\Bundle\IssueBundle\Entity\Issue;
 use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
@@ -16,7 +17,11 @@ use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-use Bap\Bundle\IssueBundle\Migrations\Schema\v1_0\BapIssueBundle as BapIssueBundleMigration;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssue;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueType;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueResolution;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssuePriority;
+use Bap\Bundle\IssueBundle\Migrations\Issue\BapIssueCollaborator;
 
 /**
  * Class BapIssueBundleInstaller
@@ -28,7 +33,7 @@ class BapIssueBundleInstaller implements Installation, NoteExtensionAwareInterfa
     /**
      * Previous migrations version
      */
-    const ISSUE_MIGRATION_VERSION = 'v0_0';
+    const ISSUE_MIGRATION_VERSION = 'v1_0';
 
     /**
      * @var NoteExtension
@@ -80,8 +85,31 @@ class BapIssueBundleInstaller implements Installation, NoteExtensionAwareInterfa
      */
     public function up(Schema $schema, QueryBag $queries)
     {
-        $migration = new BapIssueBundleMigration();
+        (new BapIssueType($schema))->setup();
+        (new BapIssuePriority($schema))->setup();
+        (new BapIssueResolution($schema))->setup();
+        (new BapIssue($schema))->setup();
+        (new BapIssueCollaborator($schema))->setup();
 
-        $migration->up($schema, $queries);
+        $this->noteExtension
+             ->addNoteAssociation(
+                 $schema,
+                 Issue::TABLE_NAME
+             );
+
+        $this->activityExtension
+             ->addActivityAssociation(
+                 $schema,
+                 'oro_email',
+                 Issue::TABLE_NAME,
+                 true
+             );
+
+        $this->activityExtension
+             ->addActivityAssociation(
+                 $schema,
+                 'oro_calendar_event',
+                 Issue::TABLE_NAME
+             );
     }
 }
