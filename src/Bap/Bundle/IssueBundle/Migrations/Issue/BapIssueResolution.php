@@ -33,7 +33,7 @@ class BapIssueResolution extends AbstractMigration
      */
     public function addColumns()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
@@ -46,7 +46,7 @@ class BapIssueResolution extends AbstractMigration
     /**
      * @return Table
      */
-    public function addIndexKeys()
+    public function addIndexes()
     {
         $table = $this->getTargetTable();
 

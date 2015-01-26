@@ -30,9 +30,9 @@ class BapIssueCollaborator extends AbstractMigration
     /**
      * @return Table
      */
-    public function addIndexKeys()
+    public function addIndexes()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addIndex(['issue_id'], 'BAP_ISSUE_COLLABORATOR_ISSUE_ID_INDEX');
         $table->addIndex(['user_id'], 'BAP_ISSUE_COLLABORATOR_USER_ID_INDEX');
@@ -45,7 +45,7 @@ class BapIssueCollaborator extends AbstractMigration
      */
     public function addColumns()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('issue_id', 'integer');
@@ -62,7 +62,7 @@ class BapIssueCollaborator extends AbstractMigration
      */
     public function addForeignKeys()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addForeignKeyConstraint(
             $this->getSchema()->getTable('bap_issue'),

@@ -33,7 +33,7 @@ abstract class AbstractMigration implements MigrationInterface
      */
     public function __construct(Schema $schema)
     {
-        $tableName    = $this->getTableName();
+        $tableName = $this->getTableName();
 
         if ($schema->hasTable($tableName)) {
             $schema->dropTable($tableName);
@@ -48,7 +48,7 @@ abstract class AbstractMigration implements MigrationInterface
      */
     public function addForeignKeys()
     {
-        return $this->getTargetTable();
+        return $this->getTable();
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class AbstractMigration implements MigrationInterface
     final public function setup()
     {
         $this->addColumns($this->table);
-        $this->addIndexKeys($this->table);
+        $this->addIndexes($this->table);
         $this->addForeignKeys($this->table);
 
         return $this->table;
@@ -85,7 +85,7 @@ abstract class AbstractMigration implements MigrationInterface
     /**
      * @return Table
      */
-    public function getTargetTable()
+    public function getTable()
     {
         return $this->table;
     }
@@ -94,7 +94,7 @@ abstract class AbstractMigration implements MigrationInterface
      * @param Table $table
      * @return AbstractMigration
      */
-    public function setTargetTable(Table $table)
+    public function setTable(Table $table)
     {
         $this->table = $table;
 
