@@ -1,0 +1,184 @@
+parameters:
+    academic_bts.issue.entity.class: Bap\Bundle\IssueBundle\Entity\Issue
+    academic_bts.priority.entity.class: Bap\Bundle\IssueBundle\Entity\Priority
+    academic_bts.resolution.entity.class: Bap\Bundle\IssueBundle\Entity\Resolution
+
+    academic_bts.form.type.priority.class: Bap\Bundle\IssueBundle\Form\Type\PriorityType
+    academic_bts.form.handler.priority.class: Bap\Bundle\IssueBundle\Form\Handler\PriorityHandler
+
+    academic_bts.form.type.resolution.class: Bap\Bundle\IssueBundle\Form\Type\ResolutionType
+    academic_bts.form.handler.resolution.class: Bap\Bundle\IssueBundle\Form\Handler\ResolutionHandler
+
+    academic_bts.form.type.issue.class: Bap\Bundle\IssueBundle\Form\Type\IssueType
+    academic_bts.form.handler.issue.class: Bap\Bundle\IssueBundle\Form\Handler\IssueHandler
+
+    academic_bts.priority.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    academic_bts.resolution.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    academic_bts.issue.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+
+    academic_bts.form.type.issue.api.class: Bap\Bundle\IssueBundle\Form\Type\IssueApiType
+
+    academic_bts.helper.issue_helper.class: Bap\Bundle\IssueBundle\Helper\IssueHelper
+    academic_bts.grid.formatter.issue_type_property.class: Bap\Bundle\IssueBundle\Grid\Formatter\IssueTypeProperty
+
+    academic_bts.twig.extension.issue.class: Bap\Bundle\IssueBundle\Twig\IssueExtension
+
+
+services:
+    academic_bts.form.issue:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "academic_bts_issue_form"
+            - "academic_bts_issue"
+
+    academic_bts.form.type.issue:
+        class: %academic_bts.form.type.issue.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: academic_bts_issue }
+
+    academic_bts.form.handler.issue:
+        class: %academic_bts.form.handler.issue.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.issue
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    academic_bts.form.priority:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "academic_bts_priority_form"
+            - "academic_bts_priority"
+
+    academic_bts.form.type.priority:
+        class: %academic_bts.form.type.priority.class%
+        tags:
+            - { name: form.type, alias: academic_bts_priority }
+
+    academic_bts.form.handler.priority:
+        class: %academic_bts.form.handler.priority.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.priority
+            - @request
+            - @doctrine.orm.entity_manager
+
+    academic_bts.form.resolution:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "academic_bts_resolution_form"
+            - "academic_bts_resolution"
+
+    academic_bts.form.type.resolution:
+        class: %academic_bts.form.type.resolution.class%
+        tags:
+            - { name: form.type, alias: academic_bts_resolution }
+
+    academic_bts.form.handler.resolution:
+        class: %academic_bts.form.handler.resolution.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.resolution
+            - @request
+            - @doctrine.orm.entity_manager
+
+    academic_bts.issue.manager.api:
+        class: %academic_bts.issue.manager.api.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %academic_bts.issue.entity.class%
+            - @doctrine.orm.entity_manager
+
+    academic_bts.form.type.issue.api:
+        class: %academic_bts.form.type.issue.api.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: issue }
+
+    academic_bts.form.issue.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["issue", "issue", null]
+
+    academic_bts.form.handler.issue.api:
+        class: %academic_bts.form.handler.issue.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.issue.api
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    academic_bts.priority.manager.api:
+        class: %academic_bts.priority.manager.api.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %academic_bts.priority.entity.class%
+            - @doctrine.orm.entity_manager
+
+    academic_bts.form.priority.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["priority", "priority", null]
+
+    academic_bts.form.handler.priority.api:
+        class: %academic_bts.form.handler.priority.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.priority.api
+            - @request
+            - @doctrine.orm.entity_manager
+
+    academic_bts.resolution.manager.api:
+        class: %academic_bts.resolution.manager.api.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %academic_bts.resolution.entity.class%
+            - @doctrine.orm.entity_manager
+
+    academic_bts.form.resolution.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["resolution", "resolution", null]
+
+    academic_bts.form.handler.resolution.api:
+        class: %academic_bts.form.handler.resolution.class%
+        scope: request
+        arguments:
+            - @academic_bts.form.resolution.api
+            - @request
+            - @doctrine.orm.entity_manager
+
+    academic_bts.helper.issue_helper:
+        class: %academic_bts.helper.issue_helper.class%
+        arguments:
+            - @translator
+
+    academic_bts.grid.formatter.issue_type_property:
+        class: %academic_bts.grid.formatter.issue_type_property.class%
+        arguments:
+            - @academic_bts.helper.issue_helper
+        tags:
+            - { name:  oro_datagrid.extension.formatter.property, type: issue_type }
+
+    academic_bts.twig.extension.issue:
+        class: %academic_bts.twig.extension.issue.class%
+        arguments:
+            - @academic_bts.helper.issue_helper
+        tags:
+            - { name: twig.extension }

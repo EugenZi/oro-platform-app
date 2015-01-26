@@ -1,0 +1,46 @@
+{% import 'OroUIBundle::macros.html.twig' as ui %}
+{% import 'OroTagBundle::macros.html.twig' as tag %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+{% import 'AcademicBtsBundle::macros.html.twig' as bts %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {{ ui.renderProperty('academic.bts.issue.type.label'|trans, get_issue_type_title(entity.type)) }}
+
+            {{ ui.renderProperty('academic.bts.issue.code.label'|trans, entity.code) }}
+
+            {{ ui.renderProperty('academic.bts.issue.summary.label'|trans, entity.summary) }}
+
+            {{ ui.renderProperty('academic.bts.issue.description.label'|trans, entity.description) }}
+
+            {{ ui.renderProperty('academic.bts.issue.priority.label'|trans, entity.priority.title) }}
+
+            {% set resolution = entity.resolution ? entity.resolution.title : 'N/A' %}
+            {{ ui.renderProperty('academic.bts.issue.resolution.label'|trans, resolution) }}
+
+            {% if entity.parent %}
+                {% set parent = bts.renderIssueLink(entity.parent) %}
+                {{ ui.renderHtmlProperty('academic.bts.issue.parent.label'|trans, parent) }}
+            {% endif %}
+
+            {% set reporter = entity.reporter ? bts.renderUserLink(entity.reporter) : 'N/A' %}
+            {{ ui.renderHtmlProperty('academic.bts.issue.reporter.label'|trans, reporter) }}
+
+            {% set assignee = entity.assignee ? bts.renderUserLink(entity.assignee) : 'N/A' %}
+            {{ ui.renderHtmlProperty('academic.bts.issue.assignee.label'|trans, assignee) }}
+
+            {% set owner = entity.owner ? bts.renderUserLink(entity.owner) : 'N/A' %}
+            {{ ui.renderHtmlProperty('academic.bts.issue.owner.label'|trans, owner) }}
+
+            {{ entityConfig.renderDynamicFields(entity) }}
+        </div>
+
+        {% if resource_granted('oro_tag_view_tag_cloud') %}
+            <div class="responsive-block">
+                {{ ui.renderHtmlProperty('oro.tag.entity_plural_label'|trans, tag.renderView(entity)) }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+

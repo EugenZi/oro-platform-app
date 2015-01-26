@@ -1,0 +1,9 @@
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {{ dataGrid.renderGrid('user-page-issue-grid', {'userId': user.id}) }}
+        </div>
+    </div>
+</div>

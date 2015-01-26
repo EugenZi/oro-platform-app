@@ -1,0 +1,5 @@
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+{% block content %}
+    {{ dataGrid.renderGrid('subtasks-grid', {'parentId': entity.id}) }}
+{% endblock %}

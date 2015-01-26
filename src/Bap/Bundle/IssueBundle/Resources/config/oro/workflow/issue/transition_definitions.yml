@@ -1,0 +1,10 @@
+workflows:
+    issue_flow:
+        transition_definitions:
+            start_progress_definition: ~
+            stop_progress_definition: ~
+            close_definition: ~
+            reopen_definition:
+                post_actions:
+                    - @assign_value: [$resolution, null]
+            resolve_definition: ~

@@ -1,0 +1,24 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set gridName = 'issue-grid' %}
+{% set pageTitle = 'academic.bts.issue.entity_plural_label'|trans %}
+
+{% block navButtons %}
+    {% include 'OroImportExportBundle:ImportExport:buttons.html.twig' with {
+        entity_class: entity_class,
+        exportProcessor: 'academic_bts_issue',
+        exportTemplateProcessor: 'academic_bts_issue',
+        importProcessor: 'academic_bts.issue.add_or_replace',
+        importTitle: 'oro.importexport.import.entity'|trans({'%entityName%': 'academic.bts.issue.entity_plural_label'|trans}),
+        dataGridName: gridName
+    } %}
+
+    {% if resource_granted('bts_issue_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+                'path': path('bts_issue_create'),
+                'entity_label': 'academic.bts.issue.entity_label'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

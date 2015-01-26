@@ -1,0 +1,30 @@
+{% import 'OroUIBundle::macros.html.twig' as ui %}
+{% import 'AcademicBtsBundle::macros.html.twig' as bts %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {% if entity.collaborators|length > 0 %}
+                <ul class="list-group">
+                    {% for collaborator in entity.collaborators %}
+                        <li class="list-group-item">
+                            {{ bts.renderUserLink(collaborator) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ 'academic.bts.controller.issue.no_collaborators.message'|trans }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        require(['oroui/js/mediator', 'oroui/js/widget-manager'], function(mediator, widgetManager) {
+            mediator.subscribe('widget_success:note-dialog', function() {
+                var collaboratorsWidget = widgetManager.getWidgetInstance('collaborators', function(widget) {
+                    widget.loadContent();
+                });
+            });
+        });
+    </script>
+</div>

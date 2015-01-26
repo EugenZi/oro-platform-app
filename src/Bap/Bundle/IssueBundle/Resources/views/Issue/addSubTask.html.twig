@@ -1,0 +1,3 @@
+{% extends 'AcademicBtsBundle:Issue:update.html.twig' %}
+
+{% set formAction = path('bts_issue_add_subtask', {'id': entity.parent.id}) %}

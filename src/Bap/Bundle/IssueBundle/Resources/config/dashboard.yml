@@ -1,0 +1,14 @@
+oro_dashboard_config:
+    widgets:
+        issue_chart:
+            label:       academic.bts.dashboard.widget.issue_chart.label
+            route:       bts_dashboard_issue_chart
+            acl:         bts_issue_view
+            description: academic.bts.dashboard.widget.issue_chart.description
+            icon:        bundles/orocalendar/img/my_calendar.png
+        my_issues:
+            label:       academic.bts.dashboard.widget.my_issues.label
+            route:       bts_dashboard_my_issues
+            acl:         bts_issue_view
+            description: academic.bts.dashboard.widget.my_issues.description
+            icon:        bundles/orocalendar/img/my_calendar.png

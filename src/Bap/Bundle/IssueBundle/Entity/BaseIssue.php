@@ -63,7 +63,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *              "organization_column_name"="organization_id"
  *          },
  *          "workflow"={
- *              "active_workflow"="issue_flow"
+ *              "active_workflow"="issue"
  *          }
  *      }
  * )

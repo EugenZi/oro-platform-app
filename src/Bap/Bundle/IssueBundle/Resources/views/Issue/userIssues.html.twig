@@ -1,0 +1,7 @@
+{% if resource_granted('bts_issue_view') %}
+    {{ oro_widget_render({
+        'widgetType': 'block',
+        'url': path('bts_issue_user_issues', {'id': entity.id}),
+        'title': 'academic.bts.issue.assigned_issues'|trans
+    }) }}
+{% endif %}

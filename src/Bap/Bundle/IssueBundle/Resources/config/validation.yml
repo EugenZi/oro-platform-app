@@ -1,0 +1,44 @@
+Bap\Bundle\IssueBundle\Entity\Issue:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
+    properties:
+        code:
+            - NotBlank:     ~
+            - Length:
+                max:        15
+        summary:
+            - NotBlank:     ~
+            - Length:
+                max:        200
+        type:
+            - Choice:
+                choices:    [task, story, sub_task, bug]
+        reporter:
+            - NotBlank:      ~
+        createdAt:
+            - DateTime:      ~
+        updatedAt:
+            - DateTime:      ~
+
+Bap\Bundle\IssueBundle\Entity\Priority:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: weight
+    properties:
+        title:
+            - NotBlank:     ~
+            - Length:
+                max:        50
+        weight:
+            - NotBlank:     ~
+            - Type:
+                type: integer
+
+Bap\Bundle\IssueBundle\Entity\Resolution:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
+    properties:
+        title:
+            - NotBlank:     ~
+            - Length:
+                max:        50
