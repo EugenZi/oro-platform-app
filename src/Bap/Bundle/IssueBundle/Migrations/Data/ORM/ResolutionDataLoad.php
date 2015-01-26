@@ -1,9 +1,8 @@
 <?php
 
-namespace Bap\Bundle\IssueBundle\Migration\Data\Demo;
+namespace Bap\Bundle\IssueBundle\Migration\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\Doctrine;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;

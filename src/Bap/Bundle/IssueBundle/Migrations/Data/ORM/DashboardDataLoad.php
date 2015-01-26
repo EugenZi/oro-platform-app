@@ -1,6 +1,6 @@
 <?php
 
-namespace Bap\Bundle\IssueBundle\Migration\Data\Demo;
+namespace Bap\Bundle\IssueBundle\Migration\Data\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
