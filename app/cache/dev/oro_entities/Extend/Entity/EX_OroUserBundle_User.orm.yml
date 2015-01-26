@@ -1,3 +1,0 @@
-Extend\Entity\EX_OroUserBundle_User:
-    type: mappedSuperclass
-    fields: {  }

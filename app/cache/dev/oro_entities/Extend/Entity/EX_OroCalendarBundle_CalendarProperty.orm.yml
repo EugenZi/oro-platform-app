@@ -1,3 +1,0 @@
-Extend\Entity\EX_OroCalendarBundle_CalendarProperty:
-    type: mappedSuperclass
-    fields: {  }

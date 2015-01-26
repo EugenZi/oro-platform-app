@@ -1,3 +1,0 @@
-Extend\Entity\EX_OroEmbeddedFormBundle_EmbeddedForm:
-    type: mappedSuperclass
-    fields: {  }

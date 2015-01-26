@@ -1,3 +1,0 @@
-Extend\Entity\EX_OroEmailBundle_Email:
-    type: mappedSuperclass
-    fields: {  }

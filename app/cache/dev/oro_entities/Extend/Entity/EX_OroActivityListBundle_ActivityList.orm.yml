@@ -1,3 +1,0 @@
-Extend\Entity\EX_OroActivityListBundle_ActivityList:
-    type: mappedSuperclass
-    fields: {  }

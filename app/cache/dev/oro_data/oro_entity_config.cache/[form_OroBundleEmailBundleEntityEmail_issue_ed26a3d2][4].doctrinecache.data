@@ -1,2 +1,0 @@
-0
-C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":225:{a:2:{i:0;C:53:"Oro\Bundle\EntityConfigBundle\Config\Id\FieldConfigId":116:{a:4:{i:0;s:35:"Oro\Bundle\EmailBundle\Entity\Email";i:1;s:4:"form";i:2;s:14:"issue_ed26a3d2";i:3;s:10:"manyToMany";}}i:1;a:1:{s:10:"is_enabled";b:1;}}}

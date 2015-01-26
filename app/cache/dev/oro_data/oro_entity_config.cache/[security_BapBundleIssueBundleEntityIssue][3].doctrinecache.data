@@ -1,2 +1,0 @@
-0
-C:43:"Oro\Bundle\EntityConfigBundle\Config\Config":234:{a:2:{i:0;C:54:"Oro\Bundle\EntityConfigBundle\Config\Id\EntityConfigId":72:{a:2:{i:0;s:35:"Bap\Bundle\IssueBundle\Entity\Issue";i:1;s:8:"security";}}i:1;a:3:{s:4:"type";s:3:"ACL";s:11:"permissions";s:3:"All";s:10:"group_name";s:0:"";}}}
