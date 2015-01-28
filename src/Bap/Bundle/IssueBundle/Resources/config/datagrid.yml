@@ -115,7 +115,7 @@ datagrid:
                     options:
                         field_type: oro_workflow_step_select
                         field_options:
-                            workflow_entity_class: %academic_bts.issue.entity.class%
+                            workflow_entity_class: %bap_issue.entity.issue.class%
                 collaborators:
                     type: entity
                     data_name: c.id
@@ -188,7 +188,7 @@ datagrid:
                     - i.updatedAt
                     - workflowStep.label as workflowStepLabel
                 from:
-                    - { table: %academic_bts.issue.entity.class%, alias: i }
+                    - { table: %bap_issue.entity.issue.class%, alias: i }
                 join:
                     left:
                         - { join: i.priority, alias: p }
@@ -251,7 +251,7 @@ datagrid:
                     options:
                         field_type: oro_workflow_step_select
                         field_options:
-                            workflow_entity_class: %academic_bts.issue.entity.class%
+                            workflow_entity_class: %bap_issue.entity.issue.class%
                 priority:
                     type: string
                     data_name: i.priority
@@ -402,7 +402,7 @@ datagrid:
                 acl_resource:  bts_resolution_delete
 
     subtasks-grid:
-        extended_entity_name: %academic_bts.issue.entity.class%
+        extended_entity_name: %bap_issue.entity.issue.class%
         options:
             entityHint: issue
         source:
@@ -421,7 +421,7 @@ datagrid:
                     - i.updatedAt
                     - workflowStep.label as workflowStepLabel
                 from:
-                    - { table: %academic_bts.issue.entity.class%, alias: i }
+                    - { table: %bap_issue.entity.issue.class%, alias: i }
                 join:
                     left:
                         - { join: i.priority, alias: p }
