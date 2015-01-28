@@ -19,9 +19,9 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 class PriorityController extends Controller
 {
     /**
-     * @Route("/priority", name="bts_priority_index")
+     * @Route("/priority", name="bap_issue_priority_index")
      * @Acl(
-     *      id="bts_priority_view",
+     *      id="bap_issue_priority_index",
      *      type="entity",
      *      class="AcademicBtsBundle:IssuePriority",
      *      permission="VIEW"
@@ -33,14 +33,14 @@ class PriorityController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('academic_bts.priority.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.priority.entity.class'),
         ];
     }
 
     /**
-     * @Route("/priority/create", name="bap_create_priority")
+     * @Route("/priority/create", name="bap_issue_create_priority")
      * @Acl(
-     *      id="bts_priority_create",
+     *      id="bap_priority_create",
      *      type="entity",
      *      class="BapIssueBundle:IssuePriority",
      *      permission="CREATE"
@@ -56,11 +56,11 @@ class PriorityController extends Controller
 
     /**
      * @param IssuePriority $priority
-     * @Route("/priority/update/{id}", name="bts_priority_update", requirements={"id"="\d+"})
+     * @Route("/priority/update/{id}", name="bap_update_priority", requirements={"id"="\d+"})
      * @Acl(
-     *      id="bts_priority_update",
+     *      id="bap_update_priority",
      *      type="entity",
-     *      class="AcademicBtsBundle:Priority",
+     *      class="BupIssueBundle:IssuePriority",
      *      permission="EDIT"
      * )
      * @Template()
@@ -78,22 +78,44 @@ class PriorityController extends Controller
      */
     protected function update(IssuePriority $entity)
     {
-        return $this->get('oro_form.model.update_handler')->handleUpdate(
-            $entity,
-            $this->get('academic_bts.form.priority'),
-            function (IssuePriority $entity) {
-                return [
-                    'route' => 'bts_priority_update',
-                    'parameters' => array('id' => $entity->getId()),
-                ];
-            },
-            function () {
-                return [
-                    'route' => 'bts_priority_index',
-                ];
-            },
-            $this->get('translator')->trans('academic.bts.controller.priority.saved.message'),
-            $this->get('academic_bts.form.handler.priority')
-        );
+        return $this
+            ->get('oro_form.model.update_handler')
+            ->handleUpdate(
+                $entity,
+                $this->get('bap_issue.form.priority'),
+                $this->saveAndStayRouteCallback($entity),
+                $this->saveAndCloseRouteCallback(),
+                $this->get('translator')->trans('bap_issue.controller.priority.saved.message'),
+                $this->get('bap_issue.form.handler.priority')
+            );
+    }
+
+    /**
+     * @param IssuePriority $entity
+     * @return \Closure
+     */
+    private function saveAndStayRouteCallback(IssuePriority $entity)
+    {
+        function () use ($entity) {
+            return [
+                'route' => 'bap_update_issue_priority',
+                'parameters' => [
+                    'id' => $entity->getId()
+                ]
+            ];
+
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    private function saveAndCloseRouteCallback()
+    {
+        return function () {
+            return [
+                'route' => 'bap_issue_priority',
+            ];
+        };
     }
 }

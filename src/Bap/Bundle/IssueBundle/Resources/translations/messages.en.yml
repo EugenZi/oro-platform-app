@@ -1,4 +1,4 @@
-academic.bts:
+bap_issue:
   dashboard:
     widget:
       issue_chart.label:        Issue status chart

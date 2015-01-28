@@ -9,13 +9,13 @@ oro_menu_config:
             label: academic.bts.issue.entity_plural_label
             route: bap_issue
             extras:
-                routes: ['bap_issue_index', 'bap_issue_create', 'bap_issue_update', 'bap_issue_add_subtask', 'bap_issue_view']
+                routes: ['bap_issue_issuees', 'bap_create_issue', 'bap_update_issue', 'bap_issue_add_subtask', 'bap_issue_view']
                 description: academic.bts_issue.entity_plural_label
         priorities_tab_link:
             label: academic.bts.priority.entity_plural_label
             route: bap_priority
             extras:
-                routes: ['bap_priority_index', 'bap_priority_create', 'bap_priority_update']
+                routes: ['bap_issue_priority', 'bap_issue_create_priority', 'bap_update_issue']
                 description: bap_issue.priority.entity_plural_label
         resolutions_tab_link:
             label: bap_issue.resolution.entity_plural_label

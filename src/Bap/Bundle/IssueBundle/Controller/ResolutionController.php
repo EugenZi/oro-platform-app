@@ -19,9 +19,10 @@ use Bap\Bundle\IssueBundle\Entity\IssueResolution as Resolution;
 class ResolutionController extends Controller
 {
     /**
-     * @Route("/resolution", name="bts_resolution_index")
+     * @Route("/resolution", name="bap_issue_resolution_index")
+     *
      * @Acl(
-     *      id="bts_resolution_view",
+     *      id="bap_issue_resolution_view",
      *      type="entity",
      *      class="AcademicBtsBundle:Resolution",
      *      permission="VIEW"
@@ -38,9 +39,10 @@ class ResolutionController extends Controller
     }
 
     /**
-     * @Route("/resolution/create", name="bap_create_resolution")
+     * @Route("/resolution/create", name="bap_issue_create_resolution")
+     *
      * @Acl(
-     *      id="bap_create_resolution",
+     *      id="bap_issue_create_resolution",
      *      type="entity",
      *      class="BapIssueBundle:Resolution",
      *      permission="CREATE"
@@ -56,9 +58,10 @@ class ResolutionController extends Controller
 
     /**
      * @param Resolution $resolution
-     * @Route("/resolution/update/{id}", name="bts_resolution_update", requirements={"id"="\d+"})
+     * @Route("/resolution/update/{id}", name="bap_issue_resolution_update", requirements={"id"="\d+"})
+     *
      * @Acl(
-     *      id="bts_resolution_update",
+     *      id="bap_issue_resolution_update",
      *      type="entity",
      *      class="AcademicBtsBundle:Resolution",
      *      permission="EDIT"
@@ -78,24 +81,44 @@ class ResolutionController extends Controller
      */
     protected function update(Resolution $entity)
     {
-        return $this->get('oro_form.model.update_handler')->handleUpdate(
-            $entity,
-            $this->get('academic_bts.form.resolution'),
-            function (Resolution $entity) {
-                return [
-                    'route' => 'bts_resolution_update',
-                    'parameters' => [
-                        'id' => $entity->getId()
-                    ],
-                ];
-            },
-            function () {
-                return [
-                    'route' => 'bap_resolution',
-                ];
-            },
-            $this->get('translator')->trans('academic.bts.controller.resolution.saved.message'),
-            $this->get('academic_bts.form.handler.resolution')
-        );
+        return $this
+            ->get('oro_form.model.update_handler')
+            ->handleUpdate(
+                $entity,
+                $this->get('bap_issue.form.resolution'),
+                $this->saveAndStayRouteCallback($entity),
+                $this->saveAndCloseRouteCallback(),
+                $this->get('translator')->trans('bap_issue.controller.resolution.saved.message'),
+                $this->get('bap_issue.form.handler.resolution')
+            );
+    }
+
+    /**
+     * @param Resolution $entity
+     * @return \Closure
+     */
+    private function saveAndStayRouteCallback(Resolution $entity)
+    {
+        return function () use ($entity) {
+            return [
+                'route' => 'bap_update_issue_priority',
+                'parameters' => [
+                    'id' => $entity->getId()
+                ]
+            ];
+
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    private function saveAndCloseRouteCallback()
+    {
+        return function () {
+            return [
+                'route' => 'bap_issue_priority',
+            ];
+        };
     }
 }

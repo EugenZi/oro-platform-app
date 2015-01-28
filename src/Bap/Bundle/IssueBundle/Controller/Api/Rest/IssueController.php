@@ -24,8 +24,8 @@ use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 use Bap\Bundle\IssueBundle\Entity\Issue;
 
 /**
- * @RouteResource("issue")
- * @NamePrefix("bts_api_")
+ * @RouteResource("bap_issue_ctrl")
+ * @NamePrefix("bap_rest_")
  */
 class IssueController extends RestController implements ClassResourceInterface
 {
@@ -34,17 +34,20 @@ class IssueController extends RestController implements ClassResourceInterface
      *
      * @QueryParam(
      *      name="page",
-     *      requirements="\d+",
+     *      requirements="[0-9]*",
      *      nullable=true,
-     *      description="Page number, starting from 1. Defaults to 1."
+     *      default: 1,
+     *      description="Integer number page, defaults to 1."
      * )
+     *
      * @QueryParam(
      *      name="limit",
-     *      requirements="\d+",
+     *      requirements="[0-9]*",
      *      nullable=true,
+     *      default: 1,
      *      description="Number of items per page. defaults to 10."
      * )
-     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @ApiDoc(
      *      description="Get the list of issues",
      *      resource=true,
@@ -53,12 +56,18 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="limit", "dataType"="integer"}
      *      }
      * )
-     * @AclAncestor("bts_user_view")
+     *
+     * @AclAncestor("bap.route.rest.issues")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cgetAction()
     {
-        $page = intval($this->get('request')->get('page', 1));
-        $limit = intval($this->get('request')->get('limit', self::ITEMS_PER_PAGE));
+        $request      = $this->getRequest();
+        $issuesOnPage = self::ITEMS_PER_PAGE;
+
+        $page  = $request->get('page', 1);
+        $limit = $request->get('limit', $issuesOnPage);
 
         return $this->handleGetListRequest($page, $limit);
     }
@@ -76,7 +85,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="id", "dataType"="integer"},
      *      }
      * )
-     * @AclAncestor("bts_issue_view")
+     * @AclAncestor("bap_rest_issue_show")
      */
     public function getAction($id)
     {
@@ -128,7 +137,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      resource=true
      * )
      * @Acl(
-     *      id="bts_issue_delete",
+     *      id="bap_issue_delete",
      *      type="entity",
      *      permission="DELETE",
      *      class="AcademicBtsBundle:Issue"
@@ -155,7 +164,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getManager()
     {
-        return $this->get('bap.issue.manager.api');
+        return $this->get('bap_issue.issue.manager.api');
     }
 
     /**
@@ -163,7 +172,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getForm()
     {
-        return $this->get('bap.form.issue.api');
+        return $this->get('bap_issue.form.issue.api');
     }
 
     /**
@@ -171,6 +180,6 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getFormHandler()
     {
-        return $this->get('bap.form.handler.issue.api');
+        return $this->get('bap_issue.form.handler.issue.api');
     }
 }

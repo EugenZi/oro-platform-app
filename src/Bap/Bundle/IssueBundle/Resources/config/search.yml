@@ -1,5 +1,5 @@
 Bap\Bundle\IssueBundle\Entity\Issue:
-    alias:                          academic_bap_issue
+    alias:                          bap_issue
     title_fields:                   [code]
     route:
         name:                       bap_issue_view

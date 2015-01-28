@@ -1,6 +1,6 @@
 definitions:
     note_creation:
-        label:   'Add user added a note as collaborator'
+        label:   'Add user as collaborator'
         enabled: true
         entity:  Oro\Bundle\NoteBundle\Entity\Note
         order:   10

@@ -34,6 +34,30 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      */
     const COLLABORATOR_TABLE_NAME = 'bap_issue_collaborator';
 
+    /**
+     * Workflow issue status
+     */
+    const STATUS_OPEN        = 'open';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_IN_PROGRESS = 'in_progress';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_CLOSED      = 'closed';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_RESOLVED    = 'resolved';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_REOPENED    = 'reopened';
 
     /**
      * Issue constructor

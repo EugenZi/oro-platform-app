@@ -9,8 +9,8 @@
     {% set actions = [
         {
             'type': 'link',
-            'label': 'bap.widgets.issues_page.view'|trans,
-            'url': path('bap_issues', {
+            'label': 'bap_issue.dashboard.widget.view_issues_page'|trans,
+            'url': path('bap_issue_page', {
                 'grid[issue-grid]': {
                     'f[collaborators][value]': app.user.id,
                     'f[collaborators][type]': 1

@@ -2,6 +2,7 @@
 
 namespace Bap\Bundle\IssueBundle\Controller;
 
+use Bap\Bundle\IssueBundle\Entity\IssueType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -22,10 +23,10 @@ class IssueController extends Controller
 {
     /**
      * @param Issue $issue
-     * @Route("/issue/view/{id}", name="bts_issue_view", requirements={"id"="\d+"})
+     * @Route("/issue/view/{id}", name="bap_issue_view", requirements={"id"="\d+"})
      * @Template()
      * @Acl(
-     *      id="bts_issue_view",
+     *      id="bap_issue_view",
      *      type="entity",
      *      class="AcademicBtsBundle:Issue",
      *      permission="VIEW"
@@ -39,24 +40,24 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/issue", name="bts_issue_index")
+     * @Route("/issue", name="bap_issue_index")
      * @Template()
-     * @AclAncestor("bts_issue_view")
+     * @AclAncestor("bap_issue_view")
      *
      * @return array
      */
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('academic_bts.issue.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.issue.entity.class'),
         ];
     }
 
     /**
-     * @Route("/issue/create", name="bts_issue_create")
+     * @Route("/issue/create", name="bap_issue_create")
      * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
-     *      id="bts_issue_create",
+     *      id="bap_issue_create",
      *      type="entity",
      *      class="AcademicBtsBundle:Issue",
      *      permission="CREATE"
@@ -67,17 +68,19 @@ class IssueController extends Controller
     public function createAction()
     {
         $issue = new Issue();
+
         $issue->setReporter($this->getUser());
+
         return $this->update($issue);
     }
 
     /**
      * @param User $user
      *
-     * @Route("/issue/create_from_widget/{id}", name="bts_issue_create_widget", requirements={"id"="\d+"})
+     * @Route("/issue/create_from_widget/{id}", name="bap_issue_create_widget", requirements={"id"="\d+"})
      * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
-     *      id="bts_issue_create_widget",
+     *      id="bap_issue_create_widget",
      *      type="entity",
      *      class="AcademicBtsBundle:Issue",
      *      permission="CREATE"
@@ -88,28 +91,31 @@ class IssueController extends Controller
     public function createFromWidgetAction(User $user)
     {
         $entity = new Issue();
+
         $entity->setAssignee($user);
         $entity->setReporter($user);
-        $responseData = array(
+
+        $responseData = [
             'entity' => $entity,
             'saved' => false
-        );
+        ];
 
-        if ($this->get('academic_bts.form.handler.issue')->process($entity)) {
+        if ($this->get('bap_issue.form.handler.issue')->process($entity)) {
             $responseData['saved'] = true;
         }
-        $responseData['form'] = $this->get('academic_bts.form.issue')->createView();
+
+        $responseData['form'] = $this->get('bap_issue.form.issue')->createView();
 
         return $responseData;
     }
 
     /**
      * @param Issue $issue
-     * @Route("/issue/update/{id}", name="bts_issue_update", requirements={"id"="\d+"})
+     * @Route("/issue/update/{id}", name="bap_issue_update", requirements={"id"="\d+"})
      * @Acl(
-     *      id="bts_issue_update",
+     *      id="bap_issue_update",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="EDIT"
      * )
      * @Template()
@@ -144,12 +150,12 @@ class IssueController extends Controller
     /**
      * @param Issue $parent
      *
-     * @Route("/issue/subtask/{id}", name="bts_issue_add_subtask", requirements={"id"="\d+"})
+     * @Route("/issue/subtask/{id}", name="bap_issue_add_sub_task", requirements={"id"="\d+"})
      * @Template()
      * @Acl(
-     *      id="bts_issue_add_sub_task",
+     *      id="bap_issue_add_sub_task",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="EDIT"
      * )
      *
@@ -157,26 +163,32 @@ class IssueController extends Controller
      */
     public function addSubTaskAction(Issue $parent)
     {
-        if ($parent->getType() != Issue::TYPE_STORY) {
+        if ($parent->getType() != IssueType::STORY_TYPE) {
             throw new HttpException(
                 400,
                 $this->get('translator')
                     ->trans(
-                        'academic.bts.controller.issue.adding_subtask.message',
+                        'bap_issue.controller.issue.adding_subtask.message',
                         ['%type%' => $parent->getType()]
                     )
             );
         }
 
         $subTask = new Issue();
-        $subTask->setType(Issue::TYPE_SUB_TASK);
+
+        $subTask->setType(IssueType::SUB_TASK_TYPE);
         $subTask->setParent($parent);
         $subTask->setReporter($this->getUser());
 
         return $this->update(
             $subTask,
             [
-                'cancelPath' => $this->get('router')->generate('bts_issue_view', ['id' => $parent->getId()]),
+                'cancelPath' => $this
+                    ->get('router')
+                    ->generate(
+                        'bap_issue_view',
+                        ['id' => $parent->getId()]
+                    ),
             ]
         );
     }
@@ -184,7 +196,7 @@ class IssueController extends Controller
     /**
      * @param Issue $issue
      *
-     * @Route("/widget/collaborators/{id}", name="bts_issue_collaborators", requirements={"id"="\d+"})
+     * @Route("/widget/collaborators/{id}", name="bap_issue_collaborators", requirements={"id"="\d+"})
      * @Template()
      *
      * @return array
@@ -197,7 +209,7 @@ class IssueController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/widget/user_issues/{id}", name="bts_issue_user_issues", requirements={"id"="\d+"})
+     * @Route("/widget/user_issues/{id}", name="bap_issue_user_issues", requirements={"id"="\d+"})
      * @Template()
      *
      * @return array
@@ -215,27 +227,37 @@ class IssueController extends Controller
      */
     protected function update(Issue $entity, array $params = [])
     {
-        if ($this->get('academic_bts.form.handler.issue')->process($entity)) {
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('academic.bts.controller.issue.saved.message')
-            );
+        if ($this->get('bap_issue.form.handler.issue')->process($entity)) {
 
-            return $this->get('oro_ui.router')->redirectAfterSave(
-                [
-                    'route' => 'bts_issue_update',
-                    'parameters' => array('id' => $entity->getId()),
-                ],
-                [
-                    'route' => 'bts_issue_view',
-                    'parameters' => array('id' => $entity->getId()),
-                ]
-            );
+            $this
+                ->get('session')
+                ->getFlashBag()
+                ->add(
+                    'success',
+                    $this
+                        ->get('translator')
+                        ->trans('bap_issue.controller.issue.saved.message')
+                );
+
+            return $this
+                ->get('oro_ui.router')
+                ->redirectAfterSave(
+                    [
+                        'route' => 'bap_issue_update',
+                        'parameters' => [
+                            'id' => $entity->getId()
+                        ],
+                    ],
+                    [
+                        'route' => 'bap_issue_view',
+                        'parameters' => ['id' => $entity->getId()],
+                    ]
+                );
         }
 
         return array_merge($params, [
             'entity' => $entity,
-            'form' => $this->get('academic_bts.form.issue')->createView(),
+            'form'   => $this->get('bap_issue.form.issue')->createView(),
         ]);
     }
 }

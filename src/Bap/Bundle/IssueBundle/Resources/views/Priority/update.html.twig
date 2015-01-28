@@ -13,11 +13,11 @@
     {% if form.vars.value.id and resource_granted('DELETE', form.vars.value) %}
         {{ UI.deleteButton({
             'dataUrl': path('bap_issue_api_delete_priority', {'id': form.vars.value.id}),
-            'dataRedirect': path('bts_priority_index'),
+            'dataRedirect': path('bap_issue_priority_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-priority',
             'dataId': form.vars.value.id,
-            'entity_label': 'academic.bts.priority.entity_label'|trans
+            'entity_label': 'bap_issue.priority.entity_label'|trans
         }) }}
         {{ UI.buttonSeparator() }}
     {% endif %}
@@ -30,7 +30,7 @@
         {% set breadcrumbs = {
             'entity':      form.vars.value,
             'indexPath':   path('bap_issue_priority_index'),
-            'indexLabel': 'academic.bts.priority.entity_plural_label'|trans,
+            'indexLabel': 'bap_issue.priority.entity_plural_label'|trans,
             'entityTitle': form.vars.value.title|default('N/A')
         } %}
         {{ parent() }}

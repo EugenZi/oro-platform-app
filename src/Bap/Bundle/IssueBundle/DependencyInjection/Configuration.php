@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
 
-        $treeBuilder->root('bap.issue');
+        $treeBuilder->root('bap_issue');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

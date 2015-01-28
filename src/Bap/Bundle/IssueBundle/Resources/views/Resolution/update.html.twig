@@ -4,17 +4,17 @@
 {% if form.vars.value.id %}
     {% oro_title_set({params : {"%entity.title%": form.vars.value.title} }) %}
 {% endif %}
-{% set formAction = form.vars.value.id ? path('bap_issue_resolution_update', { id: form.vars.value.id }) : path('bts_resolution_create') %}
+{% set formAction = form.vars.value.id ? path('bap_issue_resolution_update', { id: form.vars.value.id }) : path('bap_issue_create_resolution') %}
 
 {% block navButtons %}
     {% if form.vars.value.id and resource_granted('DELETE', form.vars.value) %}
         {{ UI.deleteButton({
-            'dataUrl': path('bts_api_delete_resolution', {'id': form.vars.value.id}),
-            'dataRedirect': path('bts_resolution_index'),
+            'dataUrl': path('bap_issue_resolution_index', {'id': form.vars.value.id}),
+            'dataRedirect': path('bap_issue_resolution_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-resolution',
             'dataId': form.vars.value.id,
-            'entity_label': 'academic.bts.resolution.entity_label'|trans
+            'entity_label': 'bap_issue.resolution.entity_label'|trans
         }) }}
         {{ UI.buttonSeparator() }}
     {% endif %}
@@ -27,12 +27,12 @@
         {% set breadcrumbs = {
             'entity':      form.vars.value,
             'indexPath':   path('bap_issue_resolution_index'),
-            'indexLabel': 'academic.bts.resolution.entity_plural_label'|trans,
+            'indexLabel': 'bap_issue.resolution.entity_plural_label'|trans,
             'entityTitle': form.vars.value.title|default('N/A')
         } %}
         {{ parent() }}
     {% else %}
-        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'academic.bts.resolution.entity_label'|trans}) %}
+        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'bap_issue.resolution.entity_label'|trans}) %}
         {% include 'OroUIBundle::page_title_block.html.twig' with { title: title } %}
     {% endif %}
 {% endblock pageHeader %}

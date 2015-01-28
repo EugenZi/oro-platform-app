@@ -1,5 +1,6 @@
 {% block page_container %}
     <div class="widget-content">
+
         {% if saved %}
             <script type="text/javascript">
                 require(['underscore', 'orotranslation/js/translator', 'oroui/js/widget-manager', 'oroui/js/messenger', 'oroui/js/mediator'],
@@ -13,25 +14,30 @@
                         });
             </script>
         {% else %}
+
             {% form_theme form with ['OroFormBundle:Form:fields.html.twig', 'OroTagBundle:Form:fields.html.twig'] %}
             <div class="form-container">
                 <form
                         id="{{ form.vars.name }}"
-                        method="post" {{ form_enctype(form) }}
-                        action="{{ path('bts_issue_create_widget', {'id': entity.assignee.id}) }}">
+                        method="post" {{ form_enctype(form) }}>
+                        action="{{ path('bap_issue_create_widget', {'id': entity.assignee.id}) }}"
 
                     <fieldset class="form form-horizontal">
                         <div class="span6">
+
                             {% if form.type is defined %}
                                 {{ form_row(form.type) }}
                             {% endif %}
+
                             {{ form_row(form.code) }}
                             {{ form_row(form.summary) }}
                             {{ form_row(form.description) }}
                             {{ form_row(form.priority) }}
+
                             {% if form.resolution is defined %}
                                 {{ form_row(form.resolution) }}
                             {% endif %}
+
                         </div>
 
                         <div class="span6">

@@ -13,6 +13,9 @@ use Bap\Bundle\IssueBundle\Entity\IssueResolution;
  */
 class ResolutionDataLoad extends AbstractFixture
 {
+    /**
+     * @var array
+     */
     protected $issueResolutions = [
         [
             'value' => 'Unresolved',
@@ -37,13 +40,13 @@ class ResolutionDataLoad extends AbstractFixture
      *
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         array_map(function ($value) use ($manager) {
 
             $issueResolution = new IssueResolution();
 
-            $issueResolution->setName($value['name']);
+            $issueResolution->setValue($value['value']);
             $manager->persist($issueResolution);
             $manager->flush();
 

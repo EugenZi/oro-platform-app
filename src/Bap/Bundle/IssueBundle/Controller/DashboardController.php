@@ -73,7 +73,9 @@ class DashboardController extends Controller
     public function myIssuesAction($widget)
     {
         $widgetAttr = array_merge(
-            $this->get('oro_dashboard.widget_configs')->getWidgetAttributesForTwig($widget),
+            $this
+                ->get('oro_dashboard.widget_configs')
+                ->getWidgetAttributesForTwig($widget),
             ['user' => $this->getUser()]
         );
 

@@ -23,7 +23,7 @@ use Bap\Bundle\IssueBundle\Entity\Resolution;
 
 /**
  * @RouteResource("resolution")
- * @NamePrefix("bts_api_")
+ * @NamePrefix("bap_api_")
  */
 class ResolutionController extends RestController implements ClassResourceInterface
 {
@@ -37,10 +37,10 @@ class ResolutionController extends RestController implements ClassResourceInterf
      *      resource=true
      * )
      * @Acl(
-     *      id="bts_resolution_delete",
+     *      id="bap_resolution_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="AcademicBtsBundle:Resolution"
+     *      class="BapIssueBundle:Resolution"
      * )
      * @return Response
      */
@@ -64,7 +64,7 @@ class ResolutionController extends RestController implements ClassResourceInterf
      */
     public function getManager()
     {
-        return $this->get('academic_bts.resolution.manager.api');
+        return $this->get('bap_issue.form.resolution');
     }
 
     /**
@@ -72,7 +72,7 @@ class ResolutionController extends RestController implements ClassResourceInterf
      */
     public function getForm()
     {
-        return $this->get('academic_bts.form.resolution.api');
+        return $this->get('bap_issue.form.resolution.api');
     }
 
     /**
@@ -80,6 +80,6 @@ class ResolutionController extends RestController implements ClassResourceInterf
      */
     public function getFormHandler()
     {
-        return $this->get('academic_bts.form.handler.resolution.api');
+        return $this->get('bap_issue.form.handler.resolution.api');
     }
 }

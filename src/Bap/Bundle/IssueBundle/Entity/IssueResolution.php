@@ -36,14 +36,6 @@ class IssueResolution
     protected $value;
 
     /**
-     * Issue resolution entity constructor
-     */
-    public function __construct()
-    {
-        $this->bapIssues = new ArrayCollection();
-    }
-
-    /**
      * Get the value of id.
      *
      * @return integer
@@ -59,7 +51,7 @@ class IssueResolution
      * @param string $value
      * @return IssueResolution
      */
-    public function setName($value)
+    public function setValue($value)
     {
         $this->value = $value;
 
@@ -71,7 +63,7 @@ class IssueResolution
      *
      * @return string
      */
-    public function getName()
+    public function getValue()
     {
         return $this->value;
     }

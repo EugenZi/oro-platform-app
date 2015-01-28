@@ -33,14 +33,14 @@ class PriorityController extends RestController implements ClassResourceInterfac
      * @param int $id
      *
      * @ApiDoc(
-     *      description="Delete IssuePriority",
+     *      description="Delete Priority Issue",
      *      resource=true
      * )
      * @Acl(
      *      id="bap_delete_issue_priority",
      *      type="entity",
      *      permission="DELETE",
-     *      class="AcademicBtsBundle:IssuePriority"
+     *      class="BapIssueBundle:IssuePriority"
      * )
      * @return Response
      */
@@ -64,7 +64,7 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getManager()
     {
-        return $this->get('bap.priority.manager.api');
+        return $this->get('bap_issue.priority.manager.api');
     }
 
     /**
@@ -72,7 +72,7 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getForm()
     {
-        return $this->get('bap.form.priority.api');
+        return $this->get('bap_issue.form.priority.api');
     }
 
     /**
@@ -80,6 +80,6 @@ class PriorityController extends RestController implements ClassResourceInterfac
      */
     public function getFormHandler()
     {
-        return $this->get('bap.form.handler.priority.api');
+        return $this->get('bap_issue.form.handler.priority.api');
     }
 }

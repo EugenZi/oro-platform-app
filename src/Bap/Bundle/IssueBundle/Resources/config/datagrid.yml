@@ -9,49 +9,49 @@ datagrid:
             type: orm
             query:
                 select:
-                    - i.id
-                    - i.code
-                    - i.summary
-                    - i.type
-                    - p.title as priority
-                    - r.title as resolution
+                    - iss.id
+                    - iss.code
+                    - iss.summary
+                    - iss.type
+                    - pri.title as priority
+                    - res.title as resolution
                     - CONCAT(rep.firstName, ' ',rep.lastName) as reporter
                     - CONCAT(ass.firstName, ' ',ass.lastName) as assignee
-                    - i.createdAt
-                    - i.updatedAt
-                    - workflowStep.label as workflowStepLabel
+                    - iss.createdAt
+                    - iss.updatedAt
+                    - wfs.label as workflowStepLabel
                 from:
-                    - { table: %bap_issue.issue.entity.class%, alias: i }
+                    - { table: %bap_issue.issue.entity.class%, alias: iss }
                 join:
                     left:
-                        - { join: i.priority, alias: p }
-                        - { join: i.resolution, alias: r }
-                        - { join: i.reporter, alias: rep }
-                        - { join: i.assignee, alias: ass }
-                        - { join: i.workflowStep, alias: workflowStep }
-                        - { join: i.collaborators, alias: c }
+                        - { join: iss.priority, alias: pri }
+                        - { join: iss.resolution, alias: res }
+                        - { join: iss.reporter, alias: rep }
+                        - { join: iss.assignee, alias: ass }
+                        - { join: iss.workflowStep, alias: wfs }
+                        - { join: iss.collaborators, alias: col }
         columns:
             code:
-                label: academic.bts.issue.code.label
+                label: bap.issue.code.label
             summary:
-                label: academic.bts.issue.summary.label
+                label: bap.issue.summary.label
             workflowStepLabel:
-                label: academic.bts.issue.workflow_step.label
+                label: bap.issue.workflow_step.label
             collaborators:
-                label: academic.bts.issue.collaborators.label
+                label: bap.issue.collaborators.label
                 renderable: false
             type:
                 type: issue_type
-                label: academic.bts.issue.type.label
+                label: bap.issue.type.label
                 data_name: type
             priority:
-                label: academic.bts.issue.priority.label
+                label: bap.issue.priority.label
             resolution:
-                label: academic.bts.issue.resolution.label
+                label: bap.issue.resolution.label
             reporter:
-                label: academic.bts.issue.reporter.label
+                label: bap.issue.reporter.label
             assignee:
-                label: academic.bts.issue.assignee.label
+                label: bap.issue.assignee.label
             createdAt:
                 label: oro.ui.created_at
                 frontend_type: datetime
@@ -63,7 +63,7 @@ datagrid:
             id: ~
             view_link:
                 type: url
-                route: bts_issue_view
+                route: bap_issue_view
                 params:
                     - id
             update_link:
