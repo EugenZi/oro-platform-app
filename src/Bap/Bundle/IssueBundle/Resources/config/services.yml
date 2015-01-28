@@ -121,7 +121,7 @@ services:
             - @doctrine.orm.entity_manager
 
     bap_issue.resolution.manager.api:
-        class: %bap_issue.api.manager.issue..resolution.class%
+        class: %bap_issue.api.manager.issue.resolution.class%
         parent: oro_soap.manager.entity_manager.abstract
         arguments:
             - %bap_issue.entity.issue.resolution.class%

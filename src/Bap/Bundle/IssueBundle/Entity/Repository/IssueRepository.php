@@ -10,5 +10,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class IssueRepository extends  EntityRepository
 {
+    public function getIssuesByStatus()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
 
+    }
 }
