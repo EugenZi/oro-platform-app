@@ -47,6 +47,11 @@ class IssueType
     const BUG_TYPE = 'bug';
 
     /**
+     * Issue type blocker
+     */
+    const BLOCKER_TYPE = 'blocker';
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

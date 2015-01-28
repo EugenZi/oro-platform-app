@@ -31,13 +31,13 @@ interface MigrationInterface
     /**
      * @return Table
      */
-    public function getTargetTable();
+    public function getTable();
 
     /**
      * @param Table $table
      * @return MigrationInterface
      */
-    public function setTargetTable(Table $table);
+    public function setTable(Table $table);
 
     /**
      * @return string
@@ -52,7 +52,7 @@ interface MigrationInterface
     /**
      * @return Table
      */
-    public function addIndexKeys();
+    public function addIndexes();
 
     /**
      * @return Table

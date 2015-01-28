@@ -1,0 +1,48 @@
+oro_menu_config:
+    items:
+        bts_tab:
+            label: academic.bts.issue.entity_plural_label
+            uri:   '#'
+            extras:
+                position: 10
+        issues_tab_link:
+            label: academic.bts.issue.entity_plural_label
+            route: bap_issue
+            extras:
+                routes: ['bap_issue_issuees', 'bap_create_issue', 'bap_update_issue', 'bap_issue_add_subtask', 'bap_issue_view']
+                description: academic.bts_issue.entity_plural_label
+        priorities_tab_link:
+            label: academic.bts.priority.entity_plural_label
+            route: bap_priority
+            extras:
+                routes: ['bap_issue_priority', 'bap_issue_create_priority', 'bap_update_issue']
+                description: bap_issue.priority.entity_plural_label
+        resolutions_tab_link:
+            label: bap_issue.resolution.entity_plural_label
+            route: bap_resolution
+            extras:
+                routes: ['bap_resolution', 'bap_resolution_create', 'bap_resolution_update']
+                description: bap_issue.resolution.entity_plural_label
+    tree:
+        application_menu:
+            children:
+                bts_tab:
+                    children:
+                        issues_tab_link: ~
+                        priorities_tab_link: ~
+                        resolutions_tab_link: ~
+
+oro_titles:
+    bts_issue_index:        bap_issue.issue.entity_plural_label
+    bts_issue_create:       bap_issue.controller.issue.create.label
+    bts_issue_view:         '%%entity.title%%'
+    bts_issue_update:       '%%entity.title%% - Edit'
+    bts_issue_add_subtask:  '%%entity.title%% - Add Subtask'
+
+    bts_priority_index:     bap_issue.priority.entity_plural_label
+    bts_priority_create:    bap_issue.controller.priority.create.label
+    bts_priority_update:    '%%entity.title%% - Edit'
+
+    bts_resolution_index:   bap_issue.resolution.entity_plural_label
+    bts_resolution_create:  bap_issue.controller.resolution.create.label
+    bts_resolution_update:  '%%entity.title%% - Edit'

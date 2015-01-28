@@ -1,0 +1,5 @@
+workflows:
+    issue_flow:
+        attributes:
+            resolution:
+                property_path: issue.resolution

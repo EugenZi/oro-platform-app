@@ -34,7 +34,7 @@ class BapIssue extends AbstractMigration
      */
     public function addColumns()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('parent_id', 'integer', ['notnull' => false]);
@@ -62,9 +62,9 @@ class BapIssue extends AbstractMigration
     /**
      * @return Table
      */
-    public function addIndexKeys()
+    public function addIndexes()
     {
-        $table = $this->getTargetTable();
+        $table = $this->getTable();
 
         $table->addIndex(['parent_id'], "BAP_ISSUE_ISSUE_PARENT_ID_INDEX");
         $table->addIndex(['organization_id'], "BAP_ISSUE_ORGANIZATION_ID_INDEX");
@@ -89,14 +89,14 @@ class BapIssue extends AbstractMigration
      */
     public function addForeignKeys()
     {
-        $table  = $this->getTargetTable();
+        $table  = $this->getTable();
         $schema = $this->getSchema();
 
         $table->addForeignKeyConstraint(
             $schema->getTable(Issue::TABLE_NAME),
             ['parent_id'],
             ['id'],
-            ['onDelete' => 'CASCADE']
+            ['onDelete' => 'SET NULL']
         );
 
         $table->addForeignKeyConstraint(

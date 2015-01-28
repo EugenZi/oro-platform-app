@@ -1,0 +1,19 @@
+{#
+    Available variables:
+    * entity       - email entity Oro\Bundle\EmailBundle\Entity\Email
+    * indexer_item - indexer item Oro\Bundle\SearchBundle\Query\Result\Item
+#}
+{% extends 'OroSearchBundle:Search:searchResultItem.html.twig' %}
+{% import 'BapIssueBundle::macros.html.twig' as bts %}
+
+{% set iconType = 'envelope' %}
+
+{% set recordUrl = indexer_item.recordUrl %}
+{% set title = bap_issue_title(entity) %}
+
+{% set entityType = 'bap_issue.issue.entity_label'|trans %}
+
+{% set entityInfo = [
+    {'title': 'bap_issue.issue.workflow_step.label'|trans, 'value': entity.workflowStep.label},
+    {'title': 'bap_issue.issue.assignee.label'|trans, 'value': entity.assignee|oro_format_name|default('N/A')},
+] %}

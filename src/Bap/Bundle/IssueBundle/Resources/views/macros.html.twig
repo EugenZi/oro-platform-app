@@ -1,0 +1,55 @@
+{% macro format_issue_title(issue) %}
+    {% if (issue.id) %}
+        {{ issue.code }}: {{ issue.summary }}
+    {% endif %}
+{% endmacro %}
+
+{% macro renderIssueLink(issue) %}
+    {% set title = _self.format_issue_title(issue)|default('N/A') %}
+    {% if resource_granted('VIEW', issue) %}
+        <a href="{{ path('bap_issue_view', {'id': issue.id}) }}">
+            {{ title }}
+        </a>
+    {% else %}
+        {{ title }}
+    {% endif %}
+{% endmacro %}
+
+{% macro createIssueButton(assignee) -%}
+    {% import 'OroUIBundle::macros.html.twig' as UI %}
+
+    {{ UI.clientButton({
+        'dataUrl': path('bap_issue_create_widget', {id: assignee.id}),
+        'aCss': 'no-hash',
+        'iCss': 'icon-time',
+        'label' : 'bap_issue.controller.issue.create.label'|trans,
+        'widget' : {
+            'type' : 'dialog',
+            'reload-grid-name' : 'user-page-issue-grid',
+            'multiple' : true,
+            'options' : {
+                'alias': 'issue-dialog',
+                'dialogOptions' : {
+                    'title' : 'bap_issue.controller.issue.create.label'|trans,
+                    'allowMaximize': true,
+                    'allowMinimize': true,
+                    'dblclick': 'maximize',
+                    'maximizedHeightDecreaseBy': 'minimize-bar',
+                    'autoResize': true,
+                    'width': 1120
+                }
+            }
+        }
+    }) }}
+{% endmacro -%}
+
+{% macro renderUserLink(user) %}
+    {% set fullName = user|oro_format_name|default('N/A') %}
+    {% if resource_granted('VIEW', user) %}
+        <a href="{{ path('oro_user_view', {'id': user.id}) }}">
+            {{ fullName }}
+        </a>
+    {% else %}
+        {{ fullName }}
+    {% endif %}
+{% endmacro %}

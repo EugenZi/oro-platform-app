@@ -34,6 +34,30 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      */
     const COLLABORATOR_TABLE_NAME = 'bap_issue_collaborator';
 
+    /**
+     * Workflow issue status
+     */
+    const STATUS_OPEN        = 'open';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_IN_PROGRESS = 'in_progress';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_CLOSED      = 'closed';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_RESOLVED    = 'resolved';
+
+    /**
+     * Workflow issue status
+     */
+    const STATUS_REOPENED    = 'reopened';
 
     /**
      * Issue constructor
@@ -61,11 +85,14 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * @param User $owner
+     * @param $owner
+     * @return Issue
      */
     public function setOwner($owner)
     {
         $this->owner = $owner;
+
+        return $this;
     }
 
     /**
@@ -78,10 +105,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param Organization $organization
+     * @return Issue
      */
     public function setOrganization(Organization $organization)
     {
         $this->organization = $organization;
+
+        return $this;
     }
 
     /**
@@ -94,10 +124,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param User $reporter
+     * @return Issue
      */
     public function setReporter(User $reporter)
     {
         $this->reporter = $reporter;
+
+        return $this;
     }
 
     /**
@@ -110,10 +143,26 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param User $assignee
+     * @return Issue
      */
     public function setAssignee(User $assignee)
     {
         $this->assignee = $assignee;
+
+        return $this;
+    }
+
+    /**
+     * Add collaborators
+     *
+     * @param User $collaborators
+     * @return Issue
+     */
+    public function pushCollaborator(User $collaborators)
+    {
+        $this->collaborators[] = $collaborators;
+
+        return $this;
     }
 
     /**
@@ -126,10 +175,14 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param ArrayCollection $collaborators
+     *
+     * @return Issue
      */
-    public function setCollaborators($collaborators)
+    public function setCollaborators(ArrayCollection $collaborators)
     {
         $this->collaborators = $collaborators;
+
+        return $this;
     }
 
     /**
@@ -142,10 +195,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param Issue $parent
+     * @return Issue
      */
     public function setParent(Issue $parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
@@ -158,10 +214,14 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param ArrayCollection $children
+     *
+     * @return Issue
      */
-    public function setChildren($children)
+    public function setChildren(ArrayCollection $children)
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
@@ -174,10 +234,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param string $code
+     * @return Issue
      */
     public function setCode($code)
     {
         $this->code = $code;
+
+        return $this;
     }
 
     /**
@@ -190,10 +253,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param mixed $type
+     * @return Issue
      */
     public function setType(IssueType $type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -206,10 +272,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param string $summary
+     * @return Issue
      */
     public function setSummary($summary)
     {
         $this->summary = $summary;
+
+        return $this;
     }
 
     /**
@@ -222,10 +291,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param string $description
+     * @return Issue
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -238,10 +310,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param IssuePriority $priority
+     * @return Issue
      */
     public function setPriority(IssuePriority $priority)
     {
         $this->priority = $priority;
+
+        return $this;
     }
 
     /**
@@ -254,10 +329,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param IssueResolution $resolution
+     * @return Issue
      */
     public function setResolution(IssueResolution $resolution)
     {
         $this->resolution = $resolution;
+
+        return $this;
     }
 
     /**
@@ -270,10 +348,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param WorkflowItem $workflowItem
+     * @return Issue
      */
     public function setWorkflowItem(WorkflowItem $workflowItem)
     {
         $this->workflowItem = $workflowItem;
+
+        return $this;
     }
 
     /**
@@ -286,10 +367,13 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
 
     /**
      * @param WorkflowStep $workflowStep
+     * @return Issue
      */
     public function setWorkflowStep(WorkflowStep $workflowStep)
     {
         $this->workflowStep = $workflowStep;
+
+        return $this;
     }
 
     /**
@@ -309,6 +393,16 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
         $this->tags = $tags;
 
         return $this;
+    }
+
+    /**
+     * Returns the unique taggable resource identifier
+     *
+     * @return int
+     */
+    public function getTaggableId()
+    {
+        return $this->getId();
     }
 
     /**
@@ -350,75 +444,5 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
             'created_at',
             'updated_at'
         ];
-    }
-
-    /**
-     * Checks if an entity of the given type can be associated with this activity entity
-     *
-     * @param string $targetClass The class name of the target entity
-     *
-     * @return bool
-     */
-    public function supportActivityTarget($targetClass)
-    {
-        // TODO: Implement supportActivityTarget() method.
-    }
-
-    /**
-     * Gets entities of the given type associated with this activity entity
-     *
-     * @param string $targetClass The class name of the target entity
-     *
-     * @return object[]
-     */
-    public function getActivityTargets($targetClass)
-    {
-        // TODO: Implement getActivityTargets() method.
-    }
-
-    /**
-     * Checks is the given entity is associated with this activity entity
-     *
-     * @param object $target Any configurable entity that can be associated with this activity
-     *
-     * @return bool
-     */
-    public function hasActivityTarget($target)
-    {
-        // TODO: Implement hasActivityTarget() method.
-    }
-
-    /**
-     * Associates the given entity with this activity entity
-     *
-     * @param object $target Any configurable entity that can be associated with this activity
-     *
-     * @return self This object
-     */
-    public function addActivityTarget($target)
-    {
-        // TODO: Implement addActivityTarget() method.
-    }
-
-    /**
-     * Removes the association of the given entity with this activity entity
-     *
-     * @param object $target Any configurable entity that can be associated with this activity
-     *
-     * @return self This object
-     */
-    public function removeActivityTarget($target)
-    {
-        // TODO: Implement removeActivityTarget() method.
-    }
-
-    /**
-     * Returns the unique taggable resource identifier
-     *
-     * @return string
-     */
-    public function getTaggableId()
-    {
-        // TODO: Implement getTaggableId() method.
     }
 }

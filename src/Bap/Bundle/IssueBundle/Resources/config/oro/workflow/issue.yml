@@ -1,0 +1,12 @@
+imports:
+    - { resource: 'issue/steps.yml' }
+    - { resource: 'issue/attributes.yml' }
+    - { resource: 'issue/transitions.yml' }
+    - { resource: 'issue/transition_definitions.yml' }
+
+workflows:
+    issue_flow:
+        label: 'Issue Workflow'
+        entity: Bap\Bundle\IssueBundle\Entity\Issue
+        entity_attribute: issue
+        start_step: open

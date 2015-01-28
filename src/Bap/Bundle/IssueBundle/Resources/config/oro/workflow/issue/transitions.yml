@@ -1,0 +1,51 @@
+workflows:
+    issue_flow:
+        transitions:
+            start_progress:
+                label: 'Start progress'
+                step_to: in_progress
+                frontend_options:
+                    icon: 'icon-play'
+                transition_definition: start_progress_definition
+            stop_progress:
+                label: 'Stop progress'
+                step_to: open
+                frontend_options:
+                    icon: 'icon-stop'
+                transition_definition: stop_progress_definition
+            close:
+                label: 'Close'
+                step_to: closed
+                frontend_options:
+                    icon: 'icon-ok'
+                transition_definition: close_definition
+                form_options:
+                    attribute_fields:
+                        resolution:
+                            form_type: entity
+                            options:
+                                class: Bap\Bundle\IssueBundle\Entity\Resolution
+                                required: true
+                                constraints:
+                                    - NotBlank: ~
+            resolve:
+                label: 'Resolve'
+                step_to: resolved
+                frontend_options:
+                    icon: 'icon-ok'
+                transition_definition: resolve_definition
+                form_options:
+                    attribute_fields:
+                        resolution:
+                            form_type: entity
+                            options:
+                                class: Bap\Bundle\IssueBundle\Entity\Resolution
+                                required: true
+                                constraints:
+                                    - NotBlank: ~
+            reopen:
+                label: 'Reopen'
+                step_to: reopened
+                frontend_options:
+                    icon: 'icon-play'
+                transition_definition: reopen_definition

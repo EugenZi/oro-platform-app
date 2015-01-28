@@ -31,17 +31,9 @@ class IssueResolution
     protected $id;
 
     /**
-     * @ORM\Column(name="`value`", type="string", length=45)
+     * @ORM\Column(name="value", type="string", length=45)
      */
-    protected $name;
-
-    /**
-     * Issue resolution entity constructor
-     */
-    public function __construct()
-    {
-        $this->bapIssues = new ArrayCollection();
-    }
+    protected $value;
 
     /**
      * Get the value of id.
@@ -56,12 +48,12 @@ class IssueResolution
     /**
      * Set the value of value.
      *
-     * @param string $name
+     * @param string $value
      * @return IssueResolution
      */
-    public function setName($name)
+    public function setValue($value)
     {
-        $this->name = $name;
+        $this->value = $value;
 
         return $this;
     }
@@ -71,9 +63,9 @@ class IssueResolution
      *
      * @return string
      */
-    public function getName()
+    public function getValue()
     {
-        return $this->name;
+        return $this->value;
     }
 
     /**
@@ -81,7 +73,7 @@ class IssueResolution
      */
     public function __toString()
     {
-        return $this->name;
+        return $this->value;
     }
 
     /**

@@ -1,0 +1,108 @@
+definitions:
+    note_creation:
+        label:   'Add user as collaborator'
+        enabled: true
+        entity:  Oro\Bundle\NoteBundle\Entity\Note
+        order:   10
+        actions_configuration:
+            - @call_method:
+                attribute: $.targetClass
+                method: get_class
+                method_parameters: [$target]
+            - @tree:
+                conditions:
+                    @equal: [$.targetClass, 'Bap\Bundle\IssueBundle\Entity\Issue']
+                actions:
+                    - @call_method:
+                        object: $target
+                        method: setUpdatedAt
+                        method_parameters: [$updatedAt]
+                    - @call_method:
+                        object: $target
+                        attribute: $.collaborators
+                        method: getCollaborators
+                    - @call_method:
+                        object: $.collaborators
+                        attribute: $.isCollaboratorExist
+                        method: contains
+                        method_parameters: [$owner]
+                    - @tree:
+                        conditions:
+                            @equal: [false, $.isCollaboratorExist]
+                        actions:
+                            - @call_method:
+                                object: $target
+                                method: addCollaborator
+                                method_parameters: [$owner]
+
+    issue_update_reporter:
+        label:   'Add issue reporter as collaborator'
+        enabled: true
+        entity:  Bap\Bundle\IssueBundle\Entity\Issue
+        order:   10
+        actions_configuration:
+            - @tree:
+                conditions:
+                    @not_blank: [$reporter]
+                actions:
+                    - @call_method:
+                        object: $collaborators
+                        attribute: $.isCollaboratorExist
+                        method: contains
+                        method_parameters: [$reporter]
+                    - @tree:
+                        conditions:
+                            @equal: [false, $.isCollaboratorExist]
+                        actions:
+                            - @call_method:
+                                method: add
+                                object: $collaborators
+                                method_parameters: [$reporter]
+
+    issue_update_assignee:
+        label:   'Add issue assignee as collaborator'
+        enabled: true
+        entity:  Bap\Bundle\IssueBundle\Entity\Issue
+        order:   10
+        actions_configuration:
+            - @tree:
+                conditions:
+                    @not_blank: [$assignee]
+                actions:
+                    - @call_method:
+                        object: $collaborators
+                        attribute: $.isCollaboratorExist
+                        method: contains
+                        method_parameters: [$assignee]
+                    - @tree:
+                        conditions:
+                            @equal: [false, $.isCollaboratorExist]
+                        actions:
+                            - @call_method:
+                                method: add
+                                object: $collaborators
+                                method_parameters: [$assignee]
+
+triggers:
+    note_creation:
+        -
+            event:    create
+            priority: 10
+
+    issue_update_reporter:
+        -
+            event:    update
+            field:    reporter
+            priority: 10
+        -
+            event:    create
+            priority: 10
+
+    issue_update_assignee:
+        -
+            event:    update
+            field:    assignee
+            priority: 10
+        -
+            event:    create
+            priority: 10
