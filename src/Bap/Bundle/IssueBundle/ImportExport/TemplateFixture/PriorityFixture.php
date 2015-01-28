@@ -5,7 +5,7 @@ namespace Academic\BtsBundle\ImportExport\TemplateFixture;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 
-use Academic\BtsBundle\Entity\Priority;
+use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 
 class PriorityFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
@@ -18,7 +18,7 @@ class PriorityFixture extends AbstractTemplateRepository implements TemplateFixt
      */
     protected function createEntity($key)
     {
-        return new Priority();
+        return new IssuePriority();
     }
 
     /**
@@ -26,7 +26,7 @@ class PriorityFixture extends AbstractTemplateRepository implements TemplateFixt
      */
     public function getEntityClass()
     {
-        return 'Academic\BtsBundle\Entity\Priority';
+        return 'Bap\Bundle\IssueBundle\Entity\IssuePriority';
     }
 
     /**
@@ -41,14 +41,15 @@ class PriorityFixture extends AbstractTemplateRepository implements TemplateFixt
 
     /**
      * @param string $key
-     * @param Priority $entity
+     * @param IssuePriority $entity
      */
     public function fillEntityData($key, $entity)
     {
         switch ($key) {
             case 'Normal':
-                $entity->setTitle('Normal')
-                    ->setWeight(20);
+                $entity
+                    ->setName('Normal')
+                    ->setValue(20);
 
                 return;
         }

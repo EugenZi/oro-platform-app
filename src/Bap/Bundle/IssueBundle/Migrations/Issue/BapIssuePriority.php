@@ -38,7 +38,7 @@ class BapIssuePriority extends AbstractMigration
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 32]);
-        $table->addColumn('priority', 'integer', ['length' => 3]);
+        $table->addColumn('value', 'integer', ['length' => 3]);
 
         $table->setPrimaryKey(['id']);
 
@@ -52,8 +52,9 @@ class BapIssuePriority extends AbstractMigration
     {
         $table = $this->getTable();
 
-        $table->addUniqueIndex(['name'], 'BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_IDX');
-        $table->addIndex(['priority'], 'BAP_ISSUE_PRIORITY_PRIORITY_FIELD_IDX');
+        $table->addUniqueIndex(['name'], 'BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_INDEX');
+        $table->addIndex(['name'], 'BAP_ISSUE_PRIORITY_NAME_FIELD_INDEX');
+        $table->addIndex(['value'], 'BAP_ISSUE_PRIORITY_VALUE_FIELD_INDEX');
 
         return $table;
     }
