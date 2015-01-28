@@ -284,7 +284,7 @@ datagrid:
                     - p.title
                     - p.weight
                 from:
-                    - { table: %academic_bts.priority.entity.class%, alias: p }
+                    - { table: %bap_issue.entity.issue.priority.class%, alias: p }
 
         columns:
             title:
