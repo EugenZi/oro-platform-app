@@ -128,7 +128,7 @@ datagrid:
                     data_name: i.type
                     options:
                         field_options:
-                            choices: @academic_bts.helper.issue_helper->getTypeList
+                            choices: @bap_issue.helper.issue_helper->getTypeList
                 priority:
                     type: string
                     data_name: i.priority
@@ -353,7 +353,7 @@ datagrid:
                     - p.id
                     - p.title
                 from:
-                    - { table: %academic_bts.resolution.entity.class%, alias: p }
+                    - { table: %bap_issue.entity.issue.resolution.class%, alias: p }
 
         columns:
             title:
