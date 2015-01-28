@@ -17,22 +17,11 @@ class ResolutionDataLoad extends AbstractFixture
      * @var array
      */
     protected $issueResolutions = [
-        [
-            'value' => 'Unresolved',
-        ],
-        [
-            'value' => 'In progress'
-        ],
-        [
-            'value' => 'Resolved'
-        ],
-        [
-            'value' => 'Closed'
-        ],
-        [
-            'value' => 'Reopened'
-        ]
-
+        'Unresolved',
+        'In progress',
+        'Resolved',
+        'Closed',
+        'Reopened'
     ];
 
     /**
@@ -42,14 +31,18 @@ class ResolutionDataLoad extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
-        array_map(function ($value) use ($manager) {
+        $data = $this->issueResolutions;
+        $it = new \ArrayIterator($data);
+
+        while($it->valid()) {
 
             $issueResolution = new IssueResolution();
 
-            $issueResolution->setValue($value['value']);
+            $issueResolution->setValue($it->current());
             $manager->persist($issueResolution);
             $manager->flush();
 
-        }, $this->issueResolutions);
+            $it->next();
+        }
     }
 }

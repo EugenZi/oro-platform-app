@@ -308,7 +308,8 @@ abstract class BaseIssue
      * @ORM\JoinColumn(
      *      name="priority_id",
      *      referencedColumnName="id",
-     *      nullable=false
+     *      nullable=true,
+     *      onDelete="SET NULL"
      * )
      *
      * @ConfigField(
@@ -330,7 +331,9 @@ abstract class BaseIssue
      * @ORM\ManyToOne(targetEntity="IssueResolution")
      * @ORM\JoinColumn(
      *      name="resolution_id",
-     *      referencedColumnName="id"
+     *      referencedColumnName="id",
+     *      nullable=true,
+     *      onDelete="SET NULL"
      * )
      *
      * @ConfigField(

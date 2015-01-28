@@ -8,13 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Bap\Bundle\IssueBundle\Entity\IssueType
  *
- * @ORM\Entity(repositoryClass="Entity\Repository\IssueTypeRepository")
+ * @ORM\Entity()
  * @ORM\Table(
  *      name="bap_issue_type",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(
  *              name="BAP_ISSUE_TYPE_NAME_UNIQUE_INDEX",
- *              columns={"value"}
+ *              columns={"name"}
  *          )
  *      }
  * )
@@ -59,7 +59,7 @@ class IssueType
     protected $id;
 
     /**
-     * @ORM\Column(name="`value`", type="string", length=45)
+     * @ORM\Column(name="name", type="string", length=45)
      */
     protected $name;
 

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Bap\Bundle\IssueBundle\Entity\BapIssueResolution
  *
- * @ORM\Entity(repositoryClass="Entity\Repository\IssueResolutionRepository")
+ * @ORM\Entity()
  * @ORM\Table(
  *      name="bap_issue_resolution",
  *      uniqueConstraints={

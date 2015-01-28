@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bap\Bundle\IssueBundle\Entity\IssuePriority
  *
- * @ORM\Entity(repositoryClass="Entity\Repository\IssuePriorityRepository")
+ * @ORM\Entity()
  * @ORM\Table(
  *      name="bap_issue_priority",
  *      indexes={
@@ -58,6 +58,7 @@ class IssuePriority
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 

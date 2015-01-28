@@ -32,16 +32,20 @@ class PriorityDataLoad extends AbstractFixture
      */
     function load(ObjectManager $manager)
     {
-        array_map(function ($value, $key) use ($manager) {
+        $data = $this->issuePriorities;
+        $it = new \ArrayIterator($data);
+
+        while($it->valid()) {
 
             $issuePriority = new IssuePriority();
 
-            $issuePriority->setName($key);
-            $issuePriority->setValue($value);
+            $issuePriority->setName($it->key());
+            $issuePriority->setValue($it->current());
 
             $manager->persist($issuePriority);
             $manager->flush();
 
-        }, $this->issuePriorities);
+            $it->next();
+        }
     }
 }

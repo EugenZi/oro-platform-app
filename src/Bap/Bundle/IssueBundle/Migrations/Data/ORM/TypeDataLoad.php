@@ -15,18 +15,10 @@ class TypeDataLoad extends AbstractFixture
 {
 
     private $issueTypes = [
-        [
-            'name' => IssueType::STORY_TYPE
-        ],
-        [
-            'name' => IssueType::TASK_TYPE
-        ],
-        [
-            'name' => IssueType::SUB_TASK_TYPE
-        ],
-        [
-            'name' => IssueType::BUG_TYPE
-        ]
+        IssueType::STORY_TYPE,
+        IssueType::TASK_TYPE,
+        IssueType::SUB_TASK_TYPE,
+        IssueType::BUG_TYPE
     ];
 
     /**
@@ -36,14 +28,18 @@ class TypeDataLoad extends AbstractFixture
      */
     function load(ObjectManager $manager)
     {
-        array_map(function ($value) use ($manager) {
+        $data = $this->issueTypes;
+        $it = new \ArrayIterator($data);
+
+        while($it->valid()) {
 
             $issueType = new IssueType();
 
-            $issueType->setName($value['name']);
+            $issueType->setName($it->current());
             $manager->persist($issueType);
             $manager->flush();
 
-        }, $this->issueTypes);
+            $it->next();
+        }
     }
 }
