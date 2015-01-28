@@ -1,6 +1,6 @@
 datagrid:
     issue-grid:
-        extended_entity_name: %bap_issue.issue.entity.class%
+        extended_entity_name: %bap_issue.entity.issue.class%
         options:
             entityHint: issue
             entity_pagination: true
@@ -21,7 +21,7 @@ datagrid:
                     - iss.updatedAt
                     - wfs.label as workflowStepLabel
                 from:
-                    - { table: %bap_issue.issue.entity.class%, alias: iss }
+                    - { table: %bap_issue.entity.issue.class%, alias: iss }
                 join:
                     left:
                         - { join: iss.priority, alias: pri }

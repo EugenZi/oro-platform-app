@@ -13,7 +13,6 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
  */
 class PriorityDataLoad extends AbstractFixture
 {
-
     /**
      * @var array
      */
