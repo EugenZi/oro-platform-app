@@ -18,10 +18,11 @@ class PriorityDataLoad extends AbstractFixture
      * @var array
      */
     private $issuePriorities = [
-        IssuePriority::BLOCKER  => 90,
-        IssuePriority::BUG      => 80,
-        IssuePriority::CRITICAL => 70,
-        IssuePriority::MAJOR    => 60,
+        IssuePriority::BLOCKER  => 100,
+        IssuePriority::BUG      => 90,
+        IssuePriority::CRITICAL => 80,
+        IssuePriority::MAJOR    => 70,
+        IssuePriority::MINOR    => 60,
         IssuePriority::TRIVIAL  => 50
     ];
 

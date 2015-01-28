@@ -1,5 +1,5 @@
 imports:
-    - { resource: classes.yml }
+    - { resource: 'parameters.yml' }
 
 services:
     bap_issue.issue.importexport.data_converter:
@@ -39,16 +39,16 @@ services:
 
     # Template fixtures
     bap_issue.importexport.template_fixture.issue:
-        class: %bap_issue.butch.issue.fixture.class%
+        class: %bap_issue.batch.fixture.issue.class%
         tags:
             - { name: oro_importexport.template_fixture }
 
     bap_issue.importexport.template_fixture.priority:
-        class: %bap_issue.butch.priority.fixture.class%
+        class: %bap_issue.batch.fixture.priority.class%
         tags:
             - { name: oro_importexport.template_fixture }
 
     bap_issue.importexport.template_fixture.resolution:
-        class: %bap_issue.butch.resolution.fixture.class%
+        class: %bap_issue.batch.fixture.resolution.class%
         tags:
             - { name: oro_importexport.template_fixture }

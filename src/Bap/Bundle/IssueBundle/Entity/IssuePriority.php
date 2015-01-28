@@ -26,6 +26,36 @@ class IssuePriority
     const TABLE_NAME = 'bap_issue_priority';
 
     /**
+     * Issue priority Blocker
+     */
+    const BLOCKER  = 'Blocker';
+
+    /**
+     * Issue priority Bug
+     */
+    const BUG      = 'Bug';
+
+    /**
+     * Issue priority Critical
+     */
+    const CRITICAL = 'Critical';
+
+    /**
+     * Issue priority Major
+     */
+    const MAJOR    = 'Major';
+
+    /**
+     * Issue priority Minor
+     */
+    const MINOR    = 'Minor';
+
+    /**
+     * Issue priority Trivial
+     */
+    const TRIVIAL  = 'Trivial';
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      */

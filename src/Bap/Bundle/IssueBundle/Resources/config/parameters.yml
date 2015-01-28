@@ -22,4 +22,8 @@ parameters:
     bap_issue.helper.issue_helper.class: Bap\Bundle\IssueBundle\Twig\Helper\IssueHelper
     bap_issue.grid.formatter.issue.type.class: Bap\Bundle\IssueBundle\Grid\Formatter\IssueTypeProperty
 
-    bap_issue.twig.extension.issue.class: Academic\BtsBundle\Twig\IssueExtension
+    bap_issue.twig.extension.issue.class: Bap\Bundle\IssueBundle\Twig\Extension\IssueExtension
+
+    bap_issue.batch.fixture.issue.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\IssueFixture
+    bap_issue.batch.fixture.resolution.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\ResolutionFixture
+    bap_issue.batch.fixture.priority.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\PriorityFixture

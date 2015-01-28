@@ -1,6 +1,6 @@
 <?php
 
-namespace Academic\BtsBundle\ImportExport\TemplateFixture;
+namespace Bap\Bundle\IssueBundle\ImportExport\TemplateFixture;
 
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
