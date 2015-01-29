@@ -44,7 +44,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      nullable=true,
      *      description="Number of items per page. defaults to 10."
      * )
-     * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @ApiDoc(
      *      description="Get the list of issues",
      *      resource=true,
@@ -54,6 +54,8 @@ class IssueController extends RestController implements ClassResourceInterface
      *      }
      * )
      * @AclAncestor("bts_user_view")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cgetAction()
     {

@@ -6,7 +6,6 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Entity\IssueType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -40,8 +39,10 @@ class IssuesDataLoad extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         $this->objectManager = $manager;
+        
         $iteration           = self::COUNT_ITEMS;
-        $organization        = $this->getOrgatization();
+        $user                = $this->getUser();
+        $organization        = $user->getOrganization();
 
         while (--$iteration) {
             $issue = new Issue();
@@ -51,24 +52,16 @@ class IssuesDataLoad extends AbstractFixture
                 ->setSummary(self::SUMMARY_TEXT . $iteration)
                 ->setDescription(self::DESCRIPTION_TEXT . $iteration)
                 ->setPriority($this->getRandomPriority())
-                ->setReporter($this->getRandomUser($organization))
-                ->setAssignee($this->getRandomUser($organization))
-                ->setOwner($this->getRandomUser($organization))
+                ->setReporter($user)
+                ->setAssignee($user)
+                ->setOwner($user)
                 ->setOrganization($organization)
                 ->setType($this->getRandomType())
-                ->pushCollaborator($this->getRandomUser($organization));
+                ->pushCollaborator($user);
 
             $manager->persist($issue);
         }
         $manager->flush();
-    }
-
-    /**
-     * @return \Oro\Bundle\OrganizationBundle\Entity\Organization
-     */
-    private function getOrgatization()
-    {
-        return $this->getOrganizationRepository()->findOneBy([]);
     }
 
     /**
@@ -77,7 +70,8 @@ class IssuesDataLoad extends AbstractFixture
     private function getRandomPriority()
     {
         $priority = $this
-            ->getPriorityRepository()
+            ->objectManager
+            ->getRepository('BapIssueBundle:IssuePriority')
             ->findAll();
 
         return $this->getRandomItem($priority);
@@ -89,21 +83,11 @@ class IssuesDataLoad extends AbstractFixture
     private function getRandomType()
     {
         $types = $this
-            ->getTypeRepository()
+            ->objectManager
+            ->getRepository('BapIssueBundle:IssueType')
             ->findAll();
 
         return $this->getRandomItem($types);
-    }
-
-    /**
-     * @param Organization $organization
-     * @return User
-     */
-    private function getRandomUser(Organization $organization)
-    {
-        $users = $organization->getUsers();
-
-        return $this->getRandomItem($users->toArray());
     }
 
     /**
@@ -112,7 +96,7 @@ class IssuesDataLoad extends AbstractFixture
      */
     private function getRandomItem(array $collection)
     {
-        $it    = new \ArrayIterator($collection);
+        $it = new \ArrayIterator($collection);
 
         return $it->offsetGet(
             rand(0, $it->count() - 1)
@@ -120,53 +104,38 @@ class IssuesDataLoad extends AbstractFixture
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return \Bap\Bundle\IssueBundle\Entity\IssueResolution
      */
-    protected function getPriorityRepository()
+    protected function getIssueResolution()
     {
-        return $this
+        $resolution = $this
             ->objectManager
-            ->getRepository('BapIssueBundle:IssuePriority');
+            ->getRepository('BapIssueBundle:IssueResolution')
+            ->findAll();
+
+        return $this->getRandomItem($resolution);
     }
 
     /**
-     * @return \Oro\Bundle\UserBundle\Entity\Repository\UserRepository
+     * @return \Bap\Bundle\IssueBundle\Entity\IssueType
      */
-    protected function getOrganizationRepository()
+    protected function getIssueType()
     {
         return $this
             ->objectManager
-            ->getRepository('OroOrganizationBundle:Organization');
+            ->getRepository('BapIssueBundle:IssueType')
+            ->findAll();
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return \Oro\Bundle\UserBundle\Entity\User
      */
-    protected function getResolutionRepository()
+    protected function getUser()
     {
         return $this
             ->objectManager
-            ->getRepository('BapIssueBundle:IssueResolution');
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
-     */
-    protected function getTypeRepository()
-    {
-        return $this
-            ->objectManager
-            ->getRepository('BapIssueBundle:IssueType');
-    }
-
-    /**
-     * @return \Oro\Bundle\OrganizationBundle\Entity\Repository\OrganizationRepository
-     */
-    protected function getUserRepository()
-    {
-        return $this
-            ->objectManager
-            ->getRepository('OroUserBundle:User');
+            ->getRepository('OroUserBundle:User')
+            ->findOneBy(['enabled' => 1]);
     }
 }
 
