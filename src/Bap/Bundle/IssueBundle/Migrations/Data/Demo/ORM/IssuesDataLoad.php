@@ -50,7 +50,9 @@ class IssuesDataLoad extends AbstractFixture
                 ->setReporter($this->getRandomUser())
                 ->setAssignee($this->getRandomUser())
                 ->setOwner($this->getRandomUser())
-                ->setOrganization($this->getRandomUser()->getOrganization())
+                ->setOrganization(
+                    $this->getRandomUser()->getOrganization()
+                )
                 ->setType($this->getRandomType())
                 ->pushCollaborator($this->getRandomUser());
 
@@ -104,10 +106,11 @@ class IssuesDataLoad extends AbstractFixture
      */
     private function getRandomItem(array $collection)
     {
-        $count = count($collection);
-        $rand  = rand(0, --$count);
+        $it    = new \ArrayIterator($collection);
 
-        return $collection[$rand];
+        return $it->offsetGet(
+            rand(0, $it->count() - 1)
+        );
     }
 
     /**
