@@ -71,15 +71,15 @@ class BapIssue extends AbstractMigration
         $table->addIndex(['owner_id'], "BAP_ISSUE_OWNER_ID_INDEX");
         $table->addIndex(['reporter_id'], "BAP_ISSUE_STATUS_INDEX");
         $table->addIndex(['assignee_id'], "BAP_ISSUE_ASSIGNEE_ID_INDEX");
-        $table->addIndex(['collaborator_id'], "BAP_ISSUE_COLLABORATORS_ID_IDX");
+        $table->addIndex(['collaborator_id'], "BAP_ISSUE_COLLABORATORS_ID_INDEX");
         $table->addIndex(['workflow_item_id'], "BAP_ISSUE_WORKFLOW_ITEM_ID_INDEX");
-        $table->addIndex(['workflow_step_id'], "BAP_ISSUE_WORKFLOW_STEP_ID_IDX");
+        $table->addIndex(['workflow_step_id'], "BAP_ISSUE_WORKFLOW_STEP_ID_INDEX");
         $table->addIndex(['type_id'], "BAP_ISSUE_TYPE_ID_INDEX");
         $table->addIndex(['priority_id'], "BAP_ISSUE_PRIORITY_ID_INDEX");
         $table->addIndex(['resolution_id'], "BAP_ISSUE_RESOLUTION_ID_INDEX");
-        $table->addIndex(['summary'], "BAP_ISSUE_SUMMARY_IDX");
-        $table->addIndex(['code'], "BAP_ISSUE_CODE_IDX");
-        $table->addIndex(['description'], "BAP_ISSUE_DESCRIPTION_IDX");
+        $table->addIndex(['summary'], "BAP_ISSUE_SUMMARY_INDEX");
+        $table->addIndex(['code'], "BAP_ISSUE_CODE_INDEX");
+        $table->addIndex(['description'], "BAP_ISSUE_DESCRIPTION_INDEX");
 
         return $table;
     }

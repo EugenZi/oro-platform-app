@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *      name="bap_issue_priority",
  *      indexes={
- *          @ORM\Index(name="BAP_ISSUE_PRIORITY_PRIORITY_FIELD_IDX", columns={"priority"})
+ *          @ORM\Index(name="BAP_ISSUE_PRIORITY_NAME_FIELD_IDX", columns={"name"})
  *      },
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(name="BAP_ISSUE_PRIORITY_NAME_FIELD_UNIQUE_IDX", columns={"value"})

@@ -21,18 +21,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(
  *      name="bap_issue",
  *      indexes={
- *          @ORM\Index(name="BAP_ISSUE_SUMMARY_IDX", columns={"summary"}),
- *          @ORM\Index(name="BAP_ISSUE_CODE_IDX", columns={"code"}),
- *          @ORM\Index(name="BAP_ISSUE_DESCRIPTION_IDX", columns={"description"}),
- *          @ORM\Index(name="BAP_ISSUE_STATUS_IDX", columns={"type"}),
- *          @ORM\Index(name="BAP_ISSUE_ASSIGNEE_ID_IDX", columns={"priority"}),
- *          @ORM\Index(name="BAP_ISSUE_RELATED_ISSUES_ID_IDX", columns={"status"}),
- *          @ORM\Index(name="BAP_ISSUE_RELATED_ISSUES_ID_IDX", columns={"tags_id"}),
- *          @ORM\Index(name="BAP_ISSUE_COLLABORATORS_ID_IDX", columns={"reporter_id"}),
- *          @ORM\Index(name="BAP_ISSUE_ISSUE_PARENT_ID_IDX", columns={"parent_id"}),
- *          @ORM\Index(name="BAP_ISSUE_CHILDREN_ID_IDX", columns={"resolution_id"}),
- *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_IDX", columns={"assignee_id"}),
- *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_IDX", columns={"notes"})
+ *          @ORM\Index(name="BAP_ISSUE_SUMMARY_INDEX", columns={"summary"}),
+ *          @ORM\Index(name="BAP_ISSUE_CODE_INDEX", columns={"code"}),
+ *          @ORM\Index(name="BAP_ISSUE_DESCRIPTION_INDEX", columns={"description"}),
+ *          @ORM\Index(name="BAP_ISSUE_STATUS_INDEX", columns={"type_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_ASSIGNEE_ID_INDEX", columns={"priority_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_COLLABORATORS_ID_INDEX", columns={"reporter_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_ISSUE_PARENT_ID_INDEX", columns={"parent_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_CHILDREN_ID_INDEX", columns={"resolution_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_INDEX", columns={"assignee_id"}),
  *      }
  * )
  *

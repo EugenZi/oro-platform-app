@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(
  *      name="bap_issue_resolution",
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="BAP_ISSUE_RESOLUTION_NAME_UNIQUE_INDEX", columns={"value"})
+ *          @ORM\UniqueConstraint(name="BAP_ISSUE_RESOLUTION_VALUE_UNIQUE_INDEX", columns={"value"})
  *      }
  * )
  */
