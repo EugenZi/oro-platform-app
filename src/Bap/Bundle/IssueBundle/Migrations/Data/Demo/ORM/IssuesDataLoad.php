@@ -19,6 +19,11 @@ use Bap\Bundle\IssueBundle\Entity\Issue;
  */
 class IssuesDataLoad extends AbstractFixture
 {
+    const COUNT_ITEMS      = 10;
+
+    const SUMMARY_TEXT     = 'Training course on ORO platform stage ';
+
+    const DESCRIPTION_TEXT = 'Training to develop on ORO platform for new team members day';
     /**
      * @var ObjectManager
      */
@@ -32,16 +37,15 @@ class IssuesDataLoad extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         $this->objectManager = $manager;
-        $storyRange          = range(1, 10);
+        $iteration           = self::COUNT_ITEMS;
 
-        foreach ($storyRange as $value) {
-
+        while (--$iteration) {
             $issue = new Issue();
 
             $issue
-                ->setCode('BAP-10' . $value)
-                ->setSummary('Training course on ORO platform stage ' . $value)
-                ->setDescription('Training to develop on ORO platform for new team members day' . $value)
+                ->setCode('BAP-10' . $iteration)
+                ->setSummary(self::SUMMARY_TEXT . $iteration)
+                ->setDescription(self::DESCRIPTION_TEXT . $iteration)
                 ->setPriority($this->getRandomPriority())
                 ->setReporter($this->getRandomUser())
                 ->setAssignee($this->getRandomUser())
