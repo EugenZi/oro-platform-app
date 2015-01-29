@@ -39,7 +39,7 @@ class IssuesDataLoad extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         $this->objectManager = $manager;
-        
+
         $iteration           = self::COUNT_ITEMS;
         $user                = $this->getUser();
         $organization        = $user->getOrganization();
@@ -51,12 +51,13 @@ class IssuesDataLoad extends AbstractFixture
                 ->setCode('BAP-10' . $iteration)
                 ->setSummary(self::SUMMARY_TEXT . $iteration)
                 ->setDescription(self::DESCRIPTION_TEXT . $iteration)
-                ->setPriority($this->getRandomPriority())
+                ->setPriority($this->getIssuePriority())
                 ->setReporter($user)
                 ->setAssignee($user)
                 ->setOwner($user)
                 ->setOrganization($organization)
-                ->setType($this->getRandomType())
+                ->setType($this->getIssueType())
+                ->setResolution($this->getIssueResolution())
                 ->pushCollaborator($user);
 
             $manager->persist($issue);
@@ -67,7 +68,7 @@ class IssuesDataLoad extends AbstractFixture
     /**
      * @return IssuePriority|null
      */
-    private function getRandomPriority()
+    private function getIssuePriority()
     {
         $priority = $this
             ->objectManager
@@ -80,7 +81,7 @@ class IssuesDataLoad extends AbstractFixture
     /**
      * @return IssueType|null
      */
-    private function getRandomType()
+    private function getIssueType()
     {
         $types = $this
             ->objectManager
@@ -114,17 +115,6 @@ class IssuesDataLoad extends AbstractFixture
             ->findAll();
 
         return $this->getRandomItem($resolution);
-    }
-
-    /**
-     * @return \Bap\Bundle\IssueBundle\Entity\IssueType
-     */
-    protected function getIssueType()
-    {
-        return $this
-            ->objectManager
-            ->getRepository('BapIssueBundle:IssueType')
-            ->findAll();
     }
 
     /**
