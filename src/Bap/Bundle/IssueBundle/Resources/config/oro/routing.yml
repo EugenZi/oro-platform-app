@@ -4,7 +4,7 @@ bap_bundle:
     prefix:       /bap_
 
 bap_api:
-    resource:     "@BapIssueBundle/Resources/config/oro/routing.yml"
+    resource:     "@BapIssueBundle/Resources/config/oro/routing_api.yml"
     type: rest
     prefix:       api/rest/{version}
     requirements:

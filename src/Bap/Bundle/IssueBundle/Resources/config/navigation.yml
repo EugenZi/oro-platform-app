@@ -33,16 +33,16 @@ oro_menu_config:
                         resolutions_tab_link: ~
 
 oro_titles:
-    bts_issue_index:        bap_issue.issue.entity_plural_label
-    bts_issue_create:       bap_issue.controller.issue.create.label
-    bts_issue_view:         '%%entity.title%%'
-    bts_issue_update:       '%%entity.title%% - Edit'
-    bts_issue_add_subtask:  '%%entity.title%% - Add Subtask'
+    bap_issues:             bap_issue.issue.entity_plural_label
+    bap_create_issue:       bap_issue.controller.issue.create.label
+    bap_issue:              '%%entity.title%%'
+    bap_update_issue:       '%%entity.title%% - Edit'
+    bap_add_issue_subtask:  '%%entity.title%% - Add Subtask'
 
-    bts_priority_index:     bap_issue.priority.entity_plural_label
-    bts_priority_create:    bap_issue.controller.priority.create.label
-    bts_priority_update:    '%%entity.title%% - Edit'
+    bap_priorities:         bap_issue.priority.entity_plural_label
+    bap_create_priority:    bap_issue.controller.priority.create.label
+    bap_update_priority:    '%%entity.title%% - Edit'
 
-    bts_resolution_index:   bap_issue.resolution.entity_plural_label
-    bts_resolution_create:  bap_issue.controller.resolution.create.label
-    bts_resolution_update:  '%%entity.title%% - Edit'
+    bap_resolutions:         bap_issue.resolution.entity_plural_label
+    bap_create_resolutions:  bap_issue.controller.resolution.create.label
+    bap_update_resolution:  '%%entity.title%% - Edit'

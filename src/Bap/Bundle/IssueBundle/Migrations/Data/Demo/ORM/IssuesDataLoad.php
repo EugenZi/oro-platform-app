@@ -6,9 +6,11 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Entity\IssueType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 
+use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
@@ -24,6 +26,7 @@ class IssuesDataLoad extends AbstractFixture
     const SUMMARY_TEXT     = 'Training course on ORO platform stage ';
 
     const DESCRIPTION_TEXT = 'Training to develop on ORO platform for new team members day';
+
     /**
      * @var ObjectManager
      */
@@ -38,6 +41,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         $this->objectManager = $manager;
         $iteration           = self::COUNT_ITEMS;
+        $organization        = $this->getOrgatization();
 
         while (--$iteration) {
             $issue = new Issue();
@@ -47,19 +51,24 @@ class IssuesDataLoad extends AbstractFixture
                 ->setSummary(self::SUMMARY_TEXT . $iteration)
                 ->setDescription(self::DESCRIPTION_TEXT . $iteration)
                 ->setPriority($this->getRandomPriority())
-                ->setReporter($this->getRandomUser())
-                ->setAssignee($this->getRandomUser())
-                ->setOwner($this->getRandomUser())
-                ->setOrganization(
-                    $this->getRandomUser()->getOrganization()
-                )
+                ->setReporter($this->getRandomUser($organization))
+                ->setAssignee($this->getRandomUser($organization))
+                ->setOwner($this->getRandomUser($organization))
+                ->setOrganization($organization)
                 ->setType($this->getRandomType())
-                ->pushCollaborator($this->getRandomUser());
+                ->pushCollaborator($this->getRandomUser($organization));
 
             $manager->persist($issue);
-            $manager->flush();
         }
+        $manager->flush();
+    }
 
+    /**
+     * @return \Oro\Bundle\OrganizationBundle\Entity\Organization
+     */
+    private function getOrgatization()
+    {
+        return $this->getOrganizationRepository()->findOneBy([]);
     }
 
     /**
@@ -87,17 +96,14 @@ class IssuesDataLoad extends AbstractFixture
     }
 
     /**
-     * @return User|null
+     * @param Organization $organization
+     * @return User
      */
-    private function getRandomUser()
+    private function getRandomUser(Organization $organization)
     {
-        $user = $this
-            ->getUserRepository()
-            ->findOneBy(['enabled' => 1]);
+        $users = $organization->getUsers();
 
-        $companyUsers = $user->getUsers();
-
-        return $this->getRandomItem($companyUsers);
+        return $this->getRandomItem($users->toArray());
     }
 
     /**
@@ -130,7 +136,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         return $this
             ->objectManager
-            ->getRepository('OroUserBundle:User');
+            ->getRepository('OroOrganizationBundle:Organization');
     }
 
     /**
@@ -160,6 +166,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         return $this
             ->objectManager
-            ->getRepository('OroOrganizationBundle:Organization');
+            ->getRepository('OroUserBundle:User');
     }
 }
+
