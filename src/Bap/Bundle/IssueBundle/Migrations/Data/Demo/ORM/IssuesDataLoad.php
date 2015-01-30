@@ -14,6 +14,8 @@ use Oro\Bundle\UserBundle\Entity\User;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
 
+use Doctrine\DBAL\LockMode;
+
 /**
  * Class IssuesDataLoad
  * @package Bap\Bundle\IssueBundle\Migration\Data\Demo\ORM
@@ -26,6 +28,7 @@ class IssuesDataLoad extends AbstractFixture
 
     const DESCRIPTION_TEXT = 'Training to develop on ORO platform for new team members day';
 
+    const ENTITY_NS        = 'Bap\Bundle\IssueBundle\Entity';
     /**
      * @var ObjectManager
      */
@@ -45,25 +48,39 @@ class IssuesDataLoad extends AbstractFixture
         $organization        = $user->getOrganization();
 
         while (--$iteration) {
-            $issue = new Issue();
+            $issue      = new Issue();
+            $type       = $this->getIssueType();
+            $priority   = $this->getIssuePriority();
+            $resolution = $this->getIssueResolution();
 
             $issue
-                ->setCode('BAP-10' . $iteration)
-                ->setSummary(self::SUMMARY_TEXT . $iteration)
-                ->setDescription(self::DESCRIPTION_TEXT . $iteration)
-                ->setPriority($this->getIssuePriority())
-                ->setReporter($user)
-                ->setAssignee($user)
                 ->setOwner($user)
                 ->setOrganization($organization)
-                ->setType($this->getIssueType())
-                ->setResolution($this->getIssueResolution())
+                ->setReporter($user)
+                ->setAssignee($user)
+                ->setCode('BAP-10' . $iteration)
+                ->setType($type)
+                ->setSummary(self::SUMMARY_TEXT . $iteration)
+                ->setDescription(self::DESCRIPTION_TEXT . $iteration)
+                ->setPriority($priority)
+                ->setResolution($resolution)
                 ->pushCollaborator($user);
 
-            $manager->persist($issue);
+            $this->objectManager->persist($issue);
         }
-        $manager->flush();
+
+        $this->objectManager->flush();
     }
+
+//    private function loadObjectManager()
+//    {
+//        if (!$this->) {
+//            $this->entityManager = $this->entityManager->create(
+//                $this->entityManager->getConnection(),
+//                $this->entityManager->getConfiguration()
+//            );
+//        }
+//    }
 
     /**
      * @return IssuePriority|null
@@ -72,7 +89,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         $priority = $this
             ->objectManager
-            ->getRepository('BapIssueBundle:IssuePriority')
+            ->getRepository(self::ENTITY_NS . '\IssuePriority')
             ->findAll();
 
         return $this->getRandomItem($priority);
@@ -85,7 +102,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         $types = $this
             ->objectManager
-            ->getRepository('BapIssueBundle:IssueType')
+            ->getRepository(self::ENTITY_NS . 'IssueType')
             ->findAll();
 
         return $this->getRandomItem($types);
@@ -97,10 +114,10 @@ class IssuesDataLoad extends AbstractFixture
      */
     private function getRandomItem(array $collection)
     {
-        $it = new \ArrayIterator($collection);
+        $iterator = new \ArrayIterator($collection);
 
-        return $it->offsetGet(
-            rand(0, $it->count() - 1)
+        return $iterator->offsetGet(
+            rand(0, $iterator->count() - 1)
         );
     }
 
@@ -111,7 +128,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         $resolution = $this
             ->objectManager
-            ->getRepository('BapIssueBundle:IssueResolution')
+            ->getRepository(self::ENTITY_NS . 'IssueResolution')
             ->findAll();
 
         return $this->getRandomItem($resolution);
@@ -124,7 +141,7 @@ class IssuesDataLoad extends AbstractFixture
     {
         return $this
             ->objectManager
-            ->getRepository('OroUserBundle:User')
+            ->getRepository('Oro\Bundle\UserBundle\Entity\User')
             ->findOneBy(['enabled' => 1]);
     }
 }

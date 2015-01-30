@@ -49,7 +49,7 @@ class BapIssue extends AbstractMigration
         $table->addColumn('priority_id', 'integer', ['notnull' => false]);
         $table->addColumn('resolution_id', 'integer', ['notnull' => false]);
         $table->addColumn('summary', 'string', ['notnull' => false, 'length' => 255]);
-        $table->addColumn('code', 'string', ['length' => 32]);
+        $table->addColumn('code', 'string', ['length' => 16]);
         $table->addColumn('description', 'string', ['notnull' => false]);
         $table->addColumn('created_at', 'datetime');
         $table->addColumn('updated_at', 'datetime');

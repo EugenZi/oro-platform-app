@@ -15,19 +15,72 @@ use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
 
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
- * @ORM\Entity(repositoryClass="Bap\Bundle\IssueBundle\Entity\Repository\IssueRepository")
+ * Bap\Bundle\IssueBundle\Entity\Issue
+ *
+ * @ORM\Entity(repositoryClass="Entity\Repository\IssueRepository")
+ * @ORM\Table(
+ *      name="bap_issue",
+ *      indexes={
+ *          @ORM\Index(name="BAP_ISSUE_SUMMARY_INDEX", columns={"summary"}),
+ *          @ORM\Index(name="BAP_ISSUE_CODE_INDEX", columns={"code"}),
+ *          @ORM\Index(name="BAP_ISSUE_DESCRIPTION_INDEX", columns={"description"}),
+ *          @ORM\Index(name="BAP_ISSUE_STATUS_INDEX", columns={"type_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_ASSIGNEE_ID_INDEX", columns={"priority_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_COLLABORATORS_ID_INDEX", columns={"reporter_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_ISSUE_PARENT_ID_INDEX", columns={"parent_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_CHILDREN_ID_INDEX", columns={"resolution_id"}),
+ *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_INDEX", columns={"assignee_id"}),
+ *      }
+ * )
+ * @ORM\HasLifecycleCallbacks()
+ *
+ * @Config(
+ *      routeName="bap_issue_index",
+ *      defaultValues={
+ *          "entity"={
+ *              "icon"="icon-envelope"
+ *          },
+ *          "dataaudit"={
+ *              "auditable"=true
+ *          },
+ *          "security"={
+ *              "type"="ACL",
+ *              "permissions"="All",
+ *              "group_name"=""
+ *          },
+ *          "ownership"={
+ *              "owner_type"="USER",
+ *              "owner_field_name"="owner",
+ *              "owner_column_name"="user_owner_id",
+ *              "organization_field_name"="organization",
+ *              "organization_column_name"="organization_id"
+ *          },
+ *          "workflow"={
+ *              "active_workflow"="issue"
+ *          }
+ *      }
+ * )
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * @package Bap\IssueBundle\Entity
  */
-class Issue extends BaseIssue implements ActivityInterface, Taggable
+class Issue implements ActivityInterface, Taggable
 {
     use ExtendActivity;
 
     /**
      * Issue table real name
      */
-    const TABLE_NAME              = 'bap_issue';
+    const TABLE_NAME        = 'bap_issue';
 
     /**
      * Issues to users intermediate table name
@@ -58,6 +111,373 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * Workflow issue status
      */
     const STATUS_REOPENED    = 'reopened';
+    /**
+     * @var int $id
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=10
+     *          }
+     *      }
+     * )
+     */
+    protected $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(
+     *      name="owner_id",
+     *      referencedColumnName="id",
+     *      onDelete="SET NULL"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=10
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $owner;
+
+    /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(
+     *      targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization",
+     *      inversedBy="businessUnits"
+     * )
+     * @ORM\JoinColumn(
+     *      name="organization_id",
+     *      referencedColumnName="id",
+     *      onDelete="SET NULL"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=30
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $organization;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(
+     *      name="reporter_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=100,
+     *              "short"=true
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $reporter;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(
+     *      name="assignee_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=10,
+     *              "short"=true
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $assignee;
+
+    /**
+     * @var ArrayCollection $collaborators
+     *
+     * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="bap_issue_collaborator")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $collaborators;
+
+    /**
+     * @var Issue $parent
+     *
+     * @ORM\ManyToOne(targetEntity="Issue", inversedBy="children")
+     * @ORM\JoinColumn(
+     *      name="parent_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $parent;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Issue",
+     *      mappedBy="parent",
+     *      cascade={"remove"},
+     *      orphanRemoval=true
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $children;
+
+    /**
+     * @var string $code
+     *
+     * @ORM\Column(type="string", length=16)
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=40
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $code;
+
+    /**
+     * @var IssueType
+     *
+     * @ORM\ManyToOne(targetEntity="IssueType")
+     * @ORM\JoinColumn(
+     *      name="type_id",
+     *      referencedColumnName="id"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=70,
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $type;
+
+    /**
+     * @var string $summary
+     *
+     * @ORM\Column(type="string", length=45, nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=50
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $summary;
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=60
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $description;
+
+    /**
+     * @var IssuePriority
+     *
+     * @ORM\ManyToOne(targetEntity="IssuePriority")
+     * @ORM\JoinColumn(
+     *      name="priority_id",
+     *      referencedColumnName="id",
+     *      nullable=false
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=90,
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $priority;
+
+    /**
+     * @var IssueResolution
+     *
+     * @ORM\ManyToOne(targetEntity="IssueResolution")
+     * @ORM\JoinColumn(
+     *      name="resolution_id",
+     *      referencedColumnName="id"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=80,
+     *          },
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $resolution;
+
+    /**
+     * @var WorkflowItem
+     *
+     * @ORM\OneToOne(targetEntity="Oro\Bundle\WorkflowBundle\Entity\WorkflowItem")
+     * @ORM\JoinColumn(
+     *      name="workflow_item_id",
+     *      referencedColumnName="id",
+     *      onDelete="SET NULL"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $workflowItem;
+
+    /**
+     * @var WorkflowStep
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\WorkflowBundle\Entity\WorkflowStep")
+     * @ORM\JoinColumn(
+     *      name="workflow_step_id",
+     *      referencedColumnName="id",
+     *      onDelete="SET NULL"
+     * )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $workflowStep;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $tags;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     *
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     *
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
 
     /**
      * Issue constructor
@@ -85,10 +505,10 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
     }
 
     /**
-     * @param $owner
+     * @param User $owner
      * @return Issue
      */
-    public function setOwner($owner)
+    public function setOwner(User $owner = null)
     {
         $this->owner = $owner;
 
@@ -107,7 +527,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param Organization $organization
      * @return Issue
      */
-    public function setOrganization(Organization $organization)
+    public function setOrganization(Organization $organization = null)
     {
         $this->organization = $organization;
 
@@ -126,7 +546,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param User $reporter
      * @return Issue
      */
-    public function setReporter(User $reporter)
+    public function setReporter(User $reporter = null)
     {
         $this->reporter = $reporter;
 
@@ -145,7 +565,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param User $assignee
      * @return Issue
      */
-    public function setAssignee(User $assignee)
+    public function setAssignee(User $assignee = null)
     {
         $this->assignee = $assignee;
 
@@ -158,7 +578,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param User $collaborators
      * @return Issue
      */
-    public function pushCollaborator(User $collaborators)
+    public function pushCollaborator(User $collaborators = null)
     {
         $this->collaborators[] = $collaborators;
 
@@ -178,7 +598,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      *
      * @return Issue
      */
-    public function setCollaborators(ArrayCollection $collaborators)
+    public function setCollaborators(ArrayCollection $collaborators = null)
     {
         $this->collaborators = $collaborators;
 
@@ -197,7 +617,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param Issue $parent
      * @return Issue
      */
-    public function setParent(Issue $parent)
+    public function setParent(Issue $parent = null)
     {
         $this->parent = $parent;
 
@@ -217,7 +637,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      *
      * @return Issue
      */
-    public function setChildren(ArrayCollection $children)
+    public function setChildren(ArrayCollection $children = null)
     {
         $this->children = $children;
 
@@ -312,7 +732,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param IssuePriority $priority
      * @return Issue
      */
-    public function setPriority(IssuePriority $priority)
+    public function setPriority(IssuePriority $priority = null)
     {
         $this->priority = $priority;
 
@@ -331,7 +751,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param IssueResolution $resolution
      * @return Issue
      */
-    public function setResolution(IssueResolution $resolution)
+    public function setResolution(IssueResolution $resolution = null)
     {
         $this->resolution = $resolution;
 
@@ -350,7 +770,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param WorkflowItem $workflowItem
      * @return Issue
      */
-    public function setWorkflowItem(WorkflowItem $workflowItem)
+    public function setWorkflowItem(WorkflowItem $workflowItem = null)
     {
         $this->workflowItem = $workflowItem;
 
@@ -369,7 +789,7 @@ class Issue extends BaseIssue implements ActivityInterface, Taggable
      * @param WorkflowStep $workflowStep
      * @return Issue
      */
-    public function setWorkflowStep(WorkflowStep $workflowStep)
+    public function setWorkflowStep(WorkflowStep $workflowStep = null)
     {
         $this->workflowStep = $workflowStep;
 
