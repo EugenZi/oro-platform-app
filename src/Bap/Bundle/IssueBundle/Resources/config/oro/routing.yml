@@ -1,7 +1,7 @@
 bap_bundle:
     resource:     "@BapIssueBundle/Controller"
     type:         annotation
-    prefix:       /bapZ
+    prefix:       /bap
 
 bap_bundle_api:
     resource:     "@BapIssueBundle/Resources/config/oro/routing_api.yml"
