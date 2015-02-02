@@ -7,9 +7,9 @@
 {% block navButtons %}
     {% include 'OroImportExportBundle:ImportExport:buttons.html.twig' with {
         entity_class: entity_class,
-        exportProcessor: 'academic_bts_issue',
-        exportTemplateProcessor: 'academic_bts_issue',
-        importProcessor: 'academic_bts.issue.add_or_replace',
+        exportProcessor: 'bap_issue',
+        exportTemplateProcessor: 'bap_issue',
+        importProcessor: 'bap.issue.add_or_replace',
         importTitle: 'oro.importexport.import.entity'|trans({'%entityName%': 'bap_issue.issue.entity_plural_label'|trans}),
         dataGridName: gridName
     } %}

@@ -4,13 +4,13 @@ parameters:
     bap_issue.entity.issue.resolution.class: Bap\Bundle\IssueBundle\Entity\IssueResolution
     bap_issue.entity.issue.type.class: Bap\Bundle\IssueBundle\Entity\IssueType
 
-    bap_issue.form.type.issue.priority.class: Bap\Bundle\IssueBundle\Form\Type\Api\IssueApiType
+    bap_issue.form.type.issue.priority.class: Bap\Bundle\IssueBundle\Form\Type\IssuePriorityType
     bap_issue.form.handler.priority.class: Bap\Bundle\IssueBundle\Form\Handler\IssuePriorityHandler
 
     bap_issue.form.type.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Type\IssueResolutionType
     bap_issue.form.handler.issue.resolution.class: Academic\BtsBundle\Form\Handler\ResolutionHandler
 
-    bap_issue.api.form.type.issue.class: Bap\Bundle\IssueBundle\Form\Type\IssueFormType
+    bap_issue.form.type.issue.class: Bap\Bundle\IssueBundle\Form\Type\IssueFormType
     bap_issue.form.handler.issue.class: Bap\Bundle\IssueBundle\Form\Handler\IssueHandler
 
     bap_issue.api.manager.issue.priority.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager

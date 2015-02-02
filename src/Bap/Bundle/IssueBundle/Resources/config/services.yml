@@ -11,7 +11,7 @@ services:
             - "bap_issue_issue"
 
     bap_issue.form.type.issue:
-        class: %bap_issue.api.manager.issue.priority.class%
+        class: %bap_issue.form.type.issue.class%
         arguments:
             - @translator
         tags:

@@ -53,7 +53,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="limit", "dataType"="integer"}
      *      }
      * )
-     * @AclAncestor("bts_user_view")
+     * @AclAncestor("bab_user_view")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
