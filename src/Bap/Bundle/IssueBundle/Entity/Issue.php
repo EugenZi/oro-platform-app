@@ -23,7 +23,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Bap\Bundle\IssueBundle\Entity\Issue
  *
- * @ORM\Entity(repositoryClass="Entity\Repository\IssueRepository")
+ * @ORM\Entity(repositoryClass="Bap\Bundle\IssueBundle\Entity\Repository\IssueRepository")
  * @ORM\Table(
  *      name="bap_issue",
  *      indexes={
@@ -38,6 +38,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *          @ORM\Index(name="BAP_ISSUE_WORKFLOW_STEP_ID_INDEX", columns={"assignee_id"}),
  *      }
  * )
+ *
  * @ORM\HasLifecycleCallbacks()
  *
  * @Config(

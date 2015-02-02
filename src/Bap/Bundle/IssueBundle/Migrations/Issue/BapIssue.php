@@ -51,8 +51,8 @@ class BapIssue extends AbstractMigration
         $table->addColumn('summary', 'string', ['notnull' => false, 'length' => 255]);
         $table->addColumn('code', 'string', ['length' => 16]);
         $table->addColumn('description', 'string', ['notnull' => false]);
-        $table->addColumn('created_at', 'datetime');
-        $table->addColumn('updated_at', 'datetime');
+        $table->addColumn('created_at', 'datetime', ['notnull' => false]);
+        $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
 
         $table->setPrimaryKey(['id']);
 

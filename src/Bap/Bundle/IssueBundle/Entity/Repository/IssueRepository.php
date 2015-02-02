@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
  * Class IssueRepository
  * @package Bap\Bundle\IssueBundle\Entity\Repository
  */
-class IssueRepository extends  EntityRepository
+class IssueRepository extends EntityRepository
 {
     public function getIssuesByStatus($status)
     {

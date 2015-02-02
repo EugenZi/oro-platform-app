@@ -157,7 +157,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getManager()
     {
-        return $this->get('bap.issue.manager.api');
+        return $this->get('bap_issue.issue.manager.api');
     }
 
     /**
@@ -165,7 +165,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getForm()
     {
-        return $this->get('bap.form.issue.api');
+        return $this->get('bap_issue.form.issue.api');
     }
 
     /**
@@ -173,6 +173,6 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getFormHandler()
     {
-        return $this->get('bap.form.handler.issue.api');
+        return $this->get('bap_issue.form.handler.issue.api');
     }
 }
