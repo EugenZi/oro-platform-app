@@ -13,19 +13,27 @@ class IssueRepository extends EntityRepository
 {
     public function getIssuesByStatus()
     {
-        $result = $this->getFullEntityList();
+        $items  = $this->getCountIssuesByLabel();
+        $result = [];
 
+        while($item = array_pop($items)) {
+            $key   = $item['label'];
+            $count = $item['count_issues'];
 
+            $result[$key] = [
+                'count' => $count
+            ];
+        }
 
-
+        return $result;
     }
 
-    public function getFullEntityList()
+    public function getCountIssuesByLabel()
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
-        $qb->select(['COUNT(issue.id) as cnt', 'workflowStep.label'])
+        $qb->select(['COUNT(issue.id) as count_issues', 'workflowStep.label'])
             ->from('OroWorkflowBundle:WorkflowStep', 'workflowStep')
             ->leftJoin('workflowStep.definition', 'definition')
             ->leftJoin(
