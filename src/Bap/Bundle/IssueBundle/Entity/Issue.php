@@ -42,7 +42,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\HasLifecycleCallbacks()
  *
  * @Config(
- *      routeName="bap_issue_index",
+ *      routeName="bap_issues",
  *      defaultValues={
  *          "entity"={
  *              "icon"="icon-envelope"

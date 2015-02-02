@@ -19,7 +19,7 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 class PriorityController extends Controller
 {
     /**
-     * @Route("/priority", name="bap_issue_priority_index")
+     * @Route("/priority", name="bap_priorities")
      * @Acl(
      *      id="bap_issue_priority_index",
      *      type="entity",

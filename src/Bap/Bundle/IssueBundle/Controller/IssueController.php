@@ -40,7 +40,7 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/issue", name="bap_issue_index")
+     * @Route("/issue", name="bap_issues")
      * @Template()
      * @AclAncestor("bap_issue_view")
      *

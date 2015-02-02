@@ -19,10 +19,10 @@ use Bap\Bundle\IssueBundle\Entity\IssueResolution as Resolution;
 class ResolutionController extends Controller
 {
     /**
-     * @Route("/resolution", name="bap_issue_resolution_index")
+     * @Route("/resolution", name="bap_resolutions")
      *
      * @Acl(
-     *      id="bap_issue_resolution_view",
+     *      id="bap_issue_resolutions",
      *      type="entity",
      *      class="AcademicBtsBundle:Resolution",
      *      permission="VIEW"
