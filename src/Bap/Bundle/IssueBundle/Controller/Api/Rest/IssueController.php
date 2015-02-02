@@ -78,7 +78,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="id", "dataType"="integer"},
      *      }
      * )
-     * @AclAncestor("bap_issue_view")
+     * @AclAncestor("bap_issue")
      */
     public function getAction($id)
     {
@@ -93,7 +93,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      description="Create new issue",
      *      resource=true
      * )
-     * @AclAncestor("bap_create_issue")
+     * @AclAncestor("bap_issue_create")
      */
     public function postAction()
     {
@@ -113,7 +113,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *          {"name"="id", "dataType"="integer"},
      *      }
      * )
-     * @AclAncestor("bap_update_issue")
+     * @AclAncestor("bap_issue_update")
      */
     public function putAction($id)
     {
@@ -130,7 +130,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      resource=true
      * )
      * @Acl(
-     *      id="bts_issue_delete",
+     *      id="bap_issue_delete",
      *      type="entity",
      *      permission="DELETE",
      *      class="BapIssueBundle:Issue"

@@ -7,7 +7,7 @@
 {% macro renderIssueLink(issue) %}
     {% set title = _self.format_issue_title(issue)|default('N/A') %}
     {% if resource_granted('VIEW', issue) %}
-        <a href="{{ path('bap_issue_view', {'id': issue.id}) }}">
+        <a href="{{ path('bap_issue', {'id': issue.id}) }}">
             {{ title }}
         </a>
     {% else %}
@@ -19,7 +19,7 @@
     {% import 'OroUIBundle::macros.html.twig' as UI %}
 
     {{ UI.clientButton({
-        'dataUrl': path('bap_issue_create_widget', {id: assignee.id}),
+        'dataUrl': path('bap_create_issue_widget', {id: assignee.id}),
         'aCss': 'no-hash',
         'iCss': 'icon-time',
         'label' : 'bap_issue.controller.issue.create.label'|trans,
