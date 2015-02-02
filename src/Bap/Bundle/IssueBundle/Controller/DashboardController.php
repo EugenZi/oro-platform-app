@@ -2,6 +2,7 @@
 
 namespace Bap\Bundle\IssueBundle\Controller;
 
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

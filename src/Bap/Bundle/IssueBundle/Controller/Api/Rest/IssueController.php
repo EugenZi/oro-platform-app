@@ -25,7 +25,7 @@ use Bap\Bundle\IssueBundle\Entity\Issue;
 
 /**
  * @RouteResource("issue")
- * @NamePrefix("bts_api_")
+ * @NamePrefix("bap_api_")
  */
 class IssueController extends RestController implements ClassResourceInterface
 {

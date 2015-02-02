@@ -1,32 +1,32 @@
 oro_menu_config:
     items:
-        bts_tab:
-            label: academic.bts.issue.entity_plural_label
+        bap_tab:
+            label: bap_issue.issue.entity_plural_label
             uri:   '#'
             extras:
                 position: 10
         issues_tab_link:
-            label: academic.bts.issue.entity_plural_label
-            route: bap_issue
+            label: bap_issue.issue.entity_plural_label
+            route: bap_issues
             extras:
-                routes: ['bap_issue_issuees', 'bap_create_issue', 'bap_update_issue', 'bap_issue_add_subtask', 'bap_issue_view']
-                description: academic.bts_issue.entity_plural_label
+                routes: ['bap_issues', 'bap_issue', 'bap_create_issue', 'bap_update_issue', 'bap_add_issue_subtask']
+                description: bap_issue_issue.entity_plural_label
         priorities_tab_link:
-            label: academic.bts.priority.entity_plural_label
-            route: bap_priority
+            label: bap_issue.priority.entity_plural_label
+            route: bap_priorities
             extras:
-                routes: ['bap_issue_priority', 'bap_issue_create_priority', 'bap_update_issue']
+                routes: ['bap_priorities', 'bap_create_priority', 'bap_update_priority']
                 description: bap_issue.priority.entity_plural_label
         resolutions_tab_link:
             label: bap_issue.resolution.entity_plural_label
-            route: bap_resolution
+            route: bap_resolutions
             extras:
-                routes: ['bap_resolution', 'bap_resolution_create', 'bap_resolution_update']
+                routes: ['bap_resolutions', 'bap_create_resolution', 'bap_update_resolution']
                 description: bap_issue.resolution.entity_plural_label
     tree:
         application_menu:
             children:
-                bts_tab:
+                bap_tab:
                     children:
                         issues_tab_link: ~
                         priorities_tab_link: ~
@@ -44,5 +44,5 @@ oro_titles:
     bap_update_priority:    '%%entity.title%% - Edit'
 
     bap_resolutions:         bap_issue.resolution.entity_plural_label
-    bap_create_resolutions:  bap_issue.controller.resolution.create.label
+    bap_create_resolution:  bap_issue.controller.resolution.create.label
     bap_update_resolution:  '%%entity.title%% - Edit'
