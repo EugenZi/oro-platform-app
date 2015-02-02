@@ -38,7 +38,7 @@ class PriorityController extends Controller
     }
 
     /**
-     * @Route("/priority/create", name="bap_issue_create_priority")
+     * @Route("/priority/create", name="bap_create_priority")
      * @Acl(
      *      id="bap_priority_create",
      *      type="entity",

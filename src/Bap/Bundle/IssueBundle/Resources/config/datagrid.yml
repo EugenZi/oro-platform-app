@@ -63,12 +63,12 @@ datagrid:
             id: ~
             view_link:
                 type: url
-                route: bap_issue_view
+                route: bap_issue
                 params:
                     - id
             update_link:
                 type: url
-                route: bts_issue_update
+                route: bap_update_issue
                 params:
                     - id
             delete_link:
@@ -148,14 +148,14 @@ datagrid:
                 label:         oro.grid.action.view
                 link:          view_link
                 icon:          eye-open
-                acl_resource:  bts_issue_view
+                acl_resource:  bap_issue
                 rowAction:     true
             update:
                 type:          navigate
                 label:         oro.grid.action.update
                 link:          update_link
                 icon:          edit
-                acl_resource:  bts_issue_update
+                acl_resource:  bap_update_issue
             delete:
                 type:          delete
                 label:         oro.grid.action.delete
@@ -166,7 +166,7 @@ datagrid:
     user-page-issue-grid:
         extends: issue-grid
         source:
-            acl_resource: bts_issue_view
+            acl_resource: bap_issue
             type: orm
             query:
                 where:
@@ -177,7 +177,7 @@ datagrid:
 
     dashboard-issue-grid:
         source:
-            acl_resource: bts_issue_view
+            acl_resource: bap_issue
             type: orm
             query:
                 select:
@@ -218,7 +218,7 @@ datagrid:
             id: ~
             view_link:
                 type: url
-                route: bts_issue_view
+                route: bap_issue
                 params:
                     - id
 
@@ -268,7 +268,7 @@ datagrid:
                 label:         oro.grid.action.view
                 link:          view_link
                 icon:          eye-open
-                acl_resource:  bts_issue_view
+                acl_resource:  bap_issue
                 rowAction:     true
 
     priority-grid:
@@ -300,7 +300,7 @@ datagrid:
             id: ~
             update_link:
                 type: url
-                route: bts_priority_update
+                route: bap_update_update
                 params:
                     - id
             delete_link:
@@ -332,7 +332,7 @@ datagrid:
                 label:         oro.grid.action.update
                 link:          update_link
                 icon:          edit
-                acl_resource:  bts_priority_update
+                acl_resource:  bap_update_update
                 rowAction:     true
             delete:
                 type:          delete
@@ -365,7 +365,7 @@ datagrid:
             id: ~
             update_link:
                 type: url
-                route: bts_resolution_update
+                route: bap_update_resolution
                 params:
                     - id
             delete_link:
@@ -392,7 +392,7 @@ datagrid:
                 label:         oro.grid.action.update
                 link:          update_link
                 icon:          edit
-                acl_resource:  bts_resolution_update
+                acl_resource:  bap_update_resolution
                 rowAction:     true
             delete:
                 type:          delete
@@ -406,7 +406,7 @@ datagrid:
         options:
             entityHint: issue
         source:
-            acl_resource: bts_issue_view
+            acl_resource: bap_issue
             type: orm
             query:
                 select:
@@ -461,12 +461,12 @@ datagrid:
             id: ~
             view_link:
                 type: url
-                route: bts_issue_view
+                route: bap_issue
                 params:
                     - id
             update_link:
                 type: url
-                route: bts_issue_update
+                route: bap_update_issue
                 params:
                     - id
             delete_link:
@@ -503,14 +503,14 @@ datagrid:
                 label:         oro.grid.action.view
                 link:          view_link
                 icon:          eye-open
-                acl_resource:  bts_issue_view
+                acl_resource:  bap_issue
                 rowAction:     true
             update:
                 type:          navigate
                 label:         oro.grid.action.update
                 link:          update_link
                 icon:          edit
-                acl_resource:  bts_issue_update
+                acl_resource:  bap_update_issue
             delete:
                 type:          delete
                 label:         oro.grid.action.delete

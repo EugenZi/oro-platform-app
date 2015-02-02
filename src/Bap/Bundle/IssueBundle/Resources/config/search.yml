@@ -2,7 +2,7 @@ Bap\Bundle\IssueBundle\Entity\Issue:
     alias:                          bap_issue
     title_fields:                   [code]
     route:
-        name:                       bap_issue_view
+        name:                       bap_issue
         parameters:
             id:                     id
     search_template:                BapIssueBundle:Issue:searchResult.html.twig

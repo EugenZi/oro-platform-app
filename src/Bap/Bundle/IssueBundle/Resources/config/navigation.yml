@@ -9,7 +9,7 @@ oro_menu_config:
             label: bap_issue.issue.entity_plural_label
             route: bap_issues
             extras:
-                routes: ['bap_issues', 'bap_issue', 'bap_create_issue', 'bap_update_issue', 'bap_add_issue_subtask']
+                routes: ['bap_issues', 'bap_issue', 'bap_create_issue', 'bap_update_issue', 'bap_add_issue_sub_task']
                 description: bap_issue_issue.entity_plural_label
         priorities_tab_link:
             label: bap_issue.priority.entity_plural_label
@@ -37,12 +37,12 @@ oro_titles:
     bap_create_issue:       bap_issue.controller.issue.create.label
     bap_issue:              '%%entity.title%%'
     bap_update_issue:       '%%entity.title%% - Edit'
-    bap_add_issue_subtask:  '%%entity.title%% - Add Subtask'
+    bap_add_issue_sub_task: '%%entity.title%% - Add Subtask'
 
     bap_priorities:         bap_issue.priority.entity_plural_label
     bap_create_priority:    bap_issue.controller.priority.create.label
     bap_update_priority:    '%%entity.title%% - Edit'
 
-    bap_resolutions:         bap_issue.resolution.entity_plural_label
+    bap_resolutions:        bap_issue.resolution.entity_plural_label
     bap_create_resolution:  bap_issue.controller.resolution.create.label
     bap_update_resolution:  '%%entity.title%% - Edit'

@@ -39,10 +39,10 @@ class ResolutionController extends Controller
     }
 
     /**
-     * @Route("/resolution/create", name="bap_issue_create_resolution")
+     * @Route("/resolution/create", name="bap_create_resolution")
      *
      * @Acl(
-     *      id="bap_issue_create_resolution",
+     *      id="bap_create_resolution",
      *      type="entity",
      *      class="BapIssueBundle:Resolution",
      *      permission="CREATE"
@@ -58,10 +58,10 @@ class ResolutionController extends Controller
 
     /**
      * @param Resolution $resolution
-     * @Route("/resolution/update/{id}", name="bap_issue_resolution_update", requirements={"id"="\d+"})
+     * @Route("/resolution/update/{id}", name="bap_update_resolution", requirements={"id"="\d+"})
      *
      * @Acl(
-     *      id="bap_issue_resolution_update",
+     *      id="bap_update_resolution",
      *      type="entity",
      *      class="AcademicBtsBundle:Resolution",
      *      permission="EDIT"
@@ -101,7 +101,7 @@ class ResolutionController extends Controller
     {
         return function () use ($entity) {
             return [
-                'route' => 'bap_update_issue_priority',
+                'route' => 'bap_update_priority',
                 'parameters' => [
                     'id' => $entity->getId()
                 ]
@@ -117,7 +117,7 @@ class ResolutionController extends Controller
     {
         return function () {
             return [
-                'route' => 'bap_issue_priority',
+                'route' => 'bap_priority',
             ];
         };
     }

@@ -19,7 +19,7 @@
 {% endif %}
 
 {% if formAction is not defined %}
-    {% set formAction = form.vars.value.id ? path('bap_issue_update', { id: form.vars.value.id }) : path('bap_issue_create') %}
+    {% set formAction = form.vars.value.id ? path('bap_update_issue', { id: form.vars.value.id }) : path('bap_issue_create') %}
 {% endif %}
 
 {% block navButtons %}

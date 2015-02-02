@@ -14,10 +14,10 @@
         dataGridName: gridName
     } %}
 
-    {% if resource_granted('bts_issue_create') %}
+    {% if resource_granted('bap_create_issue') %}
         <div class="btn-group">
             {{ UI.addButton({
-                'path': path('bap_issue_create'),
+                'path': path('bap_create_issue'),
                 'entity_label': 'bap_issue.issue.entity_label'|trans
             }) }}
         </div>

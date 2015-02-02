@@ -63,7 +63,7 @@ class DashboardController extends Controller
     /**
      * @Route(
      *      "/_issues/{widget}",
-     *      name="user_issues_board",
+     *      name="bap_user_issues_board",
      *      requirements={"widget"="[\w-]+"}
      * )
      * @Template("BapIssueBundle:Dashboard:issueChart.html.twig")

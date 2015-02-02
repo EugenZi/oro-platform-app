@@ -23,7 +23,7 @@ class IssueController extends Controller
 {
     /**
      * @param Issue $issue
-     * @Route("/issue/view/{id}", name="bap_issue_view", requirements={"id"="\d+"})
+     * @Route("/issue/view/{id}", name="bap_issue", requirements={"id"="\d+"})
      * @Template()
      * @Acl(
      *      id="bap_issue_view",
@@ -54,10 +54,10 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/issue/create", name="bap_issue_create")
+     * @Route("/issue/create", name="bap_create_issue")
      * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
-     *      id="bap_issue_create",
+     *      id="bap_create_issue",
      *      type="entity",
      *      class="AcademicBtsBundle:Issue",
      *      permission="CREATE"
@@ -77,10 +77,10 @@ class IssueController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/issue/create_from_widget/{id}", name="bap_issue_create_widget", requirements={"id"="\d+"})
+     * @Route("/issue/create_from_widget/{id}", name="bap_create_issue_widget", requirements={"id"="\d+"})
      * @Template("BapIssueBundle:Issue:update.html.twig")
      * @Acl(
-     *      id="bap_issue_create_widget",
+     *      id="bap_create_issue_widget",
      *      type="entity",
      *      class="AcademicBtsBundle:Issue",
      *      permission="CREATE"
@@ -111,9 +111,9 @@ class IssueController extends Controller
 
     /**
      * @param Issue $issue
-     * @Route("/issue/update/{id}", name="bap_issue_update", requirements={"id"="\d+"})
+     * @Route("/issue/update/{id}", name="bap_update_issue", requirements={"id"="\d+"})
      * @Acl(
-     *      id="bap_issue_update",
+     *      id="bap_update_issue",
      *      type="entity",
      *      class="BapIssueBundle:Issue",
      *      permission="EDIT"
@@ -150,10 +150,10 @@ class IssueController extends Controller
     /**
      * @param Issue $parent
      *
-     * @Route("/issue/subtask/{id}", name="bap_issue_add_sub_task", requirements={"id"="\d+"})
+     * @Route("/issue/subtask/{id}", name="bap_add_issue_sub_task", requirements={"id"="\d+"})
      * @Template()
      * @Acl(
-     *      id="bap_issue_add_sub_task",
+     *      id="bap_add_issue_sub_task",
      *      type="entity",
      *      class="BapIssueBundle:Issue",
      *      permission="EDIT"
@@ -186,7 +186,7 @@ class IssueController extends Controller
                 'cancelPath' => $this
                     ->get('router')
                     ->generate(
-                        'bap_issue_view',
+                        'bap_issue',
                         ['id' => $parent->getId()]
                     ),
             ]
@@ -243,7 +243,7 @@ class IssueController extends Controller
                 ->get('oro_ui.router')
                 ->redirectAfterSave(
                     [
-                        'route' => 'bap_issue_update',
+                        'route' => 'bap_update_issue',
                         'parameters' => [
                             'id' => $entity->getId()
                         ],

@@ -9,24 +9,24 @@
     {{ parent() }}
     {% if resource_granted('EDIT', entity) %}
         {{ UI.editButton({
-            'path' : path('bap_issue_update', { id: entity.id }),
-            'entity_label': 'academic.bts.issue.entity_label'|trans
+            'path' : path('bap_update_issue', { id: entity.id }),
+            'entity_label': 'bap_issue.issue.entity_label'|trans
         }) }}
         {% if entity.type == constant('TYPE_STORY', entity) %}
             {{ UI.button({
-                'path' : path('bap_issue_add_subtask', {id: entity.id}),
-                'label' : 'academic.bts.controller.issue.add_sub_task'|trans
+                'path' : path('bap_add_issue_sub_task', {id: entity.id}),
+                'label' : 'bap_issue.controller.issue.add_sub_task'|trans
             }) }}
         {% endif %}
     {% endif %}
     {% if resource_granted('DELETE', entity) %}
         {{ UI.deleteButton({
-            'dataUrl': path('bap_delete_issue', {'id': entity.id}),
-            'dataRedirect': path('bap_issue_board'),
+            'dataUrl': path('bap_api_delete_issue', {'id': entity.id}),
+            'dataRedirect': path('bap_user_issues_board'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-issue',
             'dataId': entity.id,
-            'entity_label': 'academic.bts.issue.entity_label'|trans
+            'entity_label': 'bap_issue.issue.entity_label'|trans
         }) }}
     {% endif %}
 {% endblock navButtons %}
@@ -35,7 +35,7 @@
     {% set breadcrumbs = {
         'entity':      entity,
         'indexPath':   path('bap_issues'),
-        'indexLabel':  'academic.bts.issue.entity_plural_label'|trans,
+        'indexLabel':  'bap_issue.issue.entity_plural_label'|trans,
         'entityTitle': entity.summary
     } %}
     {{ parent() }}

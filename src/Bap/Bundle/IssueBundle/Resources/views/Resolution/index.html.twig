@@ -4,9 +4,9 @@
 {% set pageTitle = 'bap_issue.resolution.entity_plural_label'|trans %}
 
 {% block navButtons %}
-    {% if resource_granted('bts_resolution_create') %}
+    {% if resource_granted('bap_create_resolution') %}
         {{ UI.addButton({
-            'path': path('bap_issue_create_resolution'),
+            'path': path('bap_create_resolution'),
             'entity_label': 'bap_issue.resolution.entity_label'|trans
         }) }}
     {% endif %}
