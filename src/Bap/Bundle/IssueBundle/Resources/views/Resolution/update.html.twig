@@ -4,7 +4,7 @@
 {% if form.vars.value.id %}
     {% oro_title_set({params : {"%entity.title%": form.vars.value.title} }) %}
 {% endif %}
-{% set formAction = form.vars.value.id ? path('bap_issue_resolution_update', { id: form.vars.value.id }) : path('bap_issue_create_resolution') %}
+{% set formAction = form.vars.value.id ? path('bap_update_resolution', { id: form.vars.value.id }) : path('bap_create_resolution') %}
 
 {% block navButtons %}
     {% if form.vars.value.id and resource_granted('DELETE', form.vars.value) %}

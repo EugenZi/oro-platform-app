@@ -24,7 +24,7 @@ workflows:
                         resolution:
                             form_type: entity
                             options:
-                                class: Bap\Bundle\IssueBundle\Entity\Resolution
+                                class: Bap\Bundle\IssueBundle\Entity\IssueResolution
                                 required: true
                                 constraints:
                                     - NotBlank: ~
@@ -39,7 +39,7 @@ workflows:
                         resolution:
                             form_type: entity
                             options:
-                                class: Bap\Bundle\IssueBundle\Entity\Resolution
+                                class: Bap\Bundle\IssueBundle\Entity\IssueResolution
                                 required: true
                                 constraints:
                                     - NotBlank: ~

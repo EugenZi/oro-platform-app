@@ -1,13 +1,13 @@
 <?php
 
-namespace Academic\BtsBundle\Form\Handler;
+namespace Bap\Bundle\IssueBundle\Form\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Academic\BtsBundle\Entity\Resolution;
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
 class ResolutionHandler
 {
@@ -41,10 +41,10 @@ class ResolutionHandler
     /**
      * Process form
      *
-     * @param  Resolution $entity
+     * @param  IssueResolution $entity
      * @return bool True on successful processing, false otherwise
      */
-    public function process(Resolution $entity)
+    public function process(IssueResolution $entity)
     {
         $this->form->setData($entity);
 

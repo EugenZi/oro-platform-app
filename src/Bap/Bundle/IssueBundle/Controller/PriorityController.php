@@ -21,7 +21,7 @@ class PriorityController extends Controller
     /**
      * @Route("/priority", name="bap_priorities")
      * @Acl(
-     *      id="bap_issue_priority_index",
+     *      id="bap_priorities",
      *      type="entity",
      *      class="BapIssueBundle:IssuePriority",
      *      permission="VIEW"
@@ -40,7 +40,7 @@ class PriorityController extends Controller
     /**
      * @Route("/priority/create", name="bap_create_priority")
      * @Acl(
-     *      id="bap_priority_create",
+     *      id="bap_create_priority",
      *      type="entity",
      *      class="BapIssueBundle:IssuePriority",
      *      permission="CREATE"

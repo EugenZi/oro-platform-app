@@ -5,7 +5,7 @@ namespace Bap\Bundle\IssueBundle\ImportExport\TemplateFixture;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 
-use Academic\BtsBundle\Entity\Resolution;
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
 class ResolutionFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
@@ -18,7 +18,7 @@ class ResolutionFixture extends AbstractTemplateRepository implements TemplateFi
      */
     protected function createEntity($key)
     {
-        return new Resolution();
+        return new IssueResolution();
     }
 
     /**
@@ -26,7 +26,7 @@ class ResolutionFixture extends AbstractTemplateRepository implements TemplateFi
      */
     public function getEntityClass()
     {
-        return 'Academic\BtsBundle\Entity\Resolution';
+        return 'Bap\Bundle\IssueBundle\Entity\IssueResolution';
     }
 
     /**
@@ -41,13 +41,13 @@ class ResolutionFixture extends AbstractTemplateRepository implements TemplateFi
 
     /**
      * @param string $key
-     * @param Resolution $entity
+     * @param IssueResolution $entity
      */
     public function fillEntityData($key, $entity)
     {
         switch ($key) {
             case 'Done':
-                $entity->setTitle('Done');
+                $entity->setValue('Done');
 
                 return;
         }

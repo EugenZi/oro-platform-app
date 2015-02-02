@@ -50,7 +50,7 @@
     {% set issueInformationWidget %}
         {{ oro_widget_render({
             'widgetType': 'block',
-            'url': path('bap_issue_show', {id: entity.id})
+            'url': path('bap_issue', {id: entity.id})
         }) }}
     {% endset %}
     {% set dataBlocks = [

@@ -6,6 +6,7 @@ use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
+use Proxies\__CG__\Bap\Bundle\IssueBundle\Entity\IssueType;
 
 class IssueFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
@@ -39,14 +40,11 @@ class IssueFixture extends AbstractTemplateRepository implements TemplateFixture
      */
     public function fillEntityData($key, $entity)
     {
-        $userRepo = $this->templateManager
-            ->getEntityRepository('Oro\Bundle\UserBundle\Entity\User');
-        $organizationRepo = $this->templateManager
-            ->getEntityRepository('Oro\Bundle\OrganizationBundle\Entity\Organization');
-        $priorityRepo = $this->templateManager
-            ->getEntityRepository('Academic\BtsBundle\Entity\Priority');
-        $resolutionRepo = $this->templateManager
-            ->getEntityRepository('Academic\BtsBundle\Entity\Resolution');
+        $manager          = $this->templateManager;
+        $userRepo         = $manager->getEntityRepository('Oro\Bundle\UserBundle\Entity\User');
+        $organizationRepo = $manager->getEntityRepository('Oro\Bundle\OrganizationBundle\Entity\Organization');
+        $priorityRepo     = $manager->getEntityRepository('Bap\Bundle\IssueBundle\Entity\IssuePriority');
+        $resolutionRepo   = $manager->getEntityRepository('Bap\Bundle\IssueBundle\Entity\IssueResolution');
 
         switch ($key) {
             case 'Code example':
@@ -59,7 +57,7 @@ class IssueFixture extends AbstractTemplateRepository implements TemplateFixture
                     ->setOrganization($organizationRepo->getEntity('default'))
                     ->setPriority($priorityRepo->getEntity('Normal'))
                     ->setResolution($resolutionRepo->getEntity('Done'))
-                    ->setType(Issue::TYPE_TASK);
+                    ->setType(IssueType::TASK_TYPE);
 
                 return;
         }

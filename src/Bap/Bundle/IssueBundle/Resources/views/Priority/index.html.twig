@@ -4,9 +4,9 @@
 {% set pageTitle = 'bap_issue.priority.entity_plural_label'|trans %}
 
 {% block navButtons %}
-    {% if resource_granted('bap_issue_create_priority') %}
+    {% if resource_granted('bap_create_priority') %}
         {{ UI.addButton({
-            'path': path('bap_issue_create_priority'),
+            'path': path('bap_create_priority'),
             'entity_label': 'bap_issue.priority.entity_label'|trans
         }) }}
     {% endif %}

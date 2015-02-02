@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
-use Bap\Bundle\IssueBundle\Entity\IssueResolution as Resolution;
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
 /**
  * Class ResolutionController
@@ -24,7 +24,7 @@ class ResolutionController extends Controller
      * @Acl(
      *      id="bap_issue_resolutions",
      *      type="entity",
-     *      class="BapIssueBundle:Resolution",
+     *      class="BapIssueBundle:IssueResolution",
      *      permission="VIEW"
      * )
      * @Template()
@@ -44,7 +44,7 @@ class ResolutionController extends Controller
      * @Acl(
      *      id="bap_create_resolution",
      *      type="entity",
-     *      class="BapIssueBundle:Resolution",
+     *      class="BapIssueBundle:IssueResolution",
      *      permission="CREATE"
      * )
      * @Template("BapIssueBundle:Resolution:update.html.twig")
@@ -53,33 +53,33 @@ class ResolutionController extends Controller
      */
     public function createAction()
     {
-        return $this->update(new Resolution());
+        return $this->update(new IssueResolution());
     }
 
     /**
-     * @param Resolution $resolution
+     * @param IssueResolution $resolution
      * @Route("/resolution/update/{id}", name="bap_update_resolution", requirements={"id"="\d+"})
      *
      * @Acl(
      *      id="bap_update_resolution",
      *      type="entity",
-     *      class="BapIssueBundle:Resolution",
+     *      class="BapIssueBundle:IssueResolution",
      *      permission="EDIT"
      * )
      * @Template()
      *
      * @return array
      */
-    public function updateAction(Resolution $resolution)
+    public function updateAction(IssueResolution $resolution)
     {
         return $this->update($resolution);
     }
 
     /**
-     * @param Resolution $entity
+     * @param IssueResolution $entity
      * @return array|RedirectResponse
      */
-    protected function update(Resolution $entity)
+    protected function update(IssueResolution $entity)
     {
         return $this
             ->get('oro_form.model.update_handler')
@@ -94,10 +94,10 @@ class ResolutionController extends Controller
     }
 
     /**
-     * @param Resolution $entity
+     * @param IssueResolution $entity
      * @return \Closure
      */
-    private function saveAndStayRouteCallback(Resolution $entity)
+    private function saveAndStayRouteCallback(IssueResolution $entity)
     {
         return function () use ($entity) {
             return [

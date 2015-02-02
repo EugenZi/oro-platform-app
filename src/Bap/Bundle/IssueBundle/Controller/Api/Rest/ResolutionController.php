@@ -19,7 +19,7 @@ use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 
-use Bap\Bundle\IssueBundle\Entity\Resolution;
+use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
 /**
  * @RouteResource("resolution")
@@ -33,14 +33,14 @@ class ResolutionController extends RestController implements ClassResourceInterf
      * @param int $id
      *
      * @ApiDoc(
-     *      description="Delete Resolution",
+     *      description="Delete Issue Resolution",
      *      resource=true
      * )
      * @Acl(
      *      id="bap_resolution_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="BapIssueBundle:Resolution"
+     *      class="BapIssueBundle:IssueResolution"
      * )
      * @return Response
      */
