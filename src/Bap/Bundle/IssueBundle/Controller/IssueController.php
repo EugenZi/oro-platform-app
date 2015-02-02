@@ -28,7 +28,7 @@ class IssueController extends Controller
      * @Acl(
      *      id="bap_issue_view",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="VIEW"
      * )
      *
@@ -59,7 +59,7 @@ class IssueController extends Controller
      * @Acl(
      *      id="bap_create_issue",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="CREATE"
      * )
      *
@@ -82,7 +82,7 @@ class IssueController extends Controller
      * @Acl(
      *      id="bap_create_issue_widget",
      *      type="entity",
-     *      class="AcademicBtsBundle:Issue",
+     *      class="BapIssueBundle:Issue",
      *      permission="CREATE"
      * )
      *

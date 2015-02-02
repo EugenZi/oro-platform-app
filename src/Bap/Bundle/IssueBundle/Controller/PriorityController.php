@@ -23,7 +23,7 @@ class PriorityController extends Controller
      * @Acl(
      *      id="bap_issue_priority_index",
      *      type="entity",
-     *      class="AcademicBtsBundle:IssuePriority",
+     *      class="BapIssueBundle:IssuePriority",
      *      permission="VIEW"
      * )
      * @Template()

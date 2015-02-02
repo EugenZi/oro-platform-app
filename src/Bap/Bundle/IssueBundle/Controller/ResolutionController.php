@@ -24,7 +24,7 @@ class ResolutionController extends Controller
      * @Acl(
      *      id="bap_issue_resolutions",
      *      type="entity",
-     *      class="AcademicBtsBundle:Resolution",
+     *      class="BapIssueBundle:Resolution",
      *      permission="VIEW"
      * )
      * @Template()
@@ -63,7 +63,7 @@ class ResolutionController extends Controller
      * @Acl(
      *      id="bap_update_resolution",
      *      type="entity",
-     *      class="AcademicBtsBundle:Resolution",
+     *      class="BapIssueBundle:Resolution",
      *      permission="EDIT"
      * )
      * @Template()

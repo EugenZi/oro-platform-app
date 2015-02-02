@@ -133,7 +133,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      id="bts_issue_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="AcademicBtsBundle:Issue"
+     *      class="BapIssueBundle:Issue"
      * )
      * @return Response
      */
