@@ -49,7 +49,7 @@ class IssueController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('bap_issue.issue.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.entity.issue.class'),
         ];
     }
 
@@ -130,7 +130,7 @@ class IssueController extends Controller
     /**
      * @param Issue $issue
      *
-     * @Route("/widget/info/{id}", name="bap_issue_page", requirements={"id"="\d+"})
+     * @Route("/widget/info/{id}", name="bap_issue", requirements={"id"="\d+"})
      * @Acl(
      *      id="bap_issue_view",
      *      type="entity",
