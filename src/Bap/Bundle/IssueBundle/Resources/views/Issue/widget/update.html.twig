@@ -20,7 +20,7 @@
                 <form
                         id="{{ form.vars.name }}"
                         method="post" {{ form_enctype(form) }}>
-                        action="{{ path('bap_issue_create_widget', {'id': entity.assignee.id}) }}"
+                        action="{{ path('bap_create_issue_widget', {'id': entity.assignee.id}) }}"
 
                     <fieldset class="form form-horizontal">
                         <div class="span6">

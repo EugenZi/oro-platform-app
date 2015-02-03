@@ -21,16 +21,3 @@ $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('-
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);
-
-
-//$application->setCatchExceptions(false);
-//try {
-//    $output = new Symfony\Component\Console\Output\ConsoleOutput();
-//    $application->run(null, $output);
-//} catch (Exception $e) {
-//    $application->renderException($e, $output);
-//
-//    $statusCode = $e->getCode();
-//    $statusCode = is_numeric($statusCode) && $statusCode ? $statusCode : 1;
-//    exit($statusCode);
-//}

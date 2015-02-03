@@ -138,7 +138,7 @@ class IssueController extends Controller
      *      permission="VIEW"
      * )
      *
-     * @Template()
+     * @Template("BapIssueBundle:Issue/widget:info.html.twig")
      *
      * @return array
      */
@@ -197,7 +197,7 @@ class IssueController extends Controller
      * @param Issue $issue
      *
      * @Route("/widget/collaborators/{id}", name="bap_issue_collaborators", requirements={"id"="\d+"})
-     * @Template()
+     * @Template("BapIssueBundle:Issue/widget:collaborators.html.twig")
      *
      * @return array
      */
