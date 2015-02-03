@@ -1,0 +1,519 @@
+datagrid:
+    issue-grid:
+        extended_entity_name: %bap_issue.entity.issue.class%
+        options:
+            entityHint: issue
+            entity_pagination: true
+        source:
+            acl_resource: bap_view_issue
+            type: orm
+            query:
+                select:
+                    - iss.id
+                    - iss.code
+                    - iss.summary
+                    - iss.type
+                    - pri.title as priority
+                    - res.title as resolution
+                    - CONCAT(rep.firstName, ' ',rep.lastName) as reporter
+                    - CONCAT(ass.firstName, ' ',ass.lastName) as assignee
+                    - iss.createdAt
+                    - iss.updatedAt
+                    - wfs.label as workflowStepLabel
+                from:
+                    - { table: %bap_issue.entity.issue.class%, alias: iss }
+                join:
+                    left:
+                        - { join: iss.priority, alias: pri }
+                        - { join: iss.resolution, alias: res }
+                        - { join: iss.reporter, alias: rep }
+                        - { join: iss.assignee, alias: ass }
+                        - { join: iss.workflowStep, alias: wfs }
+                        - { join: iss.collaborators, alias: col }
+        columns:
+            code:
+                label: bap.issue.code.label
+            summary:
+                label: bap.issue.summary.label
+            workflowStepLabel:
+                label: bap.issue.workflow_step.label
+            collaborators:
+                label: bap.issue.collaborators.label
+                renderable: false
+            type:
+                type: issue_type
+                label: bap.issue.type.label
+                data_name: type
+            priority:
+                label: bap.issue.priority.label
+            resolution:
+                label: bap.issue.resolution.label
+            reporter:
+                label: bap.issue.reporter.label
+            assignee:
+                label: bap.issue.assignee.label
+            createdAt:
+                label: oro.ui.created_at
+                frontend_type: datetime
+            updatedAt:
+                label: oro.ui.updated_at
+                frontend_type: datetime
+
+        properties:
+            id: ~
+            view_link:
+                type: url
+                route: bap_issue
+                params:
+                    - id
+            update_link:
+                type: url
+                route: bap_update_issue
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: bts_api_delete_issue
+                params:
+                    - id
+        sorters:
+            columns:
+                code:
+                    data_name: i.code
+                summary:
+                    data_name: i.summary
+                workflowStepLabel:
+                    data_name: workflowStep.order
+                type:
+                    data_name: i.type
+                priority:
+                    data_name: p.weight
+                resolution:
+                    data_name: i.resolution
+                reporter:
+                    data_name: i.reporter
+                assignee:
+                    data_name: i.assignee
+                updatedAt:
+                    data_name: i.updatedAt
+                createdAt:
+                    data_name: i.createdAt
+            default:
+                updatedAt: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
+
+        filters:
+            columns:
+                code:
+                    type: string
+                    data_name: i.code
+                summary:
+                    type: string
+                    data_name: i.summary
+                workflowStepLabel:
+                    type: entity
+                    data_name: i.workflowStep
+                    options:
+                        field_type: oro_workflow_step_select
+                        field_options:
+                            workflow_entity_class: %bap_issue.entity.issue.class%
+                collaborators:
+                    type: entity
+                    data_name: c.id
+                    options:
+                        field_options:
+                            class: OroUserBundle:User
+                            translatable_options: false
+                type:
+                    type: choice
+                    data_name: i.type
+                    options:
+                        field_options:
+                            choices: @bap_issue.helper.issue_helper->getTypeList
+                priority:
+                    type: string
+                    data_name: i.priority
+                resolution:
+                    type: string
+                    data_name: i.resolution
+                reporter:
+                    type: string
+                    data_name: i.reporter
+                assignee:
+                    type: string
+                    data_name: i.assignee
+
+        actions:
+            view:
+                type:          navigate
+                label:         oro.grid.action.view
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  bap_issue
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         oro.grid.action.update
+                link:          update_link
+                icon:          edit
+                acl_resource:  bap_update_issue
+            delete:
+                type:          delete
+                label:         oro.grid.action.delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  bts_issue_delete
+
+    user-page-issue-grid:
+        extends: issue-grid
+        source:
+            acl_resource: bap_issue
+            type: orm
+            query:
+                where:
+                    and:
+                        - c.id = :userId
+            bind_parameters:
+                userId: userId
+
+    dashboard-issue-grid:
+        source:
+            acl_resource: bap_issue
+            type: orm
+            query:
+                select:
+                    - i.id
+                    - i.code
+                    - i.summary
+                    - p.title as priority
+                    - i.updatedAt
+                    - workflowStep.label as workflowStepLabel
+                from:
+                    - { table: %bap_issue.entity.issue.class%, alias: i }
+                join:
+                    left:
+                        - { join: i.priority, alias: p }
+                        - { join: i.workflowStep, alias: workflowStep }
+                        - { join: i.collaborators, alias: c }
+                where:
+                    and:
+                        - workflowStep.name <> 'closed'
+                        - c.id = :userId
+            bind_parameters:
+                userId: userId
+
+        columns:
+            code:
+                label: academic.bts.issue.code.label
+            summary:
+                label: academic.bts.issue.summary.label
+            workflowStepLabel:
+                label: academic.bts.issue.workflow_step.label
+            priority:
+                label: academic.bts.issue.priority.label
+            updatedAt:
+                label: oro.ui.updated_at
+                frontend_type: datetime
+
+        properties:
+            id: ~
+            view_link:
+                type: url
+                route: bap_issue
+                params:
+                    - id
+
+        sorters:
+            columns:
+                code:
+                    data_name: i.code
+                summary:
+                    data_name: i.summary
+                workflowStepLabel:
+                    data_name: workflowStep.order
+                priority:
+                    data_name: p.weight
+                updatedAt:
+                    data_name: i.updatedAt
+            default:
+                updatedAt: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
+
+        filters:
+            columns:
+                code:
+                    type: string
+                    data_name: i.code
+                summary:
+                    type: string
+                    data_name: i.summary
+                workflowStepLabel:
+                    type: entity
+                    data_name: i.workflowStep
+                    options:
+                        field_type: oro_workflow_step_select
+                        field_options:
+                            workflow_entity_class: %bap_issue.entity.issue.class%
+                priority:
+                    type: string
+                    data_name: i.priority
+        options:
+            entity_pagination: true
+            toolbarOptions:
+                hide: true
+                pageSize:
+                    items: [10]
+                    default_per_page: 10
+        actions:
+            view:
+                type:          navigate
+                label:         oro.grid.action.view
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  bap_issue
+                rowAction:     true
+
+    priority-grid:
+        options:
+            entityHint: priority
+            entity_pagination: true
+        source:
+            acl_resource: bts_priority_view
+            type: orm
+            query:
+                select:
+                    - p.id
+                    - p.title
+                    - p.weight
+                from:
+                    - { table: %bap_issue.entity.issue.priority.class%, alias: p }
+
+        columns:
+            title:
+                label: academic.bts.priority.title.label
+                type: field
+                frontend_type: string
+            weight:
+                label: academic.bts.priority.weight.label
+                type: field
+                frontend_type: integer
+
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: bap_update_update
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: bts_api_delete_priority
+                params:
+                    - id
+        sorters:
+            columns:
+                title:
+                    data_name: p.title
+                weight:
+                    data_name: p.weight
+            default:
+                id: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
+
+        filters:
+            columns:
+                title:
+                    type: string
+                    data_name: p.title
+                weight:
+                    type: string
+                    data_name: p.weight
+
+        actions:
+            update:
+                type:          navigate
+                label:         oro.grid.action.update
+                link:          update_link
+                icon:          edit
+                acl_resource:  bap_update_update
+                rowAction:     true
+            delete:
+                type:          delete
+                label:         oro.grid.action.delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  bts_priority_delete
+
+    resolution-grid:
+        options:
+            entityHint: resolution
+            entity_pagination: true
+        source:
+            acl_resource: bts_resolution_view
+            type: orm
+            query:
+                select:
+                    - p.id
+                    - p.title
+                from:
+                    - { table: %bap_issue.entity.issue.resolution.class%, alias: p }
+
+        columns:
+            title:
+                label: academic.bts.resolution.title.label
+                type: field
+                frontend_type: string
+
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: bap_update_resolution
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: bts_api_delete_resolution
+                params:
+                    - id
+        sorters:
+            columns:
+                title:
+                    data_name: p.title
+            default:
+                id: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
+
+        filters:
+            columns:
+                title:
+                    type: string
+                    data_name: p.title
+
+        actions:
+            update:
+                type:          navigate
+                label:         oro.grid.action.update
+                link:          update_link
+                icon:          edit
+                acl_resource:  bap_update_resolution
+                rowAction:     true
+            delete:
+                type:          delete
+                label:         oro.grid.action.delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  bts_resolution_delete
+
+    subtasks-grid:
+        extended_entity_name: %bap_issue.entity.issue.class%
+        options:
+            entityHint: issue
+        source:
+            acl_resource: bap_issue
+            type: orm
+            query:
+                select:
+                    - i.id
+                    - i.code
+                    - i.summary
+                    - p.title as priority
+                    - r.title as resolution
+                    - CONCAT(rep.firstName, ' ',rep.lastName) as reporter
+                    - CONCAT(ass.firstName, ' ',ass.lastName) as assignee
+                    - i.createdAt
+                    - i.updatedAt
+                    - workflowStep.label as workflowStepLabel
+                from:
+                    - { table: %bap_issue.entity.issue.class%, alias: i }
+                join:
+                    left:
+                        - { join: i.priority, alias: p }
+                        - { join: i.resolution, alias: r }
+                        - { join: i.reporter, alias: rep }
+                        - { join: i.assignee, alias: ass }
+                        - { join: i.workflowStep, alias: workflowStep }
+                        - { join: i.parent, alias: parent }
+                where:
+                    and:
+                        - parent.id = :parentId
+            bind_parameters:
+                parentId: parentId
+        columns:
+            code:
+                label: academic.bts.issue.code.label
+            summary:
+                label: academic.bts.issue.summary.label
+            workflowStepLabel:
+                label: academic.bts.issue.workflow_step.label
+            priority:
+                label: academic.bts.issue.priority.label
+            resolution:
+                label: academic.bts.issue.resolution.label
+            reporter:
+                label: academic.bts.issue.reporter.label
+            assignee:
+                label: academic.bts.issue.assignee.label
+            createdAt:
+                label: oro.ui.created_at
+                frontend_type: datetime
+            updatedAt:
+                label: oro.ui.updated_at
+                frontend_type: datetime
+
+        properties:
+            id: ~
+            view_link:
+                type: url
+                route: bap_issue
+                params:
+                    - id
+            update_link:
+                type: url
+                route: bap_update_issue
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: bts_api_delete_issue
+                params:
+                    - id
+        sorters:
+            columns:
+                code:
+                    data_name: i.code
+                summary:
+                    data_name: i.summary
+                workflowStepLabel:
+                    data_name: workflowStep.order
+                priority:
+                    data_name: p.weight
+                resolution:
+                    data_name: i.resolution
+                reporter:
+                    data_name: i.reporter
+                assignee:
+                    data_name: i.assignee
+                updatedAt:
+                    data_name: i.updatedAt
+                createdAt:
+                    data_name: i.createdAt
+            default:
+                updatedAt: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
+
+        actions:
+            view:
+                type:          navigate
+                label:         oro.grid.action.view
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  bap_issue
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         oro.grid.action.update
+                link:          update_link
+                icon:          edit
+                acl_resource:  bap_update_issue
+            delete:
+                type:          delete
+                label:         oro.grid.action.delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  bts_issue_delete

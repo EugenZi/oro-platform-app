@@ -1,0 +1,77 @@
+Bap\Bundle\IssueBundle\Entity\Issue:
+    alias:                          bap_issue
+    title_fields:                   [code]
+    route:
+        name:                       bap_issue
+        parameters:
+            id:                     id
+    search_template:                BapIssueBundle:Issue:searchResult.html.twig
+    fields:
+        -
+            name:                   code
+            target_type:            text
+            target_fields:          [code]
+        -
+            name:                   summary
+            target_type:            text
+            target_fields:          [summary]
+        -
+            name:                   type
+            target_type:            text
+            target_fields:          [type]
+        -
+            name:                   resolution
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name:           title
+                    target_type:    text
+                    target_fields:  [resolutionTitle]
+        -
+            name:                   priority
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name:           title
+                    target_type:    text
+                    target_fields:  [priorityTitle]
+        -
+            name:                   workflowStep
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name:           label
+                    target_type:    text
+                    target_fields:  [status]
+        -
+            name:                   reporter
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name:           username
+                    target_type:    text
+                    target_fields:  [reporterUsername]
+                -
+                    name:           first_name
+                    target_type:    text
+                    target_fields:  [reporterFirstname]
+                -
+                    name:           last_name
+                    target_type:    text
+                    target_fields:  [reporterLastname]
+        -
+            name:                   assignee
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name:           username
+                    target_type:    text
+                    target_fields:  [assigneeUsername]
+                -
+                    name:           first_name
+                    target_type:    text
+                    target_fields:  [assigneeFirstname]
+                -
+                    name:           last_name
+                    target_type:    text
+                    target_fields:  [assigneeLastname]

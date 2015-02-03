@@ -1,0 +1,15 @@
+placeholders:
+    view_navButtons_before:
+        items:
+            createIssueButton: ~
+    view_content_data_additional_information:
+        items:
+            userIssues: ~
+
+items:
+    createIssueButton:
+        template: BapIssueBundle:Issue:createIssueButton.html.twig
+        applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)
+    userIssues:
+        template: BapIssueBundle:Issue:userIssues.html.twig
+        applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)

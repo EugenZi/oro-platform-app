@@ -1,0 +1,71 @@
+bap_issue:
+  dashboard:
+    widget:
+      issue_chart.label:        Issue status chart
+      issue_chart.description:  Bar chart widget of issues grouped by status
+      my_issues.label:          My issues
+      my_issues.description:    Issues where I am a collaborator
+      view_issues_page:         View at issues page
+
+  controller:
+    priority:
+      saved.message:            Priority saved
+      create.label:             Create priority
+    resolution:
+      saved.message:            Resolution saved
+      create.label:             Create resolution
+    issue:
+      saved.message:            Issue saved
+      add_sub_task:             Add subtask
+      adding_subtask.message:   Adding subtask is not awailable for %type%
+      no_collaborators.message: No collaborators
+      no_subtasks.message:      No subtasks
+      subtasks:                 Subtasks
+      create.label:             Create issue
+
+  datagrid.search:        Search
+
+  issue:
+    entity_label:         Issue
+    entity_plural_label:  Issues
+    title.label:          Title
+    assignee.label:       Assignee
+    children.label:       Subtasks
+    code.label:           Code
+    collaborators.label:  Collaborators
+    createdAt.label:      Created
+    created_at.label:     Created
+    description.label:    Description
+    id.label:             ID
+    owner.label:          Owner
+    parent.label:         Story
+    priority.label:       Priority
+    related_issues.label: Related Issues
+    reporter.label:       Reporter
+    resolution.label:     Resolution
+    summary.label:        Summary
+    type.label:           Type
+    updatedAt.label:      Updated
+    updated_at.label:     Updated
+    workflow_step.label:  Status
+    workflow_item.label:  Workflow Item
+    organization.label:   Organization
+
+    type:
+      task:               Task
+      sub_task:           Sub Task
+      story:              Story
+      bug:                Bug
+
+    assigned_issues:      Assigned Issues
+
+  priority:
+    entity_label:         Priority
+    entity_plural_label:  Priorities
+    title.label:          Title
+    weight.label:         Weight
+
+  resolution:
+    entity_label:         Resolution
+    entity_plural_label:  Resolutions
+    title.label:          Title

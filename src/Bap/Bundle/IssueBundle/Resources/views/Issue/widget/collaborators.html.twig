@@ -1,0 +1,30 @@
+{% import 'OroUIBundle::macros.html.twig' as ui %}
+{% import 'BapIssueBundle::macros.html.twig' as bap %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {% if entity.collaborators|length > 0 %}
+                <ul class="list-group">
+                    {% for collaborator in entity.collaborators %}
+                        <li class="list-group-item">
+                            {{ bap.renderUserLink(collaborator) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ 'bap_issue.controller.issue.no_collaborators.message'|trans }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        require(['oroui/js/mediator', 'oroui/js/widget-manager'], function(mediator, widgetManager) {
+            mediator.subscribe('widget_success:note-dialog', function() {
+                widgetManager.getWidgetInstance('collaborators', function(widget) {
+                    widget.loadContent();
+                });
+            });
+        });
+    </script>
+</div>

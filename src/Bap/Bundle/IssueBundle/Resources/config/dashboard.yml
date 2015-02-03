@@ -1,0 +1,14 @@
+oro_dashboard_config:
+    widgets:
+        issue_chart:
+            label:       bap_issue.dashboard.widget.issue_chart.label
+            route:       bap_dashboard_issue_chart
+            acl:         bap_issue_show
+            description: bap_issue.dashboard.widget.issue_chart.description
+            icon:        bundles/orocalendar/img/my_calendar.png
+        my_issues:
+            label:       bap_issue.dashboard.widget.personal.issues.label
+            route:       bap_issue_personal_issues_dashboard
+            acl:         bap_issue
+            description: bap_issue.dashboard.widget.personal.issues.description
+            icon:        bundles/orocalendar/img/my_calendar.png

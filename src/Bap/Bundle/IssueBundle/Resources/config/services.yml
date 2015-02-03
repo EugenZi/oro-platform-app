@@ -1,0 +1,161 @@
+imports:
+    - { resource: 'parameters.yml' }
+
+services:
+    bap_issue.form.issue:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "bap_issue_issue_form"
+            - "bap_issue_issue"
+
+    bap_issue.form.type.issue:
+        class: %bap_issue.form.type.issue.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: bap_issue_issue }
+
+    bap_issue.form.handler.issue:
+        class: %bap_issue.form.handler.issue.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.issue
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    bap_issue.form.priority:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "bap_issue_priority_form"
+            - "bap_issue_priority"
+
+    bap_issue.form.type.priority:
+        class: %bap_issue.form.type.issue.priority.class%
+        tags:
+            - { name: form.type, alias: bap_issue_priority }
+
+    bap_issue.form.handler.priority:
+        class: %bap_issue.form.handler.priority.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.priority
+            - @request
+            - @doctrine.orm.entity_manager
+
+    bap_issue.form.resolution:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "bap_issue_resolution_form"
+            - "bap_issue_resolution"
+
+    bap_issue.form.type.resolution:
+        class: %bap_issue.form.type.issue.resolution.class%
+        tags:
+            - { name: form.type, alias: bap_issue_resolution }
+
+    bap_issue.form.handler.resolution:
+        class: %bap_issue.form.handler.issue.resolution.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.resolution
+            - @request
+            - @doctrine.orm.entity_manager
+
+    bap_issue.issue.manager.api:
+        class: %bap_issue.api.manager.issue.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %bap_issue.entity.issue.class%
+            - @doctrine.orm.entity_manager
+
+    bap_issue.form.type.issue.api:
+        class: %bap_issue.api.form.issue.type.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: issue }
+
+    bap_issue.form.issue.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["issue", "issue", null]
+
+    bap_issue.form.handler.issue.api:
+        class: %bap_issue.form.handler.issue.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.issue.api
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    bap_issue.priority.manager.api:
+        class: %bap_issue.api.manager.issue.priority.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %bap_issue.entity.issue.priority.class%
+            - @doctrine.orm.entity_manager
+
+    bap_issue.form.priority.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["priority", "priority", null]
+
+    bap_issue.form.handler.priority.api:
+        class: %bap_issue.form.handler.priority.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.priority.api
+            - @request
+            - @doctrine.orm.entity_manager
+
+    bap_issue.resolution.manager.api:
+        class: %bap_issue.api.manager.issue.resolution.class%
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - %bap_issue.entity.issue.resolution.class%
+            - @doctrine.orm.entity_manager
+
+    bap_issue.form.resolution.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["resolution", "resolution", null]
+
+    bap_issue.form.handler.resolution.api:
+        class: %bap_issue.form.handler.issue.resolution.class%
+        scope: request
+        arguments:
+            - @bap_issue.form.resolution.api
+            - @request
+            - @doctrine.orm.entity_manager
+
+    bap_issue.helper.issue_helper:
+        class: %bap_issue.helper.issue_helper.class%
+        arguments:
+            - @translator
+
+    bap_issue.grid.formatter.issue_type_property:
+        class: %bap_issue.grid.formatter.issue.type.class%
+        arguments:
+            - @bap_issue.helper.issue_helper
+        tags:
+            - { name:  oro_datagrid.extension.formatter.property, type: issue_type }
+
+    bap_issue.twig.extension.issue:
+        class: %bap_issue.twig.extension.issue.class%
+        arguments:
+            - @bap_issue.helper.issue_helper
+        tags:
+            - { name: twig.extension }

@@ -1,0 +1,23 @@
+{% extends 'OroDashboardBundle:Dashboard:widget.html.twig' %}
+{% import 'BapIssueBundle::macros.html.twig' as dataGrid %}
+
+{% block content %}
+    {{ dataGrid.renderGrid('dashboard-issue-grid', {'userId': user.id}) }}
+{% endblock %}
+
+{% block actions %}
+    {% set actions = [
+        {
+            'type': 'link',
+            'label': 'bap_issue.dashboard.widget.view_issues_page'|trans,
+            'url': path('bap_issue_page', {
+                'grid[issue-grid]': {
+                    'f[collaborators][value]': app.user.id,
+                    'f[collaborators][type]': 1
+                }|url_encode
+            })
+        }
+    ] %}
+
+    {{ parent() }}
+{% endblock %}

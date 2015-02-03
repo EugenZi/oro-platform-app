@@ -1,0 +1,11 @@
+bap.rest.issue:
+    resource:     "@BapIssueBundle/Controller/Api/Rest/IssueController.php"
+    type:         rest
+
+bap.rest.issue.priority:
+    resource:     "@BapIssueBundle/Controller/Api/Rest/PriorityController.php"
+    type:         rest
+
+bap.rest.resolution:
+    resource:     "@BapIssueBundle/Controller/Api/Rest/ResolutionController.php"
+    type:         rest

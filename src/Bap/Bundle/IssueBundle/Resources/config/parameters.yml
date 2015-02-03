@@ -1,0 +1,29 @@
+parameters:
+    bap_issue.entity.issue.class: Bap\Bundle\IssueBundle\Entity\Issue
+    bap_issue.entity.issue.priority.class: Bap\Bundle\IssueBundle\Entity\IssuePriority
+    bap_issue.entity.issue.resolution.class: Bap\Bundle\IssueBundle\Entity\IssueResolution
+    bap_issue.entity.issue.type.class: Bap\Bundle\IssueBundle\Entity\IssueType
+
+    bap_issue.form.type.issue.priority.class: Bap\Bundle\IssueBundle\Form\Type\IssuePriorityType
+    bap_issue.form.handler.priority.class: Bap\Bundle\IssueBundle\Form\Handler\IssuePriorityHandler
+
+    bap_issue.form.type.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Type\IssueResolutionType
+    bap_issue.form.handler.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Handler\ResolutionHandler
+
+    bap_issue.form.type.issue.class: Bap\Bundle\IssueBundle\Form\Type\IssueFormType
+    bap_issue.form.handler.issue.class: Bap\Bundle\IssueBundle\Form\Handler\IssueHandler
+
+    bap_issue.api.manager.issue.priority.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    bap_issue.api.manager.issue.resolution.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    bap_issue.api.manager.issue.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+
+    bap_issue.api.form.issue.type.class: Bap\Bundle\IssueBundle\Form\Type\Api\IssueApiType
+
+    bap_issue.helper.issue_helper.class: Bap\Bundle\IssueBundle\Twig\Helper\IssueHelper
+    bap_issue.grid.formatter.issue.type.class: Bap\Bundle\IssueBundle\Grid\Formatter\IssueTypeProperty
+
+    bap_issue.twig.extension.issue.class: Bap\Bundle\IssueBundle\Twig\Extension\IssueExtension
+
+    bap_issue.batch.fixture.issue.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\IssueFixture
+    bap_issue.batch.fixture.resolution.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\ResolutionFixture
+    bap_issue.batch.fixture.priority.class: Bap\Bundle\IssueBundle\ImportExport\TemplateFixture\PriorityFixture
