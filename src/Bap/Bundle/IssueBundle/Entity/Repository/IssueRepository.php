@@ -17,9 +17,8 @@ class IssueRepository extends EntityRepository
         $result = [];
 
         while($item = array_pop($items)) {
-            $key   = $item['label'];
-            $count = $item['count_issues'];
-
+            $key          = $item['label'];
+            $count        = $item['count_issues'];
             $result[$key] = [
                 'count' => $count
             ];
@@ -42,15 +41,12 @@ class IssueRepository extends EntityRepository
                 'WITH',
                 'issue.workflowStep = workflowStep AND definition.name = :d_name'
             )
-            ->andWhere('')
             ->groupBy('workflowStep.label')
-            ->orderBy('cnt')
+            ->orderBy('count_issues')
             ->setParameter('d_name', 'issue_flow');
 
         return $qb
             ->getQuery()
-            ->getResult(
-                AbstractQuery::HYDRATE_SIMPLEOBJECT
-            );
+            ->getArrayResult();
     }
 }

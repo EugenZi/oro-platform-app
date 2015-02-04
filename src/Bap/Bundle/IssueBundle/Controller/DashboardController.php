@@ -66,7 +66,7 @@ class DashboardController extends Controller
      *      name="bap_user_issues_board",
      *      requirements={"widget"="[\w-]+"}
      * )
-     * @Template("BapIssueBundle:Dashboard:issueChart.html.twig")
+     * @Template("BapIssueBundle:Dashboard:myIssues.html.twig")
      *
      * @param string $widget
      * @return array
