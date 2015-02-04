@@ -2,7 +2,7 @@
 
 namespace Bap\Bundle\IssueBundle\Twig\Extension;
 
-use Bap\Bundle\IssueBundle\Twig\Helper\IssueHelper;
+use Bap\Bundle\IssueBundle\Common\Helper\IssueHelper;
 
 /**
  * Class IssueExtension

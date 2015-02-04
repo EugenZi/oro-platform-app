@@ -5,7 +5,7 @@ namespace Bap\Bundle\IssueBundle\Grid\Formatter;
 use Oro\Bundle\DataGridBundle\Datasource\ResultRecordInterface;
 use Oro\Bundle\DataGridBundle\Extension\Formatter\Property\AbstractProperty;
 
-use Bap\Bundle\IssueBundle\Twig\Helper\IssueHelper;
+use Bap\Bundle\IssueBundle\Common\Helper\IssueHelper;
 
 /**
  * Class IssueTypeProperty

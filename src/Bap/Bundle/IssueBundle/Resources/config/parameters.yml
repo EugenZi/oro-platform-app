@@ -19,7 +19,7 @@ parameters:
 
     bap_issue.api.form.issue.type.class: Bap\Bundle\IssueBundle\Form\Type\Api\IssueApiType
 
-    bap_issue.helper.issue_helper.class: Bap\Bundle\IssueBundle\Twig\Helper\IssueHelper
+    bap_issue.helper.issue_helper.class: Bap\Bundle\IssueBundle\Common\Helper\IssueHelper
     bap_issue.grid.formatter.issue.type.class: Bap\Bundle\IssueBundle\Grid\Formatter\IssueTypeProperty
 
     bap_issue.twig.extension.issue.class: Bap\Bundle\IssueBundle\Twig\Extension\IssueExtension

@@ -34,7 +34,7 @@ class IssueResolutionType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Bap\BundleIssueBundle\Entity\IssueResolution',
+                'data_class' => 'Bap\Bundle\IssueBundle\Entity\IssueResolution',
                 'intention'  => 'resolution',
             ]
         );

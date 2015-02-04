@@ -33,7 +33,7 @@ class PriorityController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('bap_issue.priority.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.entity.issue.priority.class'),
         ];
     }
 

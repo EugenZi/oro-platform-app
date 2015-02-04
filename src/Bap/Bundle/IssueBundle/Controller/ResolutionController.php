@@ -34,7 +34,7 @@ class ResolutionController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('academic_bts.resolution.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.entity.issue.resolution.class'),
         ];
     }
 
@@ -94,12 +94,15 @@ class ResolutionController extends Controller
     }
 
     /**
-     * @param IssueResolution $entity
      * @return \Closure
      */
-    private function saveAndStayRouteCallback(IssueResolution $entity)
+    private function saveAndStayRouteCallback()
     {
-        return function () use ($entity) {
+        /**
+         * @param  IssueResolution $entity
+         * @return array
+         */
+        return function (IssueResolution $entity) {
             return [
                 'route' => 'bap_update_priority',
                 'parameters' => [
@@ -117,7 +120,7 @@ class ResolutionController extends Controller
     {
         return function () {
             return [
-                'route' => 'bap_priority',
+                'route' => 'bap_resolutions',
             ];
         };
     }

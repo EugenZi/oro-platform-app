@@ -19,14 +19,14 @@ class IssuePriorityType extends AbstractType
     {
         $builder
             ->add(
-                'title',
+                'name',
                 'text',
                 [
                     'required' => true,
                 ]
             )
             ->add(
-                'weight',
+                'value',
                 'integer',
                 [
                     'required' => true,
