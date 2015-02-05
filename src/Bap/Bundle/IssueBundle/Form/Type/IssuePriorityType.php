@@ -41,7 +41,7 @@ class IssuePriorityType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Bap\Bundle\IssueBundle\Entity\Priority',
+                'data_class' => 'Bap\Bundle\IssueBundle\Entity\IssuePriority',
                 'intention'  => 'priority',
             ]
         );

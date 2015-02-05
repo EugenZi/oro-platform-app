@@ -14,6 +14,7 @@ use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
+use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
 
 /**
  * Class IssueController
@@ -21,6 +22,8 @@ use Bap\Bundle\IssueBundle\Entity\Issue;
  */
 class IssueController extends Controller
 {
+    use RouteParametersTrait;
+
     /**
      * @param Issue $issue
      * @Route("/issue/view/{id}", name="bap_issue", requirements={"id"="\d+"})
@@ -227,37 +230,35 @@ class IssueController extends Controller
      */
     protected function update(Issue $entity, array $params = [])
     {
+        $returnData = null;
+
         if ($this->get('bap_issue.form.handler.issue')->process($entity)) {
+
+            $successMessage = $this
+                ->get('translator')
+                ->trans('bap_issue.controller.issue.saved.message');
 
             $this
                 ->get('session')
                 ->getFlashBag()
                 ->add(
                     'success',
-                    $this
-                        ->get('translator')
-                        ->trans('bap_issue.controller.issue.saved.message')
+                    $successMessage
                 );
 
-            return $this
+            $returnData = $this
                 ->get('oro_ui.router')
                 ->redirectAfterSave(
-                    [
-                        'route' => 'bap_update_issue',
-                        'parameters' => [
-                            'id' => $entity->getId()
-                        ],
-                    ],
-                    [
-                        'route' => 'bap_issue_view',
-                        'parameters' => ['id' => $entity->getId()],
-                    ]
+                    $this->getRouteParams('bap_issues'),
+                    $this->getRouteParams('bap_issue_view', $entity)
                 );
+        } else {
+            $returnData = array_merge($params, [
+                'entity' => $entity,
+                'form'   => $this->get('bap_issue.form.issue')->createView(),
+            ]);
         }
 
-        return array_merge($params, [
-            'entity' => $entity,
-            'form'   => $this->get('bap_issue.form.issue')->createView(),
-        ]);
+        return $returnData;
     }
 }
