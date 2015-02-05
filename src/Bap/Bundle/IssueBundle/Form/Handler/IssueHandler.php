@@ -8,15 +8,15 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 use Oro\Bundle\TagBundle\Entity\TagManager;
-use Oro\Bundle\TagBundle\Form\Handler\TagHandlerInterface;
 
+use Bap\Bundle\IssueBundle\Common\Form\TaggedFormHandlerInterface;
 use Bap\Bundle\IssueBundle\Entity\Issue;
 
 /**
  * Class IssueHandler
  * @package Bap\Bundle\IssueBundle\Form\Handler
  */
-class IssueHandler implements TagHandlerInterface
+class IssueHandler implements TaggedFormHandlerInterface
 {
     /**
      * @var FormInterface
@@ -50,6 +50,10 @@ class IssueHandler implements TagHandlerInterface
         $this->manager = $manager;
     }
 
+    public function getEntity()
+    {
+
+    }
     /**
      * Process form
      *

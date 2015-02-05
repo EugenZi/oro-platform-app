@@ -36,9 +36,9 @@ Bap\Bundle\IssueBundle\Entity\IssuePriority:
 
 Bap\Bundle\IssueBundle\Entity\IssueResolution:
     constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: value
     properties:
-        title:
+        value:
             - NotBlank:     ~
             - Length:
                 max:        50

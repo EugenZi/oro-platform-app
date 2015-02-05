@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
-use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
+use Bap\Bundle\IssueBundle\Common\Controller\ControllerHelperTrait;
 
 /**
  * Class ResolutionController
@@ -19,7 +19,7 @@ use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
  */
 class ResolutionController extends Controller
 {
-    use RouteParametersTrait;
+    use ControllerHelperTrait;
 
     /**
      * @Route("/resolution", name="bap_resolutions")
@@ -89,7 +89,7 @@ class ResolutionController extends Controller
             ->handleUpdate(
                 $entity,
                 $this->get('bap_issue.form.resolution'),
-                $this->getRouteParams('bap_update_priority', $entity),
+                $this->getRouteParams('bap_update_resolution', $entity),
                 $this->getRouteParams('bap_resolutions'),
                 $this->get('translator')->trans('bap_issue.controller.resolution.saved.message'),
                 $this->get('bap_issue.form.handler.resolution')

@@ -14,7 +14,7 @@ datagrid:
                     - iss.summary
                     - iss.type
                     - pri.name  as priority
-                    - res.title as resolution
+                    - res.value as resolution
                     - CONCAT(rep.firstName, ' ',rep.lastName) as reporter
                     - CONCAT(ass.firstName, ' ',ass.lastName) as assignee
                     - iss.createdAt

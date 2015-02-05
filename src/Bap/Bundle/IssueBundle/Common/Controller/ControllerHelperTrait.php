@@ -8,7 +8,7 @@
 namespace Bap\Bundle\IssueBundle\Common\Controller;
 
 
-trait RouteParametersTrait
+trait ControllerHelperTrait
 {
     /**
      * @param string $status

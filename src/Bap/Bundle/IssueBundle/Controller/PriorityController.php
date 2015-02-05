@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
-use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
+use Bap\Bundle\IssueBundle\Common\Controller\ControllerHelperTrait;
 
 /**
  * Class PriorityController
@@ -19,7 +19,7 @@ use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
  */
 class PriorityController extends Controller
 {
-    use RouteParametersTrait;
+    use ControllerHelperTrait;
 
     /**
      * @Route("/priority", name="bap_priorities")

@@ -14,7 +14,7 @@ use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
-use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
+use Bap\Bundle\IssueBundle\Common\Controller\ControllerHelperTrait;
 
 /**
  * Class IssueController
@@ -22,7 +22,7 @@ use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
  */
 class IssueController extends Controller
 {
-    use RouteParametersTrait;
+    use ControllerHelperTrait;
 
     /**
      * @param Issue $issue

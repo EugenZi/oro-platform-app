@@ -2,7 +2,7 @@
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 
 {% if form.vars.value.id %}
-    {% oro_title_set({params : {"%entity.title%": form.vars.value.title} }) %}
+    {% oro_title_set({params : {"%entity.valure%": form.vars.value.value} }) %}
 {% endif %}
 {% set formAction = form.vars.value.id ? path('bap_update_resolution', { id: form.vars.value.id }) : path('bap_create_resolution') %}
 
@@ -46,7 +46,7 @@
             'subblocks': [{
                 'title': '',
                 'data': [
-                    form_row(form.title)
+                    form_row(form.value)
                 ]
             }]
         }]

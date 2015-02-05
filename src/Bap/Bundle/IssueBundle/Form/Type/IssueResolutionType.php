@@ -19,8 +19,8 @@ class IssueResolutionType extends AbstractType
     {
         $builder
             ->add(
-                'name',
                 'value',
+                'text',
                 [
                     'required' => true,
                 ]

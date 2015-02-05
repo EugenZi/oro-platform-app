@@ -8,7 +8,7 @@ parameters:
     bap_issue.form.handler.priority.class: Bap\Bundle\IssueBundle\Form\Handler\IssuePriorityHandler
 
     bap_issue.form.type.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Type\IssueResolutionType
-    bap_issue.form.handler.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Handler\ResolutionHandler
+    bap_issue.form.handler.issue.resolution.class: Bap\Bundle\IssueBundle\Form\Handler\IssueResolutionHandler
 
     bap_issue.form.type.issue.class: Bap\Bundle\IssueBundle\Form\Type\IssueFormType
     bap_issue.form.handler.issue.class: Bap\Bundle\IssueBundle\Form\Handler\IssueHandler

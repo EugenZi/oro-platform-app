@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
-class ResolutionHandler
+class IssueResolutionHandler
 {
     /**
      * @var FormInterface
@@ -47,6 +47,7 @@ class ResolutionHandler
     public function process(IssueResolution $entity)
     {
         $this->form->setData($entity);
+        $returnData = false;
 
         if (in_array($this->request->getMethod(), ['POST', 'PUT'])) {
             $this->form->submit($this->request);
@@ -55,10 +56,10 @@ class ResolutionHandler
                 $this->manager->persist($entity);
                 $this->manager->flush();
 
-                return true;
+                $returnData = true;
             }
         }
 
-        return false;
+        return $returnData;
     }
 }
