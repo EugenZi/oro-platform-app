@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\Util\Codes;
+use FOS\RestBundle\Routing\ClassResourceInterface as ResourceInterface;
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 
@@ -19,13 +18,11 @@ use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 
-use Bap\Bundle\IssueBundle\Entity\IssueResolution;
-
 /**
  * @RouteResource("resolution")
  * @NamePrefix("bap_api_")
  */
-class ResolutionController extends RestController implements ClassResourceInterface
+class ResolutionController extends RestController implements ResourceInterface
 {
     /**
      * REST DELETE

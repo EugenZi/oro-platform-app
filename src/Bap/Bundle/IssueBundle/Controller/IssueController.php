@@ -14,6 +14,7 @@ use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
+use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
 
 /**
  * Class IssueController
@@ -21,6 +22,8 @@ use Bap\Bundle\IssueBundle\Entity\Issue;
  */
 class IssueController extends Controller
 {
+    use RouteParametersTrait;
+
     /**
      * @param Issue $issue
      * @Route("/issue/view/{id}", name="bap_issue", requirements={"id"="\d+"})
@@ -49,7 +52,7 @@ class IssueController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('bap_issue.issue.entity.class'),
+            'entity_class' => $this->container->getParameter('bap_issue.entity.issue.class'),
         ];
     }
 
@@ -130,7 +133,7 @@ class IssueController extends Controller
     /**
      * @param Issue $issue
      *
-     * @Route("/widget/info/{id}", name="bap_issue_page", requirements={"id"="\d+"})
+     * @Route("/widget/info/{id}", name="bap_issue", requirements={"id"="\d+"})
      * @Acl(
      *      id="bap_issue_view",
      *      type="entity",
@@ -138,7 +141,7 @@ class IssueController extends Controller
      *      permission="VIEW"
      * )
      *
-     * @Template()
+     * @Template("BapIssueBundle:Issue/widget:info.html.twig")
      *
      * @return array
      */
@@ -197,7 +200,7 @@ class IssueController extends Controller
      * @param Issue $issue
      *
      * @Route("/widget/collaborators/{id}", name="bap_issue_collaborators", requirements={"id"="\d+"})
-     * @Template()
+     * @Template("BapIssueBundle:Issue/widget:collaborators.html.twig")
      *
      * @return array
      */
@@ -227,37 +230,29 @@ class IssueController extends Controller
      */
     protected function update(Issue $entity, array $params = [])
     {
+        $returnData = null;
+
         if ($this->get('bap_issue.form.handler.issue')->process($entity)) {
 
-            $this
-                ->get('session')
-                ->getFlashBag()
-                ->add(
-                    'success',
-                    $this
-                        ->get('translator')
-                        ->trans('bap_issue.controller.issue.saved.message')
-                );
+            $successMessage = $this
+                ->get('translator')
+                ->trans('bap_issue.controller.issue.saved.message');
 
-            return $this
+            $this->setFlashMessage('success', $successMessage);
+
+            $returnData = $this
                 ->get('oro_ui.router')
                 ->redirectAfterSave(
-                    [
-                        'route' => 'bap_update_issue',
-                        'parameters' => [
-                            'id' => $entity->getId()
-                        ],
-                    ],
-                    [
-                        'route' => 'bap_issue_view',
-                        'parameters' => ['id' => $entity->getId()],
-                    ]
+                    $this->getRouteParams('bap_issues'),
+                    $this->getRouteParams('bap_issue_view', $entity)
                 );
+        } else {
+            $returnData = array_merge($params, [
+                'entity' => $entity,
+                'form'   => $this->get('bap_issue.form.issue')->createView(),
+            ]);
         }
 
-        return array_merge($params, [
-            'entity' => $entity,
-            'form'   => $this->get('bap_issue.form.issue')->createView(),
-        ]);
+        return $returnData;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bap\Bundle\IssueBundle\Form\Type\Api;
 
+use Bap\Bundle\IssueBundle\Form\Type\IssueFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,7 +12,7 @@ use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
  * Class IssueApiType
  * @package Academic\BtsBundle\Form\Type\Api
  */
-class IssueApiType extends IssueType
+class IssueApiType extends IssueFormType
 {
     /**
      * {@inheritdoc}

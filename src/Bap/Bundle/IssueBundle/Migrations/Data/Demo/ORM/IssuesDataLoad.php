@@ -4,17 +4,12 @@ namespace Bap\Bundle\IssueBundle\Migration\Data\Demo\ORM;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
 use Bap\Bundle\IssueBundle\Entity\IssueType;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
 
-use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
-
-use Doctrine\DBAL\LockMode;
 
 /**
  * Class IssuesDataLoad
@@ -71,16 +66,6 @@ class IssuesDataLoad extends AbstractFixture
 
         $this->objectManager->flush();
     }
-
-//    private function loadObjectManager()
-//    {
-//        if (!$this->) {
-//            $this->entityManager = $this->entityManager->create(
-//                $this->entityManager->getConnection(),
-//                $this->entityManager->getConfiguration()
-//            );
-//        }
-//    }
 
     /**
      * @return IssuePriority|null

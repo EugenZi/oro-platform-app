@@ -1,6 +1,6 @@
 <?php
 
-namespace Bap\Bundle\IssueBundle\Twig\Helper;
+namespace Bap\Bundle\IssueBundle\Common\Helper;
 
 use Oro\Bundle\TranslationBundle\Translation\Translator;
 

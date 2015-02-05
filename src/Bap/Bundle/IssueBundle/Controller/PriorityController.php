@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
 use Bap\Bundle\IssueBundle\Entity\IssuePriority;
+use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
 
 /**
  * Class PriorityController
@@ -18,6 +19,8 @@ use Bap\Bundle\IssueBundle\Entity\IssuePriority;
  */
 class PriorityController extends Controller
 {
+    use RouteParametersTrait;
+
     /**
      * @Route("/priority", name="bap_priorities")
      * @Acl(
@@ -32,8 +35,12 @@ class PriorityController extends Controller
      */
     public function indexAction()
     {
+        $issuePriorityEntity = $this
+            ->container
+            ->getParameter('bap_issue.entity.issue.priority.class');
+
         return [
-            'entity_class' => $this->container->getParameter('bap_issue.priority.entity.class'),
+            'entity_class' => $issuePriorityEntity
         ];
     }
 
@@ -78,44 +85,19 @@ class PriorityController extends Controller
      */
     protected function update(IssuePriority $entity)
     {
+        $message = $this
+            ->get('translator')
+            ->trans('bap_issue.controller.priority.saved.message');
+
         return $this
             ->get('oro_form.model.update_handler')
             ->handleUpdate(
                 $entity,
                 $this->get('bap_issue.form.priority'),
-                $this->saveAndStayRouteCallback($entity),
-                $this->saveAndCloseRouteCallback(),
-                $this->get('translator')->trans('bap_issue.controller.priority.saved.message'),
+                $this->getRouteParams('bap_update_priority', $entity),
+                $this->getRouteParams('bap_priorities'),
+                $message,
                 $this->get('bap_issue.form.handler.priority')
             );
-    }
-
-    /**
-     * @param IssuePriority $entity
-     * @return \Closure
-     */
-    private function saveAndStayRouteCallback(IssuePriority $entity)
-    {
-        function () use ($entity) {
-            return [
-                'route' => 'bap_update_issue_priority',
-                'parameters' => [
-                    'id' => $entity->getId()
-                ]
-            ];
-
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function saveAndCloseRouteCallback()
-    {
-        return function () {
-            return [
-                'route' => 'bap_issue_priority',
-            ];
-        };
     }
 }

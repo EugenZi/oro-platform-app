@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
+use Oro\Bundle\OrganizationBundle\Entity\OrganizationInterface;
 use Oro\Bundle\TagBundle\Entity\Taggable;
 
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
@@ -525,10 +526,10 @@ class Issue implements ActivityInterface, Taggable
     }
 
     /**
-     * @param Organization $organization
+     * @param OrganizationInterface $organization
      * @return Issue
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(OrganizationInterface $organization = null)
     {
         $this->organization = $organization;
 

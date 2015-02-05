@@ -3,7 +3,6 @@
 namespace Bap\Bundle\IssueBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -11,9 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Oro\Bundle\TranslationBundle\Translation\Translator;
 
-use Bap\Bundle\IssueBundle\Entity\Issue as IssueEntity;
-use Bap\Bundle\IssueBundle\Entity\IssueType as Type;
-use Bap\Bundle\IssueBundle\Entity\IssueResolution as Resolution;
+use Bap\Bundle\IssueBundle\Entity\Issue;
+use Bap\Bundle\IssueBundle\Entity\IssueType;
 
 /**
  * Class IssueType
@@ -40,9 +38,11 @@ class IssueFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builderClosure = $this->getPreSetDataCallback($builder);
+
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            $this->getPreSetDataCallback()
+            $builderClosure
         );
         $builder
             ->add('priority', 'entity', [
@@ -75,7 +75,7 @@ class IssueFormType extends AbstractType
      */
     public function getName()
     {
-        return 'academic_bts_issue';
+        return 'bap_issue_form_type_issue';
     }
 
     /**
@@ -90,18 +90,18 @@ class IssueFormType extends AbstractType
     private function getIssueStatusTypes()
     {
         return [
-            IssueEntity::STATUS_OPEN,
-            IssueEntity::STATUS_REOPENED,
-            IssueEntity::STATUS_IN_PROGRESS
+            Issue::STATUS_OPEN,
+            Issue::STATUS_REOPENED,
+            Issue::STATUS_IN_PROGRESS
         ];
     }
 
     private function getChoises()
     {
         return [
-            Type::STORY_TYPE => $this->translate('bap.issue.type.story'),
-            Type::TASK_TYPE  => $this->translate('bap.issue.type.task'),
-            Type::BUG_TYPE   => $this->translate('bap.issue.type.bug'),
+            IssueType::STORY_TYPE => $this->translate('bap.issue.type.story'),
+            IssueType::TASK_TYPE  => $this->translate('bap.issue.type.task'),
+            IssueType::BUG_TYPE   => $this->translate('bap.issue.type.bug'),
         ];
     }
 
@@ -120,27 +120,28 @@ class IssueFormType extends AbstractType
             'entity',
             [
                 'class'    => 'Bap\Bundle\IssueBundle\Entity\IssueResolution',
-                'property' => 'title',
+                'property' => 'value',
                 'required' => false,
             ]
         ];
     }
 
-    private function getPreSetDataCallback(FormEvent $event)
+    private function getPreSetDataCallback(FormBuilderInterface $builder)
     {
-        return function () use ($event) {
+        return function (FormEvent $event) use ($builder) {
 
             $form = $event->getForm();
 
-            /** @var IssueEntity $issue */
-            $issueId       = $issue->getId();
-            $issue         = $event->getData();
-            $issueParent   = $issue->getParent();
-            $issueType     = (string)$issue->getType();
-            $issueStatus   = $issue->getWorkflowStep()->getName();
-            $configForm    = null;
+            /** @var Issue $issue */
+            $issueId          = $issue->getId();
+            $issue            = $event->getData();
+            $issueParent      = $issue->getParent();
+            $issueType        = $issue->getType();
+            $issueStatus      = $issue->getWorkflowStep()->getName();
+            $resolutionConfig = $this->getResolutionConfig();
+            $configForm       = null;
 
-            if (is_null($issueParent) &&  $issueType !== Type::SUB_TASK_TYPE) {
+            if (is_null($issueParent) &&  IssueType::SUB_TASK_TYPE !== $issueType) {
                 $form->add(
                     'type',
                     'choice',
@@ -148,7 +149,7 @@ class IssueFormType extends AbstractType
                 );
             }
 
-            if (!is_null($issueId) && !in_array($issueStatus, $this->getResolutionConfig())) {
+            if (!is_null($issueId) && !in_array($issueStatus, $resolutionConfig)) {
                 $form->add(
                     'resolution',
                     'entity',
@@ -156,7 +157,7 @@ class IssueFormType extends AbstractType
                 );
             }
 
-            return $this->getIssueFormBuilder($form);
+            return $this->getIssueFormBuilder($builder);
         };
     }
 
@@ -164,8 +165,8 @@ class IssueFormType extends AbstractType
     {
         $builder
             ->add('priority', 'entity', [
-                'class' => 'Academic\BtsBundle\Entity\Priority',
-                'property' => 'title',
+                'class' => 'Bap\Bundle\IssueBundle\Entity\IssuePriority',
+                'property' => 'name',
             ])
             ->add('code', 'text', ['required' => true,])
             ->add('summary', 'text', ['required' => true,])

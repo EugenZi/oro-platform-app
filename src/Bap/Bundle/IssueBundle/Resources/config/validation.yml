@@ -22,14 +22,14 @@ Bap\Bundle\IssueBundle\Entity\Issue:
 
 Bap\Bundle\IssueBundle\Entity\IssuePriority:
     constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: weight
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: value
     properties:
-        title:
+        name:
             - NotBlank:     ~
             - Length:
                 max:        50
-        weight:
+        value:
             - NotBlank:     ~
             - Type:
                 type: integer

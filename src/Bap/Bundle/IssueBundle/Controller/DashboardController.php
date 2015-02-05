@@ -2,7 +2,6 @@
 
 namespace Bap\Bundle\IssueBundle\Controller;
 
-use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -66,7 +65,7 @@ class DashboardController extends Controller
      *      name="bap_user_issues_board",
      *      requirements={"widget"="[\w-]+"}
      * )
-     * @Template("BapIssueBundle:Dashboard:issueChart.html.twig")
+     * @Template("BapIssueBundle:Dashboard:myIssues.html.twig")
      *
      * @param string $widget
      * @return array
@@ -77,7 +76,9 @@ class DashboardController extends Controller
             $this
                 ->get('oro_dashboard.widget_configs')
                 ->getWidgetAttributesForTwig($widget),
-            ['user' => $this->getUser()]
+            [
+                'user' => $this->getUser()
+            ]
         );
 
         return $widgetAttr;
