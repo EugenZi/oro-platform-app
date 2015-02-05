@@ -11,6 +11,21 @@ namespace Bap\Bundle\IssueBundle\Common\Controller;
 trait RouteParametersTrait
 {
     /**
+     * @param string $status
+     * @param string $message
+     */
+    private function setFlashMessage($status = 'success', $message = '')
+    {
+        $this
+            ->get('session')
+            ->getFlashBag()
+            ->add(
+                'success',
+                $message
+            );
+    }
+
+    /**
      * @param mixed $entity
      * @param string $routeName
      * @return array

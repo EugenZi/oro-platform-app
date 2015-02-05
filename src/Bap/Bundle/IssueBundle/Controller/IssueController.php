@@ -238,13 +238,7 @@ class IssueController extends Controller
                 ->get('translator')
                 ->trans('bap_issue.controller.issue.saved.message');
 
-            $this
-                ->get('session')
-                ->getFlashBag()
-                ->add(
-                    'success',
-                    $successMessage
-                );
+            $this->setFlashMessage('success', $successMessage);
 
             $returnData = $this
                 ->get('oro_ui.router')
