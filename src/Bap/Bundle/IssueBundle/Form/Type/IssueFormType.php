@@ -3,7 +3,6 @@
 namespace Bap\Bundle\IssueBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -13,7 +12,6 @@ use Oro\Bundle\TranslationBundle\Translation\Translator;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;
 use Bap\Bundle\IssueBundle\Entity\IssueType;
-use Bap\Bundle\IssueBundle\Entity\IssueResolution;
 
 /**
  * Class IssueType
@@ -77,7 +75,7 @@ class IssueFormType extends AbstractType
      */
     public function getName()
     {
-        return 'bap_issue';
+        return 'bap_issue_form_type_issue';
     }
 
     /**
@@ -167,8 +165,8 @@ class IssueFormType extends AbstractType
     {
         $builder
             ->add('priority', 'entity', [
-                'class' => 'Academic\BtsBundle\Entity\Priority',
-                'property' => 'title',
+                'class' => 'Bap\Bundle\IssueBundle\Entity\IssuePriority',
+                'property' => 'name',
             ])
             ->add('code', 'text', ['required' => true,])
             ->add('summary', 'text', ['required' => true,])

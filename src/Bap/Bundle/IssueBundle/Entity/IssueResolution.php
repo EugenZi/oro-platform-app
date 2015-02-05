@@ -3,7 +3,6 @@
 namespace Bap\Bundle\IssueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Bap\Bundle\IssueBundle\Entity\BapIssueResolution

@@ -2,7 +2,6 @@
 
 namespace Bap\Bundle\IssueBundle\Entity\Repository;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 
 /**

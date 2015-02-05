@@ -7,7 +7,6 @@
 
 namespace Bap\Bundle\IssueBundle\Migrations\Issue;
 
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
 use Bap\Bundle\IssueBundle\Entity\Issue;

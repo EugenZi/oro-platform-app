@@ -60,10 +60,10 @@ bap_issue:
     assigned_issues:      Assigned Issues
 
   priority:
-    entity_label:         Priority
-    entity_plural_label:  Priorities
-    title.label:          Title
-    weight.label:         Weight
+    entity_label:        Priority
+    entity_plural_label: Priorities
+    name.label:          Title
+    value.label:         Weight
 
   resolution:
     entity_label:         Resolution

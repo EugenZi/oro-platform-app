@@ -13,7 +13,7 @@ datagrid:
                     - iss.code
                     - iss.summary
                     - iss.type
-                    - pri.title as priority
+                    - pri.name  as priority
                     - res.title as resolution
                     - CONCAT(rep.firstName, ' ',rep.lastName) as reporter
                     - CONCAT(ass.firstName, ' ',ass.lastName) as assignee
@@ -87,7 +87,7 @@ datagrid:
                 type:
                     data_name: i.type
                 priority:
-                    data_name: p.weight
+                    data_name: p.value
                 resolution:
                     data_name: i.resolution
                 reporter:
@@ -128,7 +128,7 @@ datagrid:
                     data_name: i.type
                     options:
                         field_options:
-                            choices: @bap_issue.helper.issue_helper->getTypeList
+                            choices: @bap_issue.helper.issue_helper->getTypesList
                 priority:
                     type: string
                     data_name: i.priority
@@ -231,7 +231,7 @@ datagrid:
                 workflowStepLabel:
                     data_name: workflowStep.order
                 priority:
-                    data_name: p.weight
+                    data_name: p.value
                 updatedAt:
                     data_name: i.updatedAt
             default:
@@ -281,18 +281,18 @@ datagrid:
             query:
                 select:
                     - p.id
-                    - p.title
-                    - p.weight
+                    - p.name
+                    - p.value
                 from:
                     - { table: %bap_issue.entity.issue.priority.class%, alias: p }
 
         columns:
-            title:
-                label: academic.bts.priority.title.label
+            name:
+                label: academic.bts.priority.name.label
                 type: field
                 frontend_type: string
-            weight:
-                label: academic.bts.priority.weight.label
+            value:
+                label: academic.bts.priority.value.label
                 type: field
                 frontend_type: integer
 
@@ -310,21 +310,21 @@ datagrid:
                     - id
         sorters:
             columns:
-                title:
-                    data_name: p.title
-                weight:
-                    data_name: p.weight
+                name:
+                    data_name: p.name
+                value:
+                    data_name: p.value
             default:
                 id: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_DESC
 
         filters:
             columns:
-                title:
+                name:
                     type: string
-                    data_name: p.title
-                weight:
+                    data_name: p.name
+                value:
                     type: string
-                    data_name: p.weight
+                    data_name: p.value
 
         actions:
             update:
@@ -483,7 +483,7 @@ datagrid:
                 workflowStepLabel:
                     data_name: workflowStep.order
                 priority:
-                    data_name: p.weight
+                    data_name: p.value
                 resolution:
                     data_name: i.resolution
                 reporter:
