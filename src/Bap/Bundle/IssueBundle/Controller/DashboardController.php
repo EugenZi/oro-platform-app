@@ -76,7 +76,9 @@ class DashboardController extends Controller
             $this
                 ->get('oro_dashboard.widget_configs')
                 ->getWidgetAttributesForTwig($widget),
-            ['user' => $this->getUser()]
+            [
+                'user' => $this->getUser()
+            ]
         );
 
         return $widgetAttr;

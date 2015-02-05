@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
 use Bap\Bundle\IssueBundle\Entity\IssueResolution;
+use Bap\Bundle\IssueBundle\Common\Controller\RouteParametersTrait;
 
 /**
  * Class ResolutionController
@@ -18,6 +19,8 @@ use Bap\Bundle\IssueBundle\Entity\IssueResolution;
  */
 class ResolutionController extends Controller
 {
+    use RouteParametersTrait;
+
     /**
      * @Route("/resolution", name="bap_resolutions")
      *
@@ -86,42 +89,10 @@ class ResolutionController extends Controller
             ->handleUpdate(
                 $entity,
                 $this->get('bap_issue.form.resolution'),
-                $this->saveAndStayRouteCallback($entity),
-                $this->saveAndCloseRouteCallback(),
+                $this->getRouteParams('bap_update_priority', $entity),
+                $this->getRouteParams('bap_resolutions'),
                 $this->get('translator')->trans('bap_issue.controller.resolution.saved.message'),
                 $this->get('bap_issue.form.handler.resolution')
             );
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function saveAndStayRouteCallback()
-    {
-        /**
-         * @param  IssueResolution $entity
-         * @return array
-         */
-        return function (IssueResolution $entity) {
-            return [
-                'route' => 'bap_update_priority',
-                'parameters' => [
-                    'id' => $entity->getId()
-                ]
-            ];
-
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function saveAndCloseRouteCallback()
-    {
-        return function () {
-            return [
-                'route' => 'bap_resolutions',
-            ];
-        };
     }
 }
