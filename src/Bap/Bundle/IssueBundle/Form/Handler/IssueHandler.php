@@ -16,7 +16,7 @@ use Bap\Bundle\IssueBundle\Entity\Issue;
  * Class IssueHandler
  * @package Bap\Bundle\IssueBundle\Form\Handler
  */
-class IssueHandler implements TaggedFormHandlerInterface
+class IssueHandler
 {
     /**
      * @var FormInterface
