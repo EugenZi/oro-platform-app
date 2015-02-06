@@ -92,9 +92,9 @@ class IssueFormType extends AbstractType
     private function getChoises()
     {
         return [
-            IssueType::STORY_TYPE => $this->translate('bap.issue.type.story'),
-            IssueType::TASK_TYPE  => $this->translate('bap.issue.type.task'),
-            IssueType::BUG_TYPE   => $this->translate('bap.issue.type.bug'),
+            IssueType::STORY_TYPE => $this->translate('bap_issue.issue.type.task'),
+            IssueType::TASK_TYPE  => $this->translate('bap_issue.issue.type.task'),
+            IssueType::BUG_TYPE   => $this->translate('bap_issue.issue.type.bug'),
         ];
     }
 
