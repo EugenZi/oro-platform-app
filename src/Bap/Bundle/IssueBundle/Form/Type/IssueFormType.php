@@ -2,6 +2,7 @@
 
 namespace Bap\Bundle\IssueBundle\Form\Type;
 
+use Proxies\__CG__\Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -33,28 +34,20 @@ class IssueFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array $options
+     * @return FormBuilderInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builderClosure = $this->getPreSetDataCallback($builder);
+        $callback = $this->getPreSetDataCallback($builder);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            $builderClosure
+            $callback
         );
-        $builder
-            ->add('priority', 'entity', [
-                'class' => 'Bap\Bundle\IssueBundle\Entity\IssuePriority',
-                'property' => 'name',
-            ])
-            ->add('code', 'text', ['required' => true,])
-            ->add('summary', 'text', ['required' => true,])
-            ->add('description', 'textarea')
-            ->add('reporter', 'oro_user_select', ['required' => true])
-            ->add('tags', 'oro_tag_select', ['label' => 'oro.tag.entity_plural_label'])
-            ->add('assignee', 'oro_user_select');
+
+        return $this->getIssueFormBuilder($builder);
     }
 
     /**
@@ -133,13 +126,25 @@ class IssueFormType extends AbstractType
             $form = $event->getForm();
 
             /** @var Issue $issue */
-            $issueId          = $issue->getId();
             $issue            = $event->getData();
-            $issueParent      = $issue->getParent();
-            $issueType        = $issue->getType();
-            $issueStatus      = $issue->getWorkflowStep()->getName();
             $resolutionConfig = $this->getResolutionConfig();
+            $issueId          = null;
+            $issueParent      = null;
+            $issueType        = null;
+            $issueStatus      = null;
             $configForm       = null;
+            $issueStep        = null;
+
+            if ($issue instanceof Issue) {
+                $issueId     = $issue->getId();
+                $issueParent = $issue->getParent();
+                $issueType   = $issue->getType();
+                $issueStep   = $issue->getWorkflowStep();
+
+                if($issueStatus instanceof WorkflowStep) {
+                    $issueStatus = $issueStep->getName();
+                }
+            }
 
             if (is_null($issueParent) &&  IssueType::SUB_TASK_TYPE !== $issueType) {
                 $form->add(

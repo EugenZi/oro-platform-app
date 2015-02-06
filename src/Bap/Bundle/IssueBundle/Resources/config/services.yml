@@ -8,14 +8,14 @@ services:
         factory_service: form.factory
         arguments:
             - "bap_issue_issue_form"
-            - "bap_issue.form.type.issue"
+            - "bap_issue_form_type_issue"
 
     bap_issue.form.type.issue:
         class: %bap_issue.form.type.issue.class%
         arguments:
             - @translator
         tags:
-            - { name: form.type, alias: bap_issue_issue }
+            - { name: form.type, alias: bap_issue_form_type_issue }
 
     bap_issue.form.handler.issue:
         class: %bap_issue.form.handler.issue.class%

@@ -48,10 +48,10 @@ class DashboardController extends Controller
                         'label' => ['field_name' => 'label'],
                         'value' => [
                             'field_name' => 'count',
-                            'type' => 'integer',
+                            'type'       => 'integer',
                         ]
                     ],
-                    'settings' => ['xNoTicks' => 5],
+                    'settings' => ['xNoTicks' => 0],
                 ]
             )
             ->getView();
